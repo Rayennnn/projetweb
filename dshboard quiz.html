@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Office - Résultats du Quiz</title>
+    <link rel="stylesheet" href="dsh.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin - Résultats Quiz</h2>
+        </div>
+        
+    </div>
+
+    <!-- Main content area -->
+    <div id="main-content">
+        <header>
+            <div class="header-info">
+                <span>Bonjour, Admin</span>
+            </div>
+        </header>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <h2>Gestion des Résultats du Quiz</h2>
+            <button id="addResultBtn" onclick="addResult()">Ajouter un Résultat</button>
+
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Score</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        //  gestion des résultats
+        let results = [
+            { id: 1, name: "Jean Dupont", score: "8/10", status: "Bien motivé" },
+            { id: 2, name: "Marie Martin", score: "6/10", status: "Besoin d'aide" },
+            { id: 3, name: "Rima Jlassi", score: "5/10", status: "jamais motivé" }
+        ];
+
+        // Fonction pour afficher les résultats
+        function displayResults() {
+            const resultsTable = document.querySelector('#resultsTable tbody');
+            resultsTable.innerHTML = ''; // Clear the current table content
+
+            results.forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${result.id}</td>
+                    <td>${result.name}</td>
+                    <td>${result.score}</td>
+                    <td>${result.status}</td>
+                    <td>
+                        <button class="editBtn" onclick="editResult(${result.id})">Modifier</button>
+                        <button class="deleteBtn" onclick="deleteResult(${result.id})">Supprimer</button>
+                    </td>
+                `;
+                resultsTable.appendChild(row);
+            });
+        }
+
+        // Ajouter 
+        function addResult() {
+            const newResult = {
+                id: results.length + 1,
+                name: `Nouvel Utilisateur ${results.length + 1}`,
+                score: `${Math.floor(Math.random() * 10)}/10`,
+                status: Math.random() > 0.5 ? "Bien motivé" : "Besoin d'aide"
+            };
+            results.push(newResult);
+            displayResults();
+        }
+
+        // Modifier un résultat (simulé)
+        function editResult(id) {
+            const result = results.find(r => r.id === id);
+            if (result) {
+                const newName = prompt("Modifier le nom", result.name);
+                const newScore = prompt("Modifier le score", result.score);
+                const newStatus = prompt("Modifier le statut", result.status);
+                
+                result.name = newName || result.name;
+                result.score = newScore || result.score;
+                result.status = newStatus || result.status;
+                
+                displayResults();
+            }
+        }
+
+        // Supprimer un résultat
+        function deleteResult(id) {
+            results = results.filter(r => r.id !== id);
+            displayResults();
+        }
+
+        // Affichage initial des résultats
+        displayResults();
+    </script>
+
+</body>
+</html>
