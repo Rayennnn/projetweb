@@ -1,6 +1,6 @@
 <?php
 echo'hello';
-/*class Bourse
+class Bourse
 {
     private ?int $idBourse = null;
     private ?string $nom = null;
