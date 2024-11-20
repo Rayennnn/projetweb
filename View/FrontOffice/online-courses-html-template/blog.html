@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ECOURSES - Online Courses HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="main.js"></script>
+  </head>
+  <body>
+  <!-- Navbar Start -->
+  <div class="container-fluid">
+    <div class="row border-top px-xl-5">
+        <div class="col-lg- ml-auto mr-auto  d-none d-lg-block">
+                        <img href="index.html" class="img-fluid" src="img/logo.jfif" width="50" 
+                        height="50"alt="">
+        
+         
+        </div>
+        <div class="col-lg-9">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                <a href="" class="text-decoration-none d-block d-lg-none">
+                    <h1 class="m-0"><span class="text-primary">E</span>COURSES</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav py-0">
+                        <a href="index.html" class="nav-item nav-link">accueil </a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">internationale</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="blog.html" class="dropdown-item">bourse d'étude</a>
+                                <a href="single.html" class="dropdown-item">programme d'échange</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">activite</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="blog.html" class="dropdown-item">club</a>
+                                <a href="single.html" class="dropdown-item">formation</a>
+                            </div>
+                        </div>
+                        <a href="course.html" class="nav-item nav-link">quiz</a>
+
+                        <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
+                        <a href="contact.html" class="nav-item nav-link active">Contact</a>
+                    </div>
+                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.html">Sign in</a>
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.html">login</a>    
+                    </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+      
+      
+
+    <div class="he">
+        <div class="over"></div>
+        <div class="content" >
+          <h1>Bourses et programmes d'echanges</h1>
+          <p>Accedez a des programmes d'echanges et des bourses d'etudes pour les lycéens et etudiants tunisiens, offrant un soutien financier pour vos 
+            etudes en Tunisie ou a l'international. </p>
+          <div class="buttons">
+            <a href="#" class="btn btn-primary">commencer</a>
+            <a href="#aa" class="btn btn-secondary">savoir plus</a>
+          </div>
+        </div>
+      </div>
+            
+      
+      
+
+
+
+      
+
+
+
+<div class="health-section">
+    <div class="health-content">
+      <h1>Investir dans l'avenir, soutenir l'excellence  et<br>donnez du temps pour vous maintenant</h1>
+      <div class="statistics">
+        <div class="stat-item">
+          <p class="stat-number">10 000</p>
+          <p class="stat-label">Nombre d'étudiants</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">80%</p>
+          <p class="stat-label">Taux de réussite</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">70%</p>
+          <p class="stat-label">Emploi aprés la bourse</p>
+        </div>
+      </div>
+    </div>
+    <div class="health-image">
+      <img src="img/pro2.avif" alt="Image de bourse" class="animated-image" onerror="this.src='img/fallback.jpg'">
+    </div>
+  </div>
+  <!--recherche-->
+
+      <div class="wrapper">
+        <div id="search-container">
+          <input
+            type="search"
+            id="search-input"
+            placeholder="Search product name here.."
+          />
+          <button id="search">Search</button>
+        </div>
+        <div id="buttons">
+          <button class="button-value" onclick="filterProduct('all')">All</button>
+          <button class="button-value" onclick="filterProduct('Topwear')">
+            Topwear
+          </button>
+          <button class="button-value" onclick="filterProduct('Bottomwear')">
+            Bottomwear
+          </button>
+          <button class="button-value" onclick="filterProduct('Jacket')">
+            Jacket
+          </button>
+          <button class="button-value" onclick="filterProduct('Watch')">
+            Watch
+          </button>
+        </div>
+        <div id="products"></div>
+      </div>
+      
+  
+<!--slider-->
+<!-- Section Programmes d'échange -->
+<section id="programmes-echange">
+  <div class="title-section">
+    <p class="subtitle">Programmes d'échange</p>
+    <h2 class="main-title">Opportunités d'échange international</h2>
+  </div>
+
+  <div class="exchange-grid">
+    <div class="exchange-item">
+      <div class="exchange-content">
+        <div class="exchange-icon">
+          <i class="fas fa-plane"></i>
+        </div>
+        <h3>Programme AIESEC</h3>
+        <span class="duration">6-12 semaines</span>
+        <div class="exchange-details">
+          <p>Stage international pour étudiants</p>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> 120+ pays</li>
+            <li><i class="fas fa-users"></i> 18-30 ans</li>
+            <li><i class="fas fa-calendar-alt"></i> Départs toute l'année</li>
+          </ul>
+          <a href="#" class="btn-discover">Découvrir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-content">
+        <div class="exchange-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3>AFS Tunisie</h3>
+        <span class="duration">1 année scolaire</span>
+        <div class="exchange-details">
+          <p>Programme d'échange interculturel</p>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> États-Unis, Europe</li>
+            <li><i class="fas fa-users"></i> 15-18 ans</li>
+            <li><i class="fas fa-calendar-alt"></i> Départ en septembre</li>
+          </ul>
+          <a href="#" class="btn-discover">Découvrir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-content">
+        <div class="exchange-icon">
+          <i class="fas fa-globe-americas"></i>
+        </div>
+        <h3>YES Program</h3>
+        <span class="duration">1 année académique</span>
+        <div class="exchange-details">
+          <p>Échange aux États-Unis</p>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> États-Unis</li>
+            <li><i class="fas fa-users"></i> 15-17 ans</li>
+            <li><i class="fas fa-calendar-alt"></i> Bourse complète</li>
+          </ul>
+          <a href="#" class="btn-discover">Découvrir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-content">
+        <div class="exchange-icon">
+          <i class="fas fa-language"></i>
+        </div>
+        <h3>UGRAD Program</h3>
+        <span class="duration">1 semestre</span>
+        <div class="exchange-details">
+          <p>Échange universitaire américain</p>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> États-Unis</li>
+            <li><i class="fas fa-users"></i> Étudiants en licence</li>
+            <li><i class="fas fa-calendar-alt"></i> Tous frais couverts</li>
+          </ul>
+          <a href="#" class="btn-discover">Découvrir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-content">
+        <div class="exchange-icon">
+          <i class="fas fa-university"></i>
+        </div>
+        <h3>Erasmus+ Tunisie</h3>
+        <span class="duration">1-2 semestres</span>
+        <div class="exchange-details">
+          <p>Mobilité universitaire en Europe</p>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> Union Européenne</li>
+            <li><i class="fas fa-users"></i> Étudiants & Personnel</li>
+            <li><i class="fas fa-euro-sign"></i> Bourse mensuelle</li>
+          </ul>
+          <a href="#" class="btn-discover">Découvrir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-content">
+        <div class="exchange-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3>MEPI Student Leaders</h3>
+        <span class="duration">6 semaines</span>
+        <div class="exchange-details">
+          <p>Programme de leadership aux USA</p>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> États-Unis</li>
+            <li><i class="fas fa-users"></i> 18-24 ans</li>
+            <li><i class="fas fa-star"></i> Formation intensive</li>
+          </ul>
+          <a href="#" class="btn-discover">Découvrir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    
+
+<!--recherche-->
+<section id="aa">
+<div class="title-section">
+    <p class="subtitle">Bourses</p>
+    <h2 class="main-title">nos bourses populaire</h2>
+  </div>
+</section>
+  
+  <!--autre-->
+  
+  <div class="courses-section">
+    <div class="course-card">
+      <img src="img/e1.webp" alt="DAAD Bourse">
+      <div class="course-info">
+        <div class="course-badge">Allemagne</div>
+        <h3>Bourse DAAD</h3>
+        <p class="course-details">
+          <i class="fas fa-calendar"></i> Date limite: 15 Sept 2024
+          <i class="fas fa-graduation-cap"></i> Master & Doctorat
+        </p>
+        <p class="description">Bourses d'excellence pour études supérieures en Allemagne. Inclut allocation mensuelle, frais de voyage et cours d'allemand.</p>
+        <div class="course-footer">
+          <a href="#" class="btn btn-login">Postuler maintenant</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="img/e2.jpg" alt="Erasmus Mundus">
+      <div class="course-info">
+        <div class="course-badge">Europe</div>
+        <h3>Erasmus Mundus</h3>
+        <p class="course-details">
+          <i class="fas fa-calendar"></i> Date limite: 31 Jan 2024
+          <i class="fas fa-graduation-cap"></i> Licence & Master
+        </p>
+        <p class="description">Programme d'échange européen offrant des bourses complètes pour des études dans plusieurs universités européennes.</p>
+        <div class="course-footer">
+          <a href="#" class="btn btn-login">Postuler maintenant</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="img/e3.jpeg" alt="Fulbright">
+      <div class="course-info">
+        <div class="course-badge">États-Unis</div>
+        <h3>Bourse Fulbright</h3>
+        <p class="course-details">
+          <i class="fas fa-calendar"></i> Date limite: 1 Mars 2024
+          <i class="fas fa-graduation-cap"></i> Master & Recherche
+        </p>
+        <p class="description">Programme prestigieux pour études supérieures aux États-Unis incluant frais de scolarité et allocation mensuelle.</p>
+        <div class="course-footer">
+          <a href="#" class="btn btn-login">Postuler maintenant</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="courses-section">
+    <div class="course-card">
+      <img src="img/e8.png" alt="Chevening Scholarship">
+      <div class="course-info">
+        <div class="course-badge">Royaume-Uni</div>
+        <h3>Bourse Chevening</h3>
+        <p class="course-details">
+          <i class="fas fa-calendar"></i> Date limite: 1 Nov 2024
+          <i class="fas fa-graduation-cap"></i> Master
+        </p>
+        <p class="description">Programme de bourses prestigieux du gouvernement britannique, couvrant les frais de scolarité, allocation mensuelle et billets d'avion.</p>
+        <div class="course-footer">
+          <a href="#" class="btn btn-login">Postuler maintenant</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="img/e7.png" alt="MEXT Scholarship">
+      <div class="course-info">
+        <div class="course-badge">Japon</div>
+        <h3>Bourse MEXT</h3>
+        <p class="course-details">
+          <i class="fas fa-calendar"></i> Date limite: 15 Mai 2024
+          <i class="fas fa-graduation-cap"></i> Licence, Master & Doctorat
+        </p>
+        <p class="description">Bourse complète du gouvernement japonais incluant cours de langue, frais universitaires et allocation mensuelle.</p>
+        <div class="course-footer">
+          <a href="#" class="btn btn-login">Postuler maintenant</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="img/e9.jpg" alt="Eiffel Excellence">
+      <div class="course-info">
+        <div class="course-badge">France</div>
+        <h3>Bourse Eiffel Excellence</h3>
+        <p class="course-details">
+          <i class="fas fa-calendar"></i> Date limite: 10 Jan 2024
+          <i class="fas fa-graduation-cap"></i> Master & Doctorat
+        </p>
+        <p class="description">Programme d'excellence français offrant une allocation mensuelle de 1.181€, couverture sociale et autres avantages.</p>
+        <div class="course-footer">
+          <a href="#" class="btn btn-login">Postuler maintenant</a>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+  <!--ABOUUUTT-->
+  
+  <!--slider-->
+ 
+  <div class="partner-slider">
+    <h2>Nos Partenaires</h2>
+    <div class="slider-container">
+      <div class="slider">
+        <!-- Premier ensemble de logos -->
+        <div class="slide">
+          <img src="img/p1.png" alt="DAAD">
+        </div>
+        <div class="slide">
+          <img src="img/p2.png" alt="Erasmus+">
+        </div>
+        <div class="slide">
+          <img src="img/p3.png" alt="British Council">
+        </div>
+        <div class="slide">
+          <img src="img/p4.jfif" alt="Campus France">
+        </div>
+        <div class="slide">
+          <img src="img/p3.jfif"alt="Fulbright">
+        </div>
+  
+        <!-- Répétition des logos pour l'effet infini -->
+        <div class="slide">
+          <img src="img/p1.png" alt="DAAD">
+        </div>
+        <div class="slide">
+          <img src="img/p2.png" alt="Erasmus+">
+        </div>
+        <div class="slide">
+          <img src="img/p3.png" alt="British Council">
+        </div>
+        <div class="slide">
+          <img src="img/p4.jfif" alt="Campus France">
+        </div>
+        <div class="slide">
+          <img src="img/p3.jfif" alt="Fulbright">
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+   <!--slider-->
+  <section class="about-us-section">
+    <div class="container">
+      <div class="row align-items-center">
+        
+        <!-- Left Column: Image Content -->
+        <div class="col-md-6 image-content">
+          <div class="main-image">
+            <img src="img/bourse6.jpg" alt="About Us Image">
+          </div>
+         
+        </div>
+        
+        <!-- Right Column: Text Content -->
+        <div class="col-md-6 text-content">
+          
+          <h2>Pourquoi Parcouri ? Notre mission!</h2>
+          <div class="mission-points">
+            
+            
+          
+            <div class="point">
+              <i class="fas fa-book"></i>
+              <h3>Large Bibliothèque de Ressources</h3>
+              <p>De la technologie au développement personnel, nos ressources couvrent un large éventail de sujets pour répondre à vos besoins.</p>
+            </div>
+            
+            <div class="point">
+              <i class="fas fa-certificate"></i>
+              <h3>Certifications Reconnues</h3>
+              <p>Obtenez des certificats qui valident vos compétences et enrichissent votre CV.</p>
+            </div>
+          </div>
+
+          <ul class="features">
+            <li><i class="fas fa-check-circle"></i> Meilleure qualité d'étude</li>
+            <li><i class="fas fa-check-circle"></i> 100% Gratuit</li>
+            <li><i class="fas fa-check-circle"></i> Expérience professionnelle</li>
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  
+
+
+
+
+
+<!--footer-->
+<footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>contactez nous</h3>
+        <p><i class="fas fa-map-marker-alt"></i> tunisie</p>
+        <p><i class="fas fa-phone"></i> 99 444 222</p>
+        <p><i class="fas fa-envelope"></i> parcouri@gmail.com</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+  
+      <div class="footer-column">
+        <h3>SERVICES</h3>
+        <ul>
+          <li><a href="#">bourses</a></li>
+          <li><a href="#">programme d'echanges</a></li>
+          <li><a href="#">formation</a></li>
+          <li><a href="#">clubs</a></li>
+         
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h3>mail</h3>
+        <p>Abonnez-vous à notre newsletter pour les dernières mises à jour et offres.</p>
+        <form>
+          <input type="email" placeholder="Ton adresse mail">
+          <button type="submit">s'inscrire</button>
+        </form>
+      </div>
+    </div>
+  
+    <div class="footer-bottom">
+      <p>&copy; designed by team <a href="#">parcouri </a></p>
+     
+    </div>
+  </footer>
+  
+
+
+  </body>
+</html>
