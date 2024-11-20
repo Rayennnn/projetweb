@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ECOURSES - Online Courses HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="quiz.css">
+</head>
+
+<body>
+<!-- Navbar Start -->
+<div class="container-fluid">
+    <div class="row border-top px-xl-5">
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="d-flex align-items-start">
+                <img href="index.html" class="logo-img" src="assets/img/logo.jfif" alt="" style="width: 50px; margin-left: -px;">
+                <h1 class="logo-text" style="position: relative; top: 38px; margin-left: -15px; text-transform: lowercase;">arcouri</h1>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav py-0">
+                        <a href="dashboard.html" class="nav-item nav-link" style="margin-left: 5px;">dashsboard</a>
+                        <a href="index.html" class="nav-item nav-link" style="margin-left: 5px;">Accueil</a>
+                        <div class="nav-item dropdown" style="margin-left: 5px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Internationale</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="blog.html" class="dropdown-item">Bourses d'Études</a>
+                                <a href="single.html" class="dropdown-item">Programmes d'Échange</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown" style="margin-left: 5px;">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Activités</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="blog.html" class="dropdown-item">Clubs/Associations</a>
+                                <a href="single.html" class="dropdown-item">Formations</a>
+                            </div>
+                        </div>
+                        <a href="course.html" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
+                        <a href="teacher.html" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
+                        <a href="contact.html" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
+                    </div>
+                    <div class="nav-buttons d-flex align-items-center">
+                        <a class="btn btn-primary custom-btn" href="signup.html">Sign In</a>
+                        <a class="btn btn-primary custom-btn" href="login.html" style="margin-left: 5px;">Login</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+
+
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 160px">
+                <h3 class="display-4 text-white text-uppercase">quiz</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">quiz</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+<!-- quiz Start -->
+
+<style>
+    /* Logo et texte */
+.logo-img {
+    width: 150px;
+    margin-left: -15px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05) rotate(-2deg);
+}
+
+.logo-text {
+    position: relative;
+    top: 0;
+    font-size: 2rem;
+    text-transform: lowercase;
+    background: linear-gradient(45deg, #ff0000, var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+/* Animation du dégradé au survol */
+.logo-text:hover {
+    background: linear-gradient(45deg, var(--primary), #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translateY(-2px);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Navigation */
+.navbar {
+    height: 100px;
+    background: #ffffff !important;
+    padding: 0 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    width: calc(100% + 42px);
+    margin-right: -20px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar-nav .nav-link {
+    color: #333333 !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 1rem 1.5rem !important;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 20px;
+    height: 100%;
+}
+
+.custom-btn {
+    padding: 8px 25px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    white-space: nowrap;  /* Empêche le texte de passer à la ligne */
+    min-width: 100px;    /* Largeur minimale pour chaque bouton */
+    text-align: center;  /* Centre le texte dans le bouton */
+}
+
+.custom-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary) !important;
+}
+
+/* Ajustement du logo et du texte */
+.logo-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Animation au chargement de la page */
+@keyframes fadeInLogo {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.d-flex.align-items-start {
+    animation: fadeInLogo 0.8s ease-out forwards;
+}
+    
+    .btn-check:checked + .btn-outline-primary {
+        background-color: #007bff;
+        color: white;
+    }
+    .btn-check:checked + .btn-outline-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+    .btn-check:checked + .btn-outline-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+
+    .custom-container {
+        padding-top: 0px; /* Adjust this value as needed */
+    }
+    .custom-text {
+        margin-top: -20px; /* Adjust this value as needed */
+    }
+    .quiz-form {
+        background-color: #f9f9f92a;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .quiz-form h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    .quiz-form label {
+        font-weight: bold;
+    }
+    .quiz-form .form-label {
+        margin-bottom: 10px;
+    }
+    .quiz-form .form-check {
+        margin-bottom: 10px;
+    }
+    .quiz-form .btn {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container-fluid custom-container py-5">
+    <div class="container pt-5 pb-5">
+        <!-- Heading Section -->
+        <div class="text-center mb-5 custom-text">
+            <h1 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Student Motivation Quiz</h1>
+            <p class="text-muted" style="font-size: 18px;">Let's find out what drives you! 🌟</p>
+        </div>
+        
+        <!-- Account Check Section -->
+        <form id="account-check-form" class="quiz-form">
+            <div class="mb-4 text-center">
+                <label for="account-check" class="form-label" style="font-size: 22px; font-weight: bold; color: #4a90e2;">Do you have an account with us?</label>
+                <div class="d-flex justify-content-center">
+                    <button type="button" id="account-yes" class="btn btn-lg btn-outline-primary mx-3" onclick="checkAccount('yes')">Yes, I do!</button>
+                    <button type="button" id="account-no" class="btn btn-lg btn-outline-danger mx-3" onclick="checkAccount('no')">No, I don't yet</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Quiz Questions Section -->
+        <form id="quiz-form" class="quiz-form" style="display: none;">
+            <!-- Question Set 1 -->
+            <div id="question-set-1" class="question-set mb-4" style="display: block; text-align: center;">
+                <div class="mb-4">
+                    <label for="question1" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Do you believe studying in Tunisia would open up a world of unique educational adventures?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q1a1" name="tunisia-opportunities" value="1" class="btn-check">
+                        <label for="q1a1" class="btn btn-outline-primary mx-2">Absolutely! 🌍</label>
+                        <input type="radio" id="q1a2" name="tunisia-opportunities" value="0" class="btn-check">
+                        <label for="q1a2" class="btn btn-outline-danger mx-2">Not really. 🤔</label>
+                        <input type="radio" id="q1a3" name="tunisia-opportunities" value="0" class="btn-check">
+                        <label for="q1a3" class="btn btn-outline-success mx-2">Maybe... 🤷‍♂️</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="question2" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Would you be excited to dive into academic clubs like STEM, Literature, or History?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q2a1" name="academic-clubs" value="1" class="btn-check">
+                        <label for="q2a1" class="btn btn-outline-primary mx-2">Yes! 📚</label>
+                        <input type="radio" id="q2a2" name="academic-clubs" value="0" class="btn-check">
+                        <label for="q2a2" class="btn btn-outline-danger mx-2">Nope. 🚫</label>
+                        <input type="radio" id="q2a3" name="academic-clubs" value="0" class="btn-check">
+                        <label for="q2a3" class="btn btn-outline-success mx-2">Maybe, we'll see! 🤔</label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="showNextQuestionSet(2)">Next</button>
+                </div>
+            </div>
+
+            <!-- Question Set 2 -->
+            <div id="question-set-2" class="question-set mb-4" style="display: none; text-align: center;">
+                <div class="mb-4">
+                    <label for="question3" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Would you join formative clubs  to express yourself and expert leadership ?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q3a1" name="arts-clubs" value="1" class="btn-check">
+                        <label for="q3a1" class="btn btn-outline-primary mx-2">Yes! 🎨🎭🎶</label>
+                        <input type="radio" id="q3a2" name="arts-clubs" value="0" class="btn-check">
+                        <label for="q3a2" class="btn btn-outline-danger mx-2">Not really. 😅</label>
+                        <input type="radio" id="q3a3" name="arts-clubs" value="0" class="btn-check">
+                        <label for="q3a3" class="btn btn-outline-success mx-2">Maybe, depends on the vibe! 🎭</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="question4" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Do you think sports clubs could help you stay active and energized?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q4a1" name="sports-clubs" value="1" class="btn-check">
+                        <label for="q4a1" class="btn btn-outline-primary mx-2">Absolutely! 🏃‍♂️</label>
+                        <input type="radio" id="q4a2" name="sports-clubs" value="0" class="btn-check">
+                        <label for="q4a2" class="btn btn-outline-danger mx-2">Not my thing. 🛋️</label>
+                        <input type="radio" id="q4a3" name="sports-clubs" value="0" class="btn-check">
+                        <label for="q4a3" class="btn btn-outline-success mx-2">Maybe, if it's fun! ⚽</label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="showNextQuestionSet(3)">Next</button>
+                </div>
+            </div>
+
+            <!-- Question Set 3 -->
+            <div id="question-set-3" class="question-set mb-4" style="display: none; text-align: center;">
+                <div class="mb-4">
+                    <label for="question5" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Would you like to develop your leadership skills through programs like student council?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q5a1" name="leadership-programs" value="1" class="btn-check">
+                        <label for="q5a1" class="btn btn-outline-primary mx-2">Yes, I’m ready to lead! 💪</label>
+                        <input type="radio" id="q5a2" name="leadership-programs" value="0" class="btn-check">
+                        <label for="q5a2" class="btn btn-outline-danger mx-2">No, I prefer to follow. 🙇‍♂️</label>
+                        <input type="radio" id="q5a3" name="leadership-programs" value="0" class="btn-check">
+                        <label for="q5a3" class="btn btn-outline-success mx-2">Maybe, let’s see how it goes! 🌟</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="question6" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Do you think attending skill development workshops (e.g., time management, career planning) would help you shine?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q6a1" name="skill-development" value="1" class="btn-check">
+                        <label for="q6a1" class="btn btn-outline-primary mx-2">Yes, I want to grow! 🚀</label>
+                        <input type="radio" id="q6a2" name="skill-development" value="0" class="btn-check">
+                        <label for="q6a2" class="btn btn-outline-danger mx-2">I’m fine for now. ✌️</label>
+                        <input type="radio" id="q6a3" name="skill-development" value="0" class="btn-check">
+                        <label for="q6a3" class="btn btn-outline-success mx-2">Maybe, I could use a boost! 💡</label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="showNextQuestionSet(4)">Next</button>
+                </div>
+            </div>
+
+            <!-- Question Set 4 (Last Set with Submit Button) -->
+            <div id="question-set-4" class="question-set mb-4" style="display: none; text-align: center;">
+                <div class="mb-4">
+                    <label for="question7" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Are you ready to enhance your communication and teamwork skills with soft skills training?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q7a1" name="soft-skills" value="1" class="btn-check">
+                        <label for="q7a1" class="btn btn-outline-primary mx-2">Yes, let’s improve! 📢</label>
+                        <input type="radio" id="q7a2" name="soft-skills" value="0" class="btn-check">
+                        <label for="q7a2" class="btn btn-outline-danger mx-2">No, I'm good. 🤫</label>
+                        <input type="radio" id="q7a3" name="soft-skills" value="0" class="btn-check">
+                        <label for="q7a3" class="btn btn-outline-success mx-2">Maybe, I’m curious! 💬</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="question8" class="form-label" style="font-size: 20px; font-weight: bold; color: #2c3e50;">Would you be interested in exploring global cultures through international exchange programs?</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="radio" id="q8a1" name="exchange-programs" value="1" class="btn-check">
+                        <label for="q8a1" class="btn btn-outline-primary mx-2">Yes, the world is waiting! 🌏</label>
+                        <input type="radio" id="q8a2" name="exchange-programs" value="0" class="btn-check">
+                        <label for="q8a2" class="btn btn-outline-danger mx-2">Not my thing. 😌</label>
+                        <input type="radio" id="q8a3" name="exchange-programs" value="0" class="btn-check">
+                        <label for="q8a3" class="btn btn-outline-success mx-2">Maybe, if it’s the right opportunity. 🌍</label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-lg" onclick="calculateScore()">Submit Your Answers!</button>
+                </div>
+            </div>
+            <div id="result-message" style="display: none; text-align: center; font-size: 20px; margin-top: 30px;">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    
+    function checkAccount(answer) {
+        if (answer === 'yes') {
+            window.location.href = 'login.html'; // Redirect to login page
+        } else if (answer === 'no') {
+            document.getElementById('account-check-form').style.display = 'none';
+            document.getElementById('quiz-form').style.display = 'block'; // Show quiz form
+        }
+    }
+
+    document.getElementById('account-yes').addEventListener('click', function() {
+        this.classList.remove('btn-outline-primary');
+        this.classList.add('btn-success');
+    });
+
+    document.getElementById('account-no').addEventListener('click', function() {
+        this.classList.remove('btn-outline-danger');
+        this.classList.add('btn-danger');
+    });
+    function showNextQuestionSet(setNumber) {
+         document.querySelectorAll('.question-set').forEach(set => set.style.display = 'none');
+          document.getElementById(`question-set-${setNumber}`).style.display = 'block';
+           }
+    function calculateScore() {
+            let score = 0;
+            
+            const radios = document.querySelectorAll('input[type="radio"]:checked');
+        
+        
+        radios.forEach(radio => {
+            score += parseFloat(radio.value);
+        });
+            if (score > 4) {
+                resultMessage = "You're highly motivated! 🌟";
+            } else if (score < 4) {
+                resultMessage = "You're not motivated yet 😞,but we got you!. ";
+            } else {
+                resultMessage = "not motivated at all ? no worries , you're in good hands ! .";
+            }
+            document.getElementById('result-message').innerHTML = `<h3>${resultMessage}</h3>`;
+        document.getElementById('result-message').style.display = 'block';
+        
+        } 
+</script>
+
+
+
+
+<!-- quiz end -->
+ <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+        <div class="row pt-5">
+            <div class="col-lg-7 col-md-12">
+                <div class="row">
+                    <div class="col-md-6 mb-5">
+                        <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Get In Touch</h5>
+                        <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
+                        <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
+                        <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                        <div class="d-flex justify-content-start mt-4">
+                            <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-outline-light btn-square" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                        <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Our Courses</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Web Design</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Apps Design</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Marketing</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Research</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>SEO</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-12 mb-5">
+                <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Newsletter</h5>
+                <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu kasd sed ea duo ipsum. Dolor duo eirmod sea justo no lorem est diam</p>
+                <div class="w-100">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Your Email Address">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary px-4">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
+        <div class="row">
+            <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
+                <p class="m-0 text-white">&copy; <a href="#">Domain Name</a>. All Rights Reserved. Designed by <a href="https://htmlcodex.com">HTML Codex</a>
+                </p>
+            </div>
+            <div class="col-lg-6 text-center text-md-right">
+                <ul class="nav d-inline-flex">
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Terms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
