@@ -207,8 +207,8 @@ $listequestion = $questionC->affichequestion();
   <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
     <div class="sidenav-header">
       <a class="navbar-brand m-0" target="_blank">
-        <img src="assetss/img/logo.png" class="navbar-brand-img h-100" alt="logo">
-        <span class="ms-1 font-weight-bold">Rima</span>
+        <img src="/view/front/assets/img/logo.png" class="navbar-brand-img h-100" alt="logo">
+        <span class="ms-1 font-weight-bold">parcouri</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
