@@ -50,6 +50,98 @@ if (
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+    <style>
+      /* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f5f7fa; /* Light background for better contrast */
+}
+
+/* Form Container */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #ffffff; /* White background for the form */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: 1px solid #e0e0e0;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4e73df; /* Stylish color for labels */
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #d1d3e2;
+    border-radius: 8px;
+    background-color: #f8f9fc; /* Light gray for input background */
+    color: #495057; /* Dark gray for text */
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #4e73df; /* Add focus color to input borders */
+    outline: none;
+    box-shadow: 0 0 8px rgba(78, 115, 223, 0.3); /* Blue glow effect */
+}
+
+.error {
+    border-color: #e74a3b; /* Red border for invalid fields */
+}
+
+/* Error Message Styling */
+.error-message {
+    color: #e74a3b;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4e73df;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #3751a5; /* Darker blue on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    input, select, button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+    </style>
 
 </head>
 <body>

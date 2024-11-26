@@ -81,7 +81,7 @@ $listequestion = $questionC->affichequestion();
   .main-content {
     margin-left: 240px;
     padding: 30px;
-    background-color: #a2caf0;
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
@@ -111,42 +111,49 @@ $listequestion = $questionC->affichequestion();
     padding: 20px;
   }
 
-  .table {
-    width: 100%;
-    margin: 20px 0;
-    background-color: #a2caf0;
+  body {
+    background-color: #5666d4; /* Matches the background color */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.table {
+    width: 80%; /* Center the table */
+    margin: 20px auto; /* Add spacing around the table */
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-
-  /* Table Row Styling */
-.table tr {
-  border-bottom: 1px solid #fff; /* Add a border to separate rows only */
+    border-collapse: collapse; /* Remove extra spaces between cells */
+    overflow: hidden;
 }
 
 .table th, .table td {
-  border: none; /* Remove all internal borders (columns) */
-  padding: 10px 15px; /* Keep consistent spacing */
-  text-align: center; /* Center the text */
-  font-size: 0.9rem; /* Adjust font size */
+    padding: 12px 20px; /* Increase padding for a cleaner look */
+    text-align: left; /* Align text to the left */
+    font-size: 0.9rem;
 }
 
-/* Table Header Styling */
 .table th {
-  background-color: #f8f9fc; /* Header background color */
-  color: #4e73df; /* Header text color */
-  font-weight: bold;
-  text-transform: uppercase;
-  border-bottom: 2px solid #ddd; /* Optional: Header bottom border for distinction */
+    background-color: #f8f9fc;
+    color: #4e73df;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e2e6ea;
 }
 
-/* Table Row Hover Effect */
+.table tr {
+    border-bottom: 1px solid #ddd; /* Add row separators */
+}
 
+.table tr:last-child {
+    border-bottom: none; /* Remove border for the last row */
+}
 
+.table td {
+    color: #333; /* Text color for cells */
+}
 
-  /* Buttons */
-  /*icon*/
   .btn-icon {
   width: 40px; /* Set width to make buttons circular */
   height: 40px; /* Set height to make buttons circular */

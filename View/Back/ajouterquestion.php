@@ -41,10 +41,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- CSS Files -->
   <link id="pagestyle" href="assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
   <style>
-    .error { color: red; font-size: 12px; }
-    .input-field { border: 1px solid #ccc; padding: 10px; width: 100%; }
-    .input-field.error { border: 1px solid red; }
-    .alert { color: red; font-size: 12px; }
+    /* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f5f7fa; /* Light background for better contrast */
+}
+
+/* Form Container */
+.container-fluid {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff; /* White background for the form */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add depth to the card */
+}
+
+/* Card Header */
+.card-header {
+    background-color: #4e73df;
+    color: #ffffff;
+    border-radius: 10px 10px 0 0;
+    padding: 15px;
+}
+
+.card-header p {
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4e73df; /* Stylish color for labels */
+}
+
+.input-field, input, select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #d1d3e2;
+    border-radius: 8px;
+    background-color: #f8f9fc; /* Light gray for input background */
+    color: #495057; /* Dark gray for text */
+    transition: all 0.3s ease;
+}
+
+.input-field:focus, input:focus, select:focus {
+    border-color: #4e73df; /* Add focus color to input borders */
+    outline: none;
+    box-shadow: 0 0 8px rgba(78, 115, 223, 0.3); /* Blue glow effect */
+}
+
+.error {
+    border-color: #e74a3b; /* Red border for invalid fields */
+}
+
+/* Error Message Styling */
+.error-message {
+    color: #e74a3b;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* Button Styling */
+button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4e73df;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #3751a5; /* Darker blue on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 20px;
+    }
+
+    input, select, button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
   </style>
 </head>
 
