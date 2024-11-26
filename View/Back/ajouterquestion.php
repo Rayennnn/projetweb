@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             !empty($_POST["date"]) &&
             !empty($_POST["type"])
         ) {
-            $question = new question($_POST["titre"], $_POST["id_auteur"], $_POST["date"], $_POST["type"]);
+            $question = new question($_POST["titre"], $_POST["id_auteur"], $_POST["date"], $_POST["type"], /*id: $_POST["id"]*/);
             $questionC->ajouterquestion($question);
             header('refresh:0;url=afficherquestion.php');
         }
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Psychoz admin</title>
+  <title>webproject</title>
   <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="id" class="form-control-label">Identifiant</label>
+                      <label for="id" class="form-control-label">Identifiant(uniquement des chiffres)</label>
                       <input class="form-control input-field" type="number" name="id" id="id" />
                       <span id="id-error" class="error"></span>
                     </div>
@@ -80,22 +80,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="id_auteur" class="form-control-label">ID_Auteur</label>
-                      <input class="form-control input-field" type="number" name="id_auteur" id="id_auteur" />
-                      <span id="id_auteur-error" class="error"></span>
+                    <label for="id_auteur">Auteur :</label>
+    <select id="id_auteur" name="id_auteur" class="input-field">
+      <option value="">-- Sélectionnez un auteur --</option>
+      <option value="rima">Rima</option>
+      <option value="fatma">Fatma</option>
+      <option value="mahmoud">Mahmoud</option>
+      <option value="malek">Malek</option>
+      <option value="rayen">Rayen</option>
+      <option value="aziz">Aziz</option>
+    </select>
+    <span id="id_auteur-error" class="error-message"></span>
+    <br><br>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="date" class="form-control-label">Date</label>
-                      <input class="form-control input-field" type="text" name="date" id="date" />
-                      <span id="date-error" class="error"></span>
+                    <label for="date">Date :</label>
+    <input type="date" id="date" name="date" class="input-field">
+    <span id="date-error" class="error-message"></span>
+    <br><br>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="type" class="form-control-label">Type</label>
-                      <input class="form-control input-field" type="text" name="type" id="type" maxlength="10" />
+                      <input class="form-control input-field" type="text" name="type" id="type" maxlength="25" />
                       <span id="type-error" class="error"></span>
                     </div>
                   </div>
@@ -113,51 +123,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       const titre = document.getElementById("titre");
       const id_auteur = document.getElementById("id_auteur");
       const date = document.getElementById("date");
+      const id = document.getElementById("id");
       const type = document.getElementById("type");
 
       let isValid = true;
-      
-      // Clear previous errors
+
+      // Efface les erreurs précédentes
       clearErrors();
 
-      // Validate 'titre'
+      // Valider 'titre'
       if (titre.value.trim().length === 0) {
         showError('titre-error', "Le champ 'Titre' est obligatoire.");
         titre.classList.add('error');
         isValid = false;
       }
 
-      // Validate 'id_auteur'
-      if (id_auteur.value.trim().length === 0) {
-        showError('id_auteur-error', "Le champ 'ID Auteur' est obligatoire.");
+      // Valider 'id_auteur'
+      if (id_auteur.value.trim() === "") {
+        showError('id_auteur-error', "Veuillez sélectionner un auteur.");
         id_auteur.classList.add('error');
         isValid = false;
       }
 
-      // Validate 'date'
+      // Valider 'date'
       if (date.value.trim().length === 0) {
         showError('date-error', "Le champ 'Date' est obligatoire.");
         date.classList.add('error');
         isValid = false;
       }
 
-      // Validate 'type' (only letters, max 10 chars)
-      const typeRegex = /^[A-Za-z]+$/; // Regex to match only letters
+      // Valider 'id' (doit être uniquement des chiffres)
+      const idRegex = /^[0-9]+$/; // Regex pour accepter uniquement des chiffres
+      if (id.value.trim().length === 0) {
+        showError('id-error', "Le champ 'ID' est obligatoire.");
+        id.classList.add('error');
+        isValid = false;
+      } else if (!idRegex.test(id.value)) {
+        showError('id-error', "Le champ 'ID' doit contenir uniquement des chiffres.");
+        id.classList.add('error');
+        isValid = false;
+      }
+
+      // Valider 'type' (seulement des lettres, max 25 caractères)
+      const typeRegex = /^[A-Za-z]+$/; // Regex pour accepter uniquement des lettres
       if (type.value.trim().length === 0) {
         showError('type-error', "Le champ 'Type' est obligatoire.");
         type.classList.add('error');
         isValid = false;
-      } else if (!typeRegex.test(type.value.trim())) {
-        showError('type-error', "Le champ 'Type' ne doit contenir que des lettres.");
+      } else if (!typeRegex.test(type.value)) {
+        showError('type-error', "Le champ 'Type' doit contenir uniquement des lettres.");
         type.classList.add('error');
         isValid = false;
-      } else if (type.value.trim().length > 10) {
-        showError('type-error', "Le champ 'Type' ne doit pas dépasser 10 caractères.");
+      } else if (type.value.trim().length > 25) {
+        showError('type-error', "Le champ 'Type' ne doit pas dépasser 25 caractères.");
         type.classList.add('error');
         isValid = false;
       }
 
-      return isValid; // If validation fails, form won't submit
+      return isValid; // Si 'isValid' est false, le formulaire ne sera pas soumis
     }
 
     function showError(elementId, message) {
@@ -166,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     function clearErrors() {
-      const errorElements = document.querySelectorAll('.error');
+      const errorElements = document.querySelectorAll('.error-message');
       errorElements.forEach(el => el.textContent = "");
       const inputFields = document.querySelectorAll('.input-field');
       inputFields.forEach(field => field.classList.remove('error'));

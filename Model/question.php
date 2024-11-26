@@ -8,7 +8,7 @@ class question {
     private $type=NULL;
 
     // Constructeur
-    public function __construct(string $titre, int $id_auteur, string $date, string $type){
+    public function __construct(string $titre, string $id_auteur, string $date, string $type){
         $this->settitre($titre);
         $this->setid_auteur($id_auteur);
         $this->setdate($date);
@@ -43,7 +43,7 @@ class question {
         $this->titre=$titre;
     }
 
-    function setid_auteur(int $id_auteur): void{
+    function setid_auteur(string $id_auteur): void{
         $this->id_auteur=$id_auteur;
     }
 

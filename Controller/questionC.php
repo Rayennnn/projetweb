@@ -113,7 +113,7 @@ function modifierquestion($question,$id){
             'titre' => $question->getTitre(),
             'date' => $question->getDate(),
             'type' => $question->getType(),
-            'id_auteur' => $question->getIdAuteur(),
+            'id_auteur' => $question->getId_auteur(),
             'id'=>$id
         ]);
     }

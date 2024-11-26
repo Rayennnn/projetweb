@@ -20,186 +20,223 @@ $listequestion = $questionC->affichequestion();
 
   <!-- Custom CSS -->
   <style>
-    body {
-      background-color: #f7f7f7;
-      font-family: 'Open Sans', sans-serif;
-      margin: 0;
-      padding: 0;
+  body {
+    background: linear-gradient(135deg, #f7f9fc, #eaf1f8);
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Side Navigation */
+  .sidenav {
+    background-color: #3f72af;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 0;
+    position: fixed;
+    width: 220px;
+    height: 100vh;
+  }
+
+  .sidenav-header {
+    padding: 20px;
+    text-align: center;
+    background-color: #2a4d84;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .sidenav-header .navbar-brand {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .navbar-nav {
+    padding: 0;
+  }
+
+  .navbar-nav .nav-link {
+    color: #ddd;
+    padding: 15px 20px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    display: block;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: #2a4d84;
+    color: #fff;
+    border-radius: 5px;
+  }
+
+  .navbar-nav .nav-link.active {
+    background-color: #4e73df;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  /* Main Content */
+  .main-content {
+    margin-left: 240px;
+    padding: 30px;
+    background-color: #a2caf0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .card {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 70%;
+    max-width: 900px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    background-color: #4e73df;
+    color: #021a30;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 10px 10px 0 0;
+    text-align: center; 
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .table {
+    width: 100%;
+    margin: 20px 0;
+    background-color: #a2caf0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  /* Table Row Styling */
+.table tr {
+  border-bottom: 1px solid #fff; /* Add a border to separate rows only */
+}
+
+.table th, .table td {
+  border: none; /* Remove all internal borders (columns) */
+  padding: 10px 15px; /* Keep consistent spacing */
+  text-align: center; /* Center the text */
+  font-size: 0.9rem; /* Adjust font size */
+}
+
+/* Table Header Styling */
+.table th {
+  background-color: #f8f9fc; /* Header background color */
+  color: #4e73df; /* Header text color */
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 2px solid #ddd; /* Optional: Header bottom border for distinction */
+}
+
+/* Table Row Hover Effect */
+
+
+
+  /* Buttons */
+  /*icon*/
+  .btn-icon {
+  width: 40px; /* Set width to make buttons circular */
+  height: 40px; /* Set height to make buttons circular */
+  font-size: 1.2rem; /* Slightly larger emoji size */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Make buttons perfectly circular */
+  border: none; /* Remove default borders */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-icon:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+  .btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+
+  .btn-danger {
+    background-color: #e3342f;
+    color: #fff;
+  }
+
+  .btn-danger:hover {
+    background-color: #cc1f1a;
+    transform: scale(1.05);
+  }
+
+  .btn-add-question {
+    background-color: #021a30
+    color: #fff;
+  }
+
+  .btn-add-question:hover {
+    background-color: #343a40;
+    transform: scale(1.05);
+  }
+
+  /* Position the Add Button */
+  .position-absolute {
+    position: absolute;
+    top: 160px;
+    right: 700px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0;
+      padding: 15px;
     }
 
-    /* Side Navigation */
     .sidenav {
-      background-color: #3f72af;
-      color: white;
-      border-radius: 10px;
-    }
-
-    .sidenav-header {
-      padding: 20px;
-      text-align: center;
-      background-color: #2a4d84;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .sidenav-header .navbar-brand {
-      color: #fff;
-      font-size: 1.5rem;
-      font-weight: bold;
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-radius: 0;
     }
 
     .navbar-nav .nav-link {
-      color: #ddd;
-      padding: 10px 20px;
-      font-size: 1rem;
-      text-transform: uppercase;
-    }
-
-    .navbar-nav .nav-link:hover {
-      background-color: #2a4d84;
-      color: #fff;
-    }
-
-    .navbar-nav .nav-link.active {
-      background-color: #4e73df;
-      color: #fff;
-    }
-
-    /* Main Content */
-    .main-content {
-      margin-left: 220px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .card {
-      background-color: #fff;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
     }
 
     .card-header {
-      background-color: #4e73df;
-      color: #fff;
       font-size: 1.2rem;
-      font-weight: bold;
-      padding: 15px;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .card-body {
-      padding: 20px;
-    }
-
-    .table {
-      width: 100%;
-      margin-bottom: 1rem;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .table th, .table td {
-      padding: 15px;
-      text-align: center;
-      vertical-align: middle;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
+  }
+</style>
 
-    .table th {
-      background-color: #f8f9fc;
-      color: #4e73df;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
-
-    .table td {
-      background-color: #fff;
-      color: #555;
-    }
-
-    .table tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .table tr:hover {
-      background-color: #f1f1f1;
-    }
-
-    .btn-primary {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background-color: #0056b3;
-    }
-
-    .btn-danger {
-      background-color: #e3342f;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-danger:hover {
-      background-color: #cc1f1a;
-    }
-
-    /* Add button styles for the 'Add Questions' button */
-    .btn-add-question {
-      background-color: #4e73df;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-add-question:hover {
-      background-color: #2a4d84;
-    }
-
-    .position-absolute {
-      position: absolute;
-      top: 15px;
-      right: 30px;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .main-content {
-        margin-left: 0;
-        padding: 10px;
-      }
-
-      .card-header {
-        font-size: 1rem;
-      }
-
-      .table th, .table td {
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .table th, .table td {
-        padding: 10px;
-      }
-    }
-
-  </style>
 </head>
 <body class="g-sidenav-show bg-primary">
 
@@ -207,23 +244,11 @@ $listequestion = $questionC->affichequestion();
   <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
     <div class="sidenav-header">
       <a class="navbar-brand m-0" target="_blank">
-        <img src="/view/front/assets/img/logo.png" class="navbar-brand-img h-100" alt="logo">
-        <span class="ms-1 font-weight-bold">parcouri</span>
+        <img src="logo1.PNG" class="navbar-brand-img h-50" alt="logo">
+        <span class="ms-1 font-weight-bold">ADMINS</span>
       </a>
     </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" href="afficherquestion.php">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Gestion questions</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+    
   </aside>
 
   <!-- Main Content -->
@@ -234,10 +259,11 @@ $listequestion = $questionC->affichequestion();
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Liste des Questions</h6>
-              <div class="position-absolute top-3 start-50 translate-middle-x">
-                <button type="button" class="btn btn-add-question">
-                  <a href="ajouterquestion.php" class="text-light">Ajouter des Questions</a>
-                </button>
+              <div class="position-absolute top-3 start-100 translate-middle-x">
+              <button type="button" class="btn btn-add-question" onclick="location.href='ajouterquestion.php'">
+  Ajouter des Questions
+</button>
+
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -250,7 +276,7 @@ $listequestion = $questionC->affichequestion();
                       <th>id_auteur</th>
                       <th>date</th>
                       <th>type</th>
-                      <th>Actions</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -264,12 +290,13 @@ $listequestion = $questionC->affichequestion();
                         <td class="text-center"><?php echo $question['date']; ?></td>
                         <td class="text-center"><?php echo $question['type']; ?></td>
                         <td class="text-center">
-                          <button class="btn btn-primary">
-                            <a href="modifierquestion.php?id=<?PHP echo $question['id']; ?>" class="text-light"><i class="fas fa-pencil-alt" aria-hidden="true"> Edit</i></a>
-                          </button>
-                          <button class="btn btn-danger">
-                            <a href="supprimerquestion.php?id=<?PHP echo $question['id']; ?>" class="text-light"><i class="far fa-trash-alt" aria-hidden="true"> Delete</i></a>
-                          </button>
+                        <button class="btn btn-primary " onclick="window.location.href='modifierquestion.php?id=<?php echo $question['id']; ?>'">
+  <i class="fas fa-pencil-alt" aria-hidden="true"></i> Edit✏️
+</button>
+
+<button class="btn btn-danger rounded-circle btn-icon" onclick="window.location.href='supprimerquestion.php?id=<?php echo $question['id']; ?>'">
+  <i class="fas fa-pencil-alt" aria-hidden="true"></i> 🗑️
+</button>
                         </td>
                       </tr>
                     <?php } ?>
