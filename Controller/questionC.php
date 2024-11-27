@@ -50,7 +50,7 @@ class questionC{
 public function listequestion($id) {
     $db = config::getConnexion();
     try {
-        $liste = $db->prepare('SELECT q.id , q.titre ,q.id_auteur , q.date , q.type
+        $liste = $db->prepare('SELECT  q.titre ,q.id_auteur , q.date , q.type
         FROM question q
         WHERE id=:id');
         $liste->execute(['id' => $id]);

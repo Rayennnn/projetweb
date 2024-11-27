@@ -1,48 +1,32 @@
 <?php
-include ('C:/xampp/htdocs/Quiz/Controller/reponseC.php');
+include('C:/xampp/htdocs/Quiz/Controller/questionC.php');
+require_once('C:/xampp/htdocs/Quiz/Model/question.php');
+include('C:/xampp/htdocs/Quiz/Controller/reponseC.php');
+require_once('C:/xampp/htdocs/Quiz/Model/reponse.php');
 
 $reponseC = new reponseC();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST["id_question"]) &&
-        isset($_POST["id_user"]) &&
-        isset($_POST["date"]) &&
-        isset($_POST["choix_rp"])&&
-        isset($_POST["id"]) 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (
+        isset($_POST["id_user"]) && !empty($_POST["id_user"]) &&
+        isset($_POST["date"]) && !empty($_POST["date"]) &&
+        isset($_POST["id_question"]) && !empty($_POST["id_question"]) &&
+        isset($_POST["choix_rp"]) && !empty($_POST["choix_rp"])
     ) {
-        if (
-            !empty($_POST["id_question"]) &&
-            !empty($_POST["id_user"]) &&
-            !empty($_POST["date"]) &&
-            !empty($_POST["choix_rp"])&&
-            !empty($_POST["id"])
-        ) {
-            $reponse = new reponse(id_question: $_POST["id_question"], id_user: $_POST["id_user"], date: $_POST["date"], choix_rp: $_POST["choix_rp"], id: $_POST["id"]);
-            $reponseC->ajoutereponse($question);
-            header('refresh:0;url=afficherquestion.php');
-        }
+        $reponse = new reponse($_POST["id_user"], $_POST["date"], $_POST["id_question"], $_POST["choix_rp"]);
+
+        $reponseC = new reponseC();
+        $reponseC->ajoutereponse($reponse);
+
+        header('refresh:0;url=affichereponse.php');
+        exit(); 
     } else {
-        echo '<script> alert("Missing information"); </script>';
+        echo "Please fill out all required fields.";
     }
 }
 ?>
-
-<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>webproject</title>
-  <!-- Fonts and icons -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-  <style>
+<style>
     /* General Reset */
 body {
     margin: 0;
@@ -154,68 +138,48 @@ button:hover {
   </style>
 </head>
 
-<body class="g-sidenav-show bg-primary">
+<body>
   <main class="main-content position-relative border-radius-lg">
-    <form method="POST" action="" onsubmit="return checkInput()">
+    <form method="POST" action="">
       <div class="container-fluid py-4">
         <div class="row">
           <div class="col-md-8">
             <div class="card">
               <div class="card-header pb-0">
                 <div class="d-flex align-items-center">
-                  <p class="mb-0">Ajouter reponse</p>
-                  <button class="btn btn-primary btn-sm ms-auto" type="submit" name="submit">Ajouter reponse</button>
+                  <p class="mb-0">Ajouter une réponse</p>
+                  <button class="btn btn-primary btn-sm ms-auto" type="submit">Ajouter</button>
                 </div>
               </div>
               <div class="card-body">
-                <p class="text-uppercase text-sm">reponse Information</p>
+                <p class="text-uppercase text-sm">Informations Réponses</p>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="id" class="form-control-label">Identifiant(uniquement des chiffres)</label>
-                      <input class="form-control input-field" type="number" name="id" id="id" />
-                      <span id="id-error" class="error"></span>
+                      <label for="id_user" class="form-control-label">ID User</label>
+                      <input class="form-control" type="text" name="id_user" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="choix_rp" class="form-control-label">choix_rp</label>
-                      <input class="form-control input-field" type="text" name="titre" id="choix_rp" />
-                      <span id="choix_rp-error x-error" class="error"></span>
+                      <label for="date" class="form-control-label">Date (YYYY-MM-DD)</label>
+                      <input class="form-control" type="date" name="date" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                    <label for="id_user">Auteur :</label>
-    <select id="id_user" name="id_user" class="input-field">
-      <option value="">-- Sélectionnez un auteur --</option>
-      <option value="rima">Rima</option>
-      <option value="fatma">Fatma</option>
-      <option value="mahmoud">Mahmoud</option>
-      <option value="malek">Malek</option>
-      <option value="rayen">Rayen</option>
-      <option value="aziz">Aziz</option>
-    </select>
-    <span id="id_auteur-error" class="error-message"></span>
-    <br><br>
+                      <label for="id_question" class="form-control-label">ID Question</label>
+                      <input class="form-control" type="number" name="id_question" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                    <label for="date">Date :</label>
-    <input type="date" id="date" name="date" class="input-field">
-    <span id="date-error" class="error-message"></span>
-    <br><br>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="id_question" class="form-control-label">id_question</label>
-                      <input class="form-control input-field" type="text" name="type" id="id_question" maxlength="25" />
-                      <span id="id_question-error" class="error"></span>
+                      <label for="choix_rp" class="form-control-label">Choix Réponse</label>
+                      <input class="form-control" type="text" name="choix_rp" required>
                     </div>
                   </div>
                 </div>
+                <hr class="horizontal dark">
               </div>
             </div>
           </div>
@@ -223,7 +187,5 @@ button:hover {
       </div>
     </form>
   </main>
-
-  
 </body>
 </html>

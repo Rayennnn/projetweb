@@ -1,21 +1,24 @@
 <?php
-require_once(__DIR__ . '/../Config.php');
+require_once(__DIR__ . '/../config.php');
 require_once(__DIR__ . '/../Model/reponse.php');
 
 class reponseC{
 
-    function ajoutereponse($reponses){
-        $sql="INSERT INTO reponse (id_user,date,id_question,choix_rp,id)
-			VALUES (:id_user,:date,:id_question,:choix_rp,:id)";
+
+    /////////////////////////////////////////////////////   Ajout   //////////////////////////////////////////////////////////////////////
+
+    function ajoutereponse($reponse){
+        $sql="INSERT INTO reponse (id_user,date,id_question,choix_rp)
+			VALUES (:id_user,:date,:id_question,:choix_rp)";
 			$db = config::getConnexion();
 			try{
 				$query = $db->prepare($sql);
 				$query->execute([
-                    'id_user' => $reponses->getid_user(),
-                    'date' => $reponses->getdate(),
-                    'id_question' => $reponses->getid_question,
-                    'choix_rp' => $reponses->getchoix_rp(),
-                    'id' => $reponses->getid()
+                    'id_user' => $reponse->getId_user(),
+                    'date' => $reponse->getDate(),
+                    'id_question' => $reponse->getId_question(),
+                    'choix_rp' => $reponse->getChoix_rp()
+                    
 				]);		
 			}
 			catch (Exception $e){
@@ -23,7 +26,11 @@ class reponseC{
 			}	
     }
 
-    public function affichereponse(){
+
+    /////////////////////////////////////////////////////   Afficher   //////////////////////////////////////////////////////////////////////
+
+
+           function affichereponse(){
         $db =config::getConnexion();
 			try{
 				$query = $db ->prepare ('select * FROM reponse');
@@ -38,7 +45,7 @@ class reponseC{
     public function listereponse($id) {
         $db = config::getConnexion();
         try {
-            $liste = $db->prepare('SELECT r.id_user , r.date ,r.choix_rp , r.date 
+            $liste = $db->prepare('SELECT r.id_user , r.id_question ,r.date , r.choix_rp 
             FROM reponse r
             WHERE id=:id');
             $liste->execute(['id' => $id]);
@@ -49,57 +56,7 @@ class reponseC{
         }
     }
 
-    function supprimereponse($id) {
-        $sql1 = "DELETE FROM question WHERE id = :id";
-        $sql2 = "DELETE FROM reponse WHERE id = :id";
-        $db = config::getConnexion();
-    
-      
-        $req1 = $db->prepare($sql1);
-        $req1->bindValue(':id', $id);
-        try {
-            $req1->execute();
-        } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
-        }
-    
-       
-        $req2 = $db->prepare($sql2);
-        $req2->bindValue(':id', $id);
-        try {
-            $req2->execute();
-        } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
-        }
-    }
-    
-
-    function modifiereponse($reponses,$id){
-        try {
-            $db = config::getConnexion();
-            $query = $db->prepare(
-                'UPDATE question SET 
-                    titre= :titre, 
-                    id_auteur=:id__auteur,
-                    date=:date,
-                    auteur=:auteur
-                   id_event = evenement.id
-                FROM question
-                WHERE reponse.nom_evenement = evenement.nom
-                WHERE id = :id'
-            );
-            $query->execute([
-                'id_user' => $reponses->getid_user(),
-                'date' => $reponses->getdate(),
-                'id_question' => $reponses->getid_question(),
-                'choix_rp' => $reponses->getchoix_rp(),
-                'id'=>$id
-            ]);
-        }
-        catch (PDOException $e){
-            echo 'Erreur: '.$e->getMessage();
-        }
-    }   
+   
 
     function getreponse($id){
         $db = config::getConnexion();
@@ -114,9 +71,57 @@ class reponseC{
             die('Erreur: '.$e->getMessage());
         }
     }
-}
 
 
+
+    /////////////////////////////////////////////////////   Supprimer   //////////////////////////////////////////////////////////////////////
+
+
+
+
+    function supprimereponse($id){
+        $sql="DELETE FROM reponse WHERE id= :id";
+        $db = config::getConnexion();
+        $req=$db->prepare($sql);
+        $req->bindValue(':id',$id);
+        try{
+            $req->execute();
+        }
+        catch (Exception $e){
+            echo 'Erreur: '.$e->getMessage();
+        }
+    }
+
+
+
+
+    /////////////////////////////////////////////////////   Modifier   //////////////////////////////////////////////////////////////////////
+
+
+
+    function modifiereponse($reponse,$id){
+        try {
+            $db = config::getConnexion();
+            $query = $db->prepare(
+                'UPDATE reponse SET 
+                    id_user= :id_user,
+                    date=:date,
+                    id_question= :id_question, 
+                    choix_rp=:choix_rp
+                WHERE id = :id'
+            );
+            $query->execute([
+                'id_user' => $reponse->getId_user(),
+                'date' => $reponse->getDate(),
+                'id_question' => $reponse->getId_question(),
+                'choix_rp' => $reponse->getChoix_rp(),
+                'id'=>$id
+            ]);
+        }
+        catch (PDOException $e){
+            echo 'Erreur: '.$e->getMessage();
+        }
+    }
     
 /*
  function Triesalle(){
@@ -151,5 +156,5 @@ class reponseC{
 
 
 */
-
+}
 ?>

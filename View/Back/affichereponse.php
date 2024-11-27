@@ -263,16 +263,16 @@ $listereponse = $reponseC->affichereponse();
                     foreach ($listereponse as $reponse) {
                       ?>
                       <tr>
-                    
+                      <td class="text-center"><?php echo $reponse['id']; ?></td>
                         <td class="text-center"><?php echo $reponse['id_user']; ?></td>
                         <td class="text-center"><?php echo $reponse['date']; ?></td>
                         <td class="text-center"><?php echo $reponse['id_question']; ?></td>
                         <td class="text-center"><?php echo $reponse['choix_rp']; ?></td>
                         <td class="text-center">
-                          <button class="btn btn-primary" onclick="window.location.href='modifierreponse.php?id=<?php echo $reponse['id']; ?>'">
-                            <i class="fas fa-pencil-alt" aria-hidden="true"></i> Modifier
+                          <button class="btn btn-primary" onclick="window.location.href='modifiereponse.php?id=<?php echo $reponse['id']; ?>'">
+                            <i class="fas fa-pencil-alt" aria-hidden="true"></i>Edit✏️
                           </button>
-                          <button class="btn btn-danger rounded-circle btn-icon" onclick="window.location.href='supprimerreponse.php?id=<?php echo $reponse['id']; ?>'">
+                          <button class="btn btn-danger rounded-circle btn-icon" onclick="window.location.href='supprimereponse.php?id=<?php echo $reponse['id']; ?>'">
                             🗑️
                           </button>
                         </td>
