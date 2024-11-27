@@ -42,13 +42,13 @@ class reponseC{
 				echo 'Erreur: '.$e->getMessage();
 			}
     }
-    public function listereponse($id) {
+    public function listereponse($id_reponse) {
         $db = config::getConnexion();
         try {
             $liste = $db->prepare('SELECT r.id_user , r.id_question ,r.date , r.choix_rp 
             FROM reponse r
-            WHERE id=:id');
-            $liste->execute(['id' => $id]);
+            WHERE id_reponse=:id_reponse');
+            $liste->execute(['id_reponse' => $id_reponse]);
     
             return $liste;
         } catch(Exception $e) {
@@ -56,14 +56,13 @@ class reponseC{
         }
     }
 
-   
 
-    function getreponse($id){
+    function getreponse($id_reponse){
         $db = config::getConnexion();
         try{
-            $req=$db->prepare("SELECT * FROM reponse where id=:id");
+            $req=$db->prepare("SELECT * FROM reponse where id_reponse=:id_reponse");
             $req->execute([
-                "id" => $id
+                "id_reponse" => $id_reponse
             ]);
             return $req->fetch(); 
         }
@@ -79,11 +78,11 @@ class reponseC{
 
 
 
-    function supprimereponse($id){
-        $sql="DELETE FROM reponse WHERE id= :id";
+    function supprimereponse($id_reponse){
+        $sql="DELETE FROM reponse WHERE id_reponse= :id_reponse";
         $db = config::getConnexion();
         $req=$db->prepare($sql);
-        $req->bindValue(':id',$id);
+        $req->bindValue(':id_reponse',$id_reponse);
         try{
             $req->execute();
         }
@@ -99,29 +98,28 @@ class reponseC{
 
 
 
-    function modifiereponse($reponse,$id){
+    public function modifiereponse($reponse, $id_reponse) {
+        $sql = "UPDATE reponse 
+                SET id_user = :id_user, 
+                    date = :date, 
+                    id_question = :id_question, 
+                    choix_rp = :choix_rp 
+                WHERE id_reponse = :id_reponse";
+        
+        $db = config::getConnexion();
         try {
-            $db = config::getConnexion();
-            $query = $db->prepare(
-                'UPDATE reponse SET 
-                    id_user= :id_user,
-                    date=:date,
-                    id_question= :id_question, 
-                    choix_rp=:choix_rp
-                WHERE id = :id'
-            );
-            $query->execute([
-                'id_user' => $reponse->getId_user(),
-                'date' => $reponse->getDate(),
-                'id_question' => $reponse->getId_question(),
-                'choix_rp' => $reponse->getChoix_rp(),
-                'id'=>$id
-            ]);
-        }
-        catch (PDOException $e){
-            echo 'Erreur: '.$e->getMessage();
+            $query = $db->prepare($sql);
+            $query->bindValue(':id_user', $reponse->getId_user());
+            $query->bindValue(':date', $reponse->getDate());
+            $query->bindValue(':id_question', $reponse->getId_question());
+            $query->bindValue(':choix_rp', $reponse->getChoix_rp());
+            $query->bindValue(':id_reponse', $id_reponse, PDO::PARAM_INT); // Assurez-vous que l'ID est bien passé
+            $query->execute();
+        } catch (Exception $e) {
+            echo 'Erreur : ' . $e->getMessage();
         }
     }
+    
     
 /*
  function Triesalle(){

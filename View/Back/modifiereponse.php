@@ -4,11 +4,21 @@ include "../../Controller/reponseC.php";
 // Instantiate the controller
 $reponseC = new reponseC();
 
+// Récupération et validation de l'ID de la réponse
+$id_reponse = $_GET['id_reponse'] ?? null;
 
-$id = $_GET['id'];
+if ($id_reponse && is_numeric($id_reponse)) {
+    // Appel unique à getreponse
+    $reponse = $reponseC->getreponse($id_reponse);
 
-
-$reponse = $reponseC->getreponse($id);
+    if (!$reponse) {
+        echo "Erreur : Réponse non trouvée.";
+        exit;
+    }
+} else {
+    echo "Erreur : ID non valide.";
+    exit;
+}
 
 // Handle the form submission
 if (
@@ -32,7 +42,7 @@ if (
         );
 
          
-        $reponseC->modifiereponse($updatedReponse, $id);
+        $reponseC->modifiereponse($updatedReponse, $id_reponse);
         header('Location: affichereponse.php');
     } else {
         echo '<script> alert("Missing information"); </script>';

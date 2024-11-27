@@ -122,6 +122,17 @@ function modifierquestion($question,$id){
     }
 }
 
+public function afficherQuestions() {
+    $sql = "SELECT id, titre FROM question";
+    $db = config::getConnexion();
+    try {
+        $query = $db->query($sql);
+        return $query->fetchAll();
+    } catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
+    }
+}
+
 
 }
 

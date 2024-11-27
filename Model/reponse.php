@@ -2,7 +2,7 @@
 
 class reponse
 {
-    private $id=NULL;
+    private $id_reponse=NULL;
     private $id_user=NULL;
     private $id_question=NULL ;   
     private $date=NULL;
@@ -20,9 +20,9 @@ class reponse
     }
 
     
-    public function getId(): int
+    public function getId_reponse(): int
     {
-        return $this->id;
+        return $this->id_reponse;
     }
 
     public function getId_user(): string
@@ -46,9 +46,9 @@ class reponse
     }
 
    
-    public function setid(int $id): void
+    public function setid_reponse(int $id_reponse): void
     {
-        $this->id = $id;
+        $this->id_reponse= $id_reponse;
     }
 
     public function setid_user(string $id_user): void

@@ -4,6 +4,11 @@ require_once('C:/xampp/htdocs/Quiz/Model/question.php');
 include('C:/xampp/htdocs/Quiz/Controller/reponseC.php');
 require_once('C:/xampp/htdocs/Quiz/Model/reponse.php');
 
+
+
+$questionC = new questionC();
+$questions = $questionC->afficherQuestions();
+
 $reponseC = new reponseC();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -167,10 +172,18 @@ button:hover {
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="id_question" class="form-control-label">ID Question</label>
-                      <input class="form-control" type="number" name="id_question" required>
-                    </div>
+    <div class="form-group">
+        <label for="id_question" class="form-control-label">Question</label>
+        <select class="form-control" name="id_question" required>
+            <option value="">Sélectionnez une question</option>
+            <?php
+            foreach ($questions as $question) {
+                echo '<option value="' . htmlspecialchars($question['id']) . '">' . htmlspecialchars($question['titre']) . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
