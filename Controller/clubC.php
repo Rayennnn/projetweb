@@ -24,7 +24,6 @@ class Clubc
                 'logo' => $club->getLogo(),
                 'lien' => $club->getLien(),
             ]);
-            echo "Club ajouté avec succès!";
         } catch (Exception $e) {
             echo 'Erreur : ' . $e->getMessage();
         }
@@ -64,21 +63,20 @@ class Clubc
     // Fonction pour mettre à jour un club
     public function updateClub($club)
     {
-        $sql = "UPDATE `clubs et associations` SET 
-                nom_club = :nom_club, 
-                description = :description, 
-                date_creation = :date_creation,
-                categorie = :categorie, 
-                lieu = :lieu, 
-                logo = :logo, 
-                lien = :lien 
-                WHERE id_club = :id_club";
-        
-        $db = config::getConnexion();
-
         try {
+            $db = config::getConnexion();
+            $sql = "UPDATE `clubs et associations` SET 
+                    nom_club = :nom_club,
+                    description = :description,
+                    date_creation = :date_creation,
+                    categorie = :categorie,
+                    lieu = :lieu,
+                    logo = :logo,
+                    lien = :lien
+                    WHERE id_club = :id_club";
+            
             $query = $db->prepare($sql);
-            $query->execute([
+            return $query->execute([
                 'id_club' => $club->getIdClub(),
                 'nom_club' => $club->getNomClub(),
                 'description' => $club->getDescription(),
@@ -86,11 +84,12 @@ class Clubc
                 'categorie' => $club->getCategorie(),
                 'lieu' => $club->getLieu(),
                 'logo' => $club->getLogo(),
-                'lien' => $club->getLien(),
+                'lien' => $club->getLien()
             ]);
-            echo "Club mis à jour avec succès!";
+            
         } catch (Exception $e) {
-            echo 'Erreur : ' . $e->getMessage();
+            error_log('Erreur : ' . $e->getMessage());
+            return false;
         }
     }
 

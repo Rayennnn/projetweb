@@ -1,33 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Initialisation du graphique
-    let clubsChart;
- 
-    const initChart = () => {
-        const ctx = document.getElementById('clubsChart').getContext('2d');
-        clubsChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Culture', 'Sport', 'Technologie', 'Art', 'Social', 'Scientifique', 'Environnement'],
-                datasets: [{
-                    data: [3, 4, 2, 1, 2, 1, 1], // Données fictives
-                    backgroundColor: [
-                        '#FF6384', '#36A2EB', '#FFCE56',
-                        '#4BC0C0', '#9966FF', '#FF9F40', '#47B39C'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-    };
- 
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    
     // Fonction de validation du nom du club
     function validateNomClub(nom) {
         if (nom.trim().length < 3) {
@@ -47,6 +20,19 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
         document.getElementById('descriptionError').textContent = '';
+        return true;
+    }
+
+    // Fonction de validation de la date
+    function validateDate(date) {
+        if (!date) {
+            return false;
+        }
+        const selectedDate = new Date(date);
+        const currentDate = new Date();
+        if (selectedDate > currentDate) {
+            return false;
+        }
         return true;
     }
 
@@ -92,119 +78,75 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Validation du formulaire
-    const validateForm = () => {
-        const form = document.querySelector('form');
-        const nomInput = document.querySelector('[name="nom_club"]');
-        const descriptionInput = document.querySelector('[name="description"]');
-        const logoInput = document.querySelector('[name="logo"]');
-        const successMessage = document.querySelector('#formSuccess');
- 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            console.log('Soumission du formulaire...');
- 
-            // Réinitialiser les messages d'erreur
-            document.querySelectorAll('.error-message').forEach(error => error.textContent = '');
- 
-            // Récupérer et valider les données
-            const nom = nomInput.value;
-            const description = descriptionInput.value;
-            const logo = logoInput.files[0];
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log("Soumission du formulaire détectée");
 
-            console.log('Données du formulaire:', {
-                nom,
-                description,
-                logo: logo ? logo.name : 'Aucun fichier'
-            });
+        // Réinitialiser les messages d'erreur
+        document.querySelectorAll('.error-message').forEach(error => error.textContent = '');
 
-            // Valider tous les champs
-            const isNomValid = validateNomClub(nom);
-            const isDescriptionValid = validateDescription(description);
-            const isLogoValid = validateLogo(logo);
+        // Récupérer et valider les données
+        const nom = nomInput.value;
+        const description = descriptionInput.value;
+        const logo = logoInput.files[0];
 
-            console.log('Résultats de validation:', {
-                nom: isNomValid,
-                description: isDescriptionValid,
-                logo: isLogoValid
-            });
-
-            // Si tout est valide
-            if (isNomValid && isDescriptionValid && isLogoValid) {
-                console.log('Formulaire valide, envoi des données...');
-                const formData = new FormData(form);
- 
-                // Envoi des données via AJAX (fetch)
-                fetch('../../../Controller/add_club.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => {
-                        console.log('Réponse reçue:', response);
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Données reçues:', data);
-                        if (data.success) {
-                            console.log('Succès: Club ajouté');
-                            successMessage.textContent = data.message;
-                            successMessage.style.color = 'green';
-                            form.reset();
-                            document.querySelector('#logoPreview').innerHTML = '';
-                            updateStats();
-                        } else {
-                            console.error('Erreur:', data.error || 'Une erreur est survenue');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erreur lors de l\'envoi:', error);
-                    });
-            } else {
-                console.log('Formulaire invalide, envoi annulé');
-            }
+        console.log('Données du formulaire:', {
+            nom,
+            description,
+            logo: logo ? logo.name : 'Aucun fichier'
         });
-    };
- 
-    // Aperçu du logo
-    const initLogoPreview = () => {
-        const logoInput = document.querySelector('[name="logo"]');
-        const previewDiv = document.querySelector('#logoPreview');
- 
-        logoInput.addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (file) {
-                console.log('Prévisualisation du logo:', file.name);
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    console.log('Logo chargé avec succès');
-                    previewDiv.innerHTML = `<img src="${e.target.result}" alt="Aperçu du logo" style="max-width: 200px;">`;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                previewDiv.innerHTML = ''; // Réinitialiser si aucun fichier n'est sélectionné
-            }
+
+        // Valider tous les champs
+        const isNomValid = validateNomClub(nom);
+        const isDescriptionValid = validateDescription(description);
+        const isDateValid = validateDate(date);
+        const isLogoValid = validateLogo(logo);
+
+        console.log('Résultats de validation:', {
+            nom: isNomValid,
+            description: isDescriptionValid,
+            logo: isLogoValid
         });
-    };
- 
-    // Mettre à jour les statistiques dynamiquement
-    const updateStats = () => {
-        fetch('get_club_stats.php')
-            .then(response => {
-                if (!response.ok) {
- throw new Error('Erreur lors de la récupération des statistiques.');
-                }
-                return response.json();
+
+        // Si tout est valide
+        if (isNomValid && isDescriptionValid && isDateValid && isLogoValid) {
+            console.log("Formulaire valide, envoi...");
+            const formData = new FormData(form);
+
+            fetch('addClub.php', {
+                method: 'POST',
+                body: formData
             })
+            .then(response => response.text())
             .then(data => {
-                // Mettre à jour les données des statistiques
-                document.querySelector('.amount').textContent = data.totalClubs;
-                clubsChart.data.datasets[0].data = data.categoriesData;
-                clubsChart.update();
+                console.log('Réponse:', data);
+                alert('Club ajouté avec succès!');
+                // Redirection vers listClubs.php
+                window.location.href = 'listClubs.php';
             })
-            .catch(error => console.error('Erreur:', error));
-    };
- 
-    // Initialisation
-    initChart();
-    validateForm();
-    initLogoPreview();
- });
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'ajout du club');
+            });
+        } else {
+            console.log('Formulaire invalide, envoi annulé');
+        }
+    });
+
+    // Prévisualisation du logo
+    logoInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            console.log('Prévisualisation du logo:', file.name);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                console.log('Logo chargé avec succès');
+                const preview = document.getElementById('logoPreview') || document.createElement('div');
+                preview.id = 'logoPreview';
+                preview.innerHTML = `<img src="${e.target.result}" style="max-width: 200px; margin-top: 10px;">`;
+                logoInput.parentNode.appendChild(preview);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+});
