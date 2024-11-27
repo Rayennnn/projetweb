@@ -4,9 +4,9 @@ require_once(__DIR__ . '/../Model/reponse.php');
 
 class reponseC{
 
-    function ajouterreponse($reponses){
-        $sql="INSERT INTO reponse (id_user,date,id_question,choix_rp)
-			VALUES (:id_user,:date,:id_question,:choix_rp)";
+    function ajoutereponse($reponses){
+        $sql="INSERT INTO reponse (id_user,date,id_question,choix_rp,id)
+			VALUES (:id_user,:date,:id_question,:choix_rp,:id)";
 			$db = config::getConnexion();
 			try{
 				$query = $db->prepare($sql);
@@ -14,7 +14,8 @@ class reponseC{
                     'id_user' => $reponses->getid_user(),
                     'date' => $reponses->getdate(),
                     'id_question' => $reponses->getid_question,
-                    'choix_rp' => $reponses->getchoix_rp()
+                    'choix_rp' => $reponses->getchoix_rp(),
+                    'id' => $reponses->getid()
 				]);		
 			}
 			catch (Exception $e){
@@ -22,7 +23,7 @@ class reponseC{
 			}	
     }
 
-    function afficherreponse(){
+    public function affichereponse(){
         $db =config::getConnexion();
 			try{
 				$query = $db ->prepare ('select * FROM reponse');
@@ -34,8 +35,21 @@ class reponseC{
 				echo 'Erreur: '.$e->getMessage();
 			}
     }
+    public function listereponse($id) {
+        $db = config::getConnexion();
+        try {
+            $liste = $db->prepare('SELECT r.id_user , r.date ,r.choix_rp , r.date 
+            FROM reponse r
+            WHERE id=:id');
+            $liste->execute(['id' => $id]);
+    
+            return $liste;
+        } catch(Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
 
-    function supprimerreponse($id) {
+    function supprimereponse($id) {
         $sql1 = "DELETE FROM question WHERE id = :id";
         $sql2 = "DELETE FROM reponse WHERE id = :id";
         $db = config::getConnexion();
@@ -60,7 +74,7 @@ class reponseC{
     }
     
 
-    function modifierreponse($reponses,$id){
+    function modifiereponse($reponses,$id){
         try {
             $db = config::getConnexion();
             $query = $db->prepare(

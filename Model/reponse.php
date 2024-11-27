@@ -1,20 +1,22 @@
 <?php
 
-class Reponse
+class reponse
 {
-    private ?int $id = null; 
-    private int $id_user;    
-    private string $date;   
-    private int $id_question; 
-    private int $choix_rp;   
+    private $id=NULL;
+    private $id_user=NULL;
+    private $id_question=NULL ;   
+    private $date=NULL;
+    private $choix_rp=NULL; 
+
 
     
-    public function __construct(int $id_user, string $date, int $id_question, int $choix_rp)
+    public function __construct(string $id_user, string $date, int $id_question, string $choix_rp)
     {
         $this->setid_user($id_user);
         $this->setdate($date);
-        $this->setid_question($id_question);
-        $this->setchoix_rp($choix_rp);
+        $this->setid_question(id_question:$id_question);
+        $this->setchoix_rp(choix_rp:$choix_rp);
+       
     }
 
     
@@ -23,7 +25,7 @@ class Reponse
         return $this->id;
     }
 
-    public function getIdUser(): int
+    public function getId_User(): string
     {
         return $this->id_user;
     }
@@ -33,12 +35,12 @@ class Reponse
         return $this->date;
     }
 
-    public function getIdQuestion(): int
+    public function getId_Question(): int
     {
         return $this->id_question;
     }
 
-    public function getChoixRp(): int
+    public function getChoix_Rp(): string
     {
         return $this->choix_rp;
     }
@@ -49,7 +51,7 @@ class Reponse
         $this->id = $id;
     }
 
-    public function setIdUser(int $id_user): void
+    public function setId_User(string $id_user): void
     {
         $this->id_user = $id_user;
     }
@@ -63,12 +65,12 @@ class Reponse
         $this->date = $date;
     }
 
-    public function setIdQuestion(int $id_question): void
+    public function setId_Question(int $id_question): void
     {
         $this->id_question = $id_question;
     }
 
-    public function setChoixRp(int $choix_rp): void
+    public function setChoix_Rp(string $choix_rp): void
     {
         $this->choix_rp = $choix_rp;
     }
