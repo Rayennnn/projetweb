@@ -156,7 +156,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
                                                 <option value="">Sélectionnez une catégorie</option>
                                                 <option value="Sport">Sport</option>
                                                 <option value="Culture">Culture</option>
-                                                <option value="Loisir">Loisir</option>
+                                                <option value="Loisir">Art</option>
+                                                <option value="Sport">Technologie</option>
+                                                <option value="Culture">Social</option>
+                                                <option value="Loisir">Litérraire</option>
+                                                <option value="Loisir">Entrepreneriat</option>
+                                                <option value="Loisir">Environnement</option>
+                                                <option value="Loisir">Santé</option>
                                             </select>
                                             <span class="error-message" id="categorieError"></span>
                                         </div>
