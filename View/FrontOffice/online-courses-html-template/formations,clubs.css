@@ -173,7 +173,21 @@ body {
 .logo-container {
     display: flex;
     align-items: center;
-    height: 100%;
+    gap: 15px;
+    padding: 10px;
+}
+
+.logo-container img {
+    max-height: 70px;
+    width: auto;
+}
+
+.logo-text {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+    font-family: Arial, sans-serif;
 }
 
 /* Styles et animations du header */
