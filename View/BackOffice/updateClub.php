@@ -159,7 +159,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <option value="">Sélectionnez une catégorie</option>
                                                     <option value="Sport" <?php echo $club['categorie'] == 'Sport' ? 'selected' : ''; ?>>Sport</option>
                                                     <option value="Culture" <?php echo $club['categorie'] == 'Culture' ? 'selected' : ''; ?>>Culture</option>
-                                                    <option value="Loisir" <?php echo $club['categorie'] == 'Loisir' ? 'selected' : ''; ?>>Loisir</option>
+                                                    <option value="Art" <?php echo $club['categorie'] == 'Art' ? 'selected' : ''; ?>>Art</option>
+                                                    <option value="Technologie" <?php echo $club['categorie'] == 'Technologie' ? 'selected' : ''; ?>>Technologie</option>
+                                                    <option value="Social" <?php echo $club['categorie'] == 'Social' ? 'selected' : ''; ?>>Social</option>
+                                                    <option value="Litérraire" <?php echo $club['categorie'] == 'Litérraire' ? 'selected' : ''; ?>>Litérraire</option>
+                                                    <option value="Entrepreneriat" <?php echo $club['categorie'] == 'Entrepreneriat' ? 'selected' : ''; ?>>Entrepreneriat</option>
+                                                    <option value="Environnement" <?php echo $club['categorie'] == 'Environnement' ? 'selected' : ''; ?>>Environnement</option>
+                                                    <option value="Santé" <?php echo $club['categorie'] == 'Santé' ? 'selected' : ''; ?>>Santé</option>
+                                                    
                                                     <!-- Ajoutez d'autres catégories selon vos besoins -->
                                                 </select>
                                                 <span class="error-message" id="categorieError"></span>
