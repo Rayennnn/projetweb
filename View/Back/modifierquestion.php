@@ -1,5 +1,8 @@
 <?php
-include "../../controller/questionC.php";
+include('C:/xampp/htdocs/Quiz/Controller/questionC.php');
+require_once('C:/xampp/htdocs/Quiz/Model/question.php');
+include('C:/xampp/htdocs/Quiz/Controller/reponseC.php');
+require_once('C:/xampp/htdocs/Quiz/Model/reponse.php');
 
 // Instantiate the controller
 $questionC = new questionC();
@@ -34,8 +37,6 @@ if (
         // Update the question
         $questionC->modifierquestion($updatedQuestion, $id);
         header('Location: afficherquestion.php');
-    } else {
-        echo '<script> alert("Missing information"); </script>';
     }
 }
 ?>
@@ -182,68 +183,81 @@ button:hover {
   </main>
 
   <script>
-        function validateForm() {
-            // Clear previous errors
-            clearErrors();
+    function checkInput() {
+      const titre = document.getElementById("titre");
+      const id_auteur = document.getElementById("id_auteur");
+      const date = document.getElementById("date");
+      const id = document.getElementById("id");
+      const type = document.getElementById("type");
 
-            // Get form elements
-            const titre = document.getElementById("titre");
-            const id_auteur = document.getElementById("id_auteur");
-            const date = document.getElementById("date");
-            const type = document.getElementById("type");
+      let isValid = true;
 
-            let isValid = true;
+      // Efface les erreurs précédentes
+      clearErrors();
 
-            // Validate Titre
-            if (titre.value.trim() === "") {
-                showError(titre, "Le champ 'Titre' est obligatoire.");
-                isValid = false;
-            }
+      // Valider 'titre'
+      if (titre.value.trim().length === 0) {
+        showError('titre-error', "Le champ 'Titre' est obligatoire.");
+        titre.classList.add('error');
+        isValid = false;
+      }
 
-            // Validate Auteur
-            if (id_auteur.value.trim() === "") {
-                showError(id_auteur, "Veuillez sélectionner un auteur.");
-                isValid = false;
-            }
+      // Valider 'id_auteur'
+      if (id_auteur.value.trim() === "") {
+        showError('id_auteur-error', "Veuillez sélectionner un auteur.");
+        id_auteur.classList.add('error');
+        isValid = false;
+      }
 
-            // Validate Date
-            if (date.value.trim() === "") {
-                showError(date, "Le champ 'Date' est obligatoire.");
-                isValid = false;
-            }
+      // Valider 'date'
+      if (date.value.trim().length === 0) {
+        showError('date-error', "Le champ 'Date' est obligatoire.");
+        date.classList.add('error');
+        isValid = false;
+      }
 
-            // Validate Type
-            const typeRegex = /^[A-Za-z]+$/; // Only letters
-            if (type.value.trim() === "") {
-                showError(type, "Le champ 'Type' est obligatoire.");
-                isValid = false;
-            } else if (!typeRegex.test(type.value)) {
-                showError(type, "Le champ 'Type' doit contenir uniquement des lettres.");
-                isValid = false;
-            }
+      // Valider 'id' (doit être uniquement des chiffres)
+      const idRegex = /^[0-9]+$/; // Regex pour accepter uniquement des chiffres
+      if (id.value.trim().length === 0) {
+        showError('id-error', "Le champ 'ID' est obligatoire.");
+        id.classList.add('error');
+        isValid = false;
+      } else if (!idRegex.test(id.value)) {
+        showError('id-error', "Le champ 'ID' doit contenir uniquement des chiffres.");
+        id.classList.add('error');
+        isValid = false;
+      }
 
-            return isValid;
-        }
+      // Valider 'type' (seulement des lettres, max 25 caractères)
+      const typeRegex = /^[A-Za-z]+$/; // Regex pour accepter uniquement des lettres
+      if (type.value.trim().length === 0) {
+        showError('type-error', "Le champ 'Type' est obligatoire.");
+        type.classList.add('error');
+        isValid = false;
+      } else if (!typeRegex.test(type.value)) {
+        showError('type-error', "Le champ 'Type' doit contenir uniquement des lettres.");
+        type.classList.add('error');
+        isValid = false;
+      } else if (type.value.trim().length > 25) {
+        showError('type-error', "Le champ 'Type' ne doit pas dépasser 25 caractères.");
+        type.classList.add('error');
+        isValid = false;
+      }
 
-        function showError(element, message) {
-            // Highlight the input field with a red border
-            element.classList.add("error");
+      return isValid; // Si 'isValid' est false, le formulaire ne sera pas soumis
+    }
 
-            // Show the error message below the input field
-            const errorElement = document.getElementById(`${element.id}-error`);
-            if (errorElement) {
-                errorElement.textContent = message;
-            }
-        }
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+    }
 
-        function clearErrors() {
-            // Remove all error messages and reset input field styles
-            const errorMessages = document.querySelectorAll(".error-message");
-            errorMessages.forEach((error) => (error.textContent = ""));
-
-            const inputFields = document.querySelectorAll(".input-field");
-            inputFields.forEach((field) => field.classList.remove("error"));
-        }
-    </script>
+    function clearErrors() {
+      const errorElements = document.querySelectorAll('.error-message');
+      errorElements.forEach(el => el.textContent = "");
+      const inputFields = document.querySelectorAll('.input-field');
+      inputFields.forEach(field => field.classList.remove('error'));
+    }
+  </script>
 </body>
 </html>

@@ -1,7 +1,12 @@
 <?php
 include "../../Controller/reponseC.php";
+include "../../Controller/questionC.php";
+require_once('C:/xampp/htdocs/Quiz/Model/question.php');
+require_once('C:/xampp/htdocs/Quiz/Model/reponse.php');
 
 // Instantiate the controller
+$questionC = new questionC();
+$questions = $questionC->afficherQuestions();
 $reponseC = new reponseC();
 
 // Récupération et validation de l'ID de la réponse
@@ -44,8 +49,6 @@ if (
          
         $reponseC->modifiereponse($updatedReponse, $id_reponse);
         header('Location: affichereponse.php');
-    } else {
-        echo '<script> alert("Missing information"); </script>';
     }
 }
 ?>
@@ -173,23 +176,109 @@ button:hover {
                 <input type="date" name="date" id="date" class="form-control" 
                     value="<?php echo htmlspecialchars($reponse['date']); ?>">
             </div>
-            <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="example-text-input" class="form-control-label">Question </label>
-                    <input class="form-control" type="text" value="<?php echo $reponse['id_question']; ?>" name="id_question">
-                  </div>
-                </div>
             <div class="form-group">
+        <label for="id_question" class="form-control-label">Question</label>
+        <select class="form-control" name="id_question" required>
+            <option value="">Sélectionnez une question</option>
+            <?php
+            foreach ($questions as $question) {
+                echo '<option value="' . htmlspecialchars($question['id']) . '">' . htmlspecialchars($question['titre']) . '</option>';
+            }
+            ?>
+        </select>
+        <div class="form-group">
                 <label for="type">Choix:</label>
                 <input type="text" name="choix_rp" id="choix_rp" class="form-control" 
                     value="<?php echo htmlspecialchars($reponse['choix_rp']); ?>">
             </div>
             <button type="submit" class="btn btn-primary">Modifier</button>
         </div>
+    </div>
+</div>
+                  </div>
     </form>
 </body>
 </html>
 
   </main>
+  <script>
+    function validateForm() {
+        // Clear previous errors
+        clearErrors();
+
+        // Get form elements
+        const id_user = document.getElementById("id_user");
+        const id_question = document.getElementById("id_question");
+        const date = document.getElementById("date");
+        const choix_rp = document.getElementById("choix_rp");
+
+        let isValid = true;
+
+        // Validate ID User
+        if (id_user.value.trim() === "") {
+            showError(id_user, "Le champ 'ID Utilisateur' est obligatoire.");
+            isValid = false;
+        } else if (!/^[0-9]+$/.test(id_user.value)) {
+            showError(id_user, "L'ID Utilisateur doit être un nombre entier positif.");
+            isValid = false;
+        }
+
+        // Validate ID Question
+        if (id_question.value.trim() === "") {
+            showError(id_question, "Le champ 'ID Question' est obligatoire.");
+            isValid = false;
+        } else if (!/^[0-9]+$/.test(id_question.value)) {
+            showError(id_question, "L'ID Question doit être un nombre entier positif.");
+            isValid = false;
+        }
+
+        // Validate Date
+        if (date.value.trim() === "") {
+            showError(date, "Le champ 'Date' est obligatoire.");
+            isValid = false;
+        } else if (!/^\d{4}-\d{2}-\d{2}$/.test(date.value)) {
+            showError(date, "La date doit être au format YYYY-MM-DD.");
+            isValid = false;
+        } else if (isNaN(new Date(date.value).getTime())) {
+            showError(date, "La date spécifiée est invalide.");
+            isValid = false;
+        }
+
+        // Validate Choix Réponse
+        if (choix_rp.value.trim() === "") {
+            showError(choix_rp, "Le champ 'Choix Réponse' est obligatoire.");
+            isValid = false;
+        } else if (choix_rp.value.trim().length > 25) {
+            showError(choix_rp, "Le champ 'Choix Réponse' ne doit pas dépasser 25 caractères.");
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9\s]+$/.test(choix_rp.value)) {
+            showError(choix_rp, "Le champ 'Choix Réponse' ne doit pas contenir de caractères spéciaux.");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    function showError(element, message) {
+        // Highlight the input field with a red border
+        element.classList.add("error");
+
+        // Show the error message below the input field
+        const errorElement = document.getElementById(`${element.id}-error`);
+        if (errorElement) {
+            errorElement.textContent = message;
+        }
+    }
+
+    function clearErrors() {
+        // Remove all error messages and reset input field styles
+        const errorMessages = document.querySelectorAll(".error-message");
+        errorMessages.forEach((error) => (error.textContent = ""));
+
+        const inputFields = document.querySelectorAll(".input-field");
+        inputFields.forEach((field) => field.classList.remove("error"));
+    }
+</script>
+
 </body>
 </html>

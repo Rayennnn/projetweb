@@ -73,6 +73,21 @@ class reponseC{
 
 
 
+
+
+    public function getReponsesByQuestionId($questionId) {
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare('SELECT * FROM reponse WHERE id_question = :id_question');
+            $query->execute(['id_question' => $questionId]);
+            return $query->fetchAll();
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
+
+
+
     /////////////////////////////////////////////////////   Supprimer   //////////////////////////////////////////////////////////////////////
 
 

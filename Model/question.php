@@ -6,15 +6,13 @@ class question {
     private $id_auteur=NULL;
     private $date=NULL;
     private $type=NULL;
-    private $id_reponse = NULL;
 
     // Constructeur
-    public function __construct(string $titre, string $id_auteur, string $date, string $type, int $id_reponse){
+    public function __construct(string $titre, string $id_auteur, string $date, string $type){
         $this->settitre($titre);
         $this->setid_auteur($id_auteur);
         $this->setdate($date);
         $this->settype($type);
-        $this->setid_reponse($id_reponse);
     }
 
     // Getters et setters

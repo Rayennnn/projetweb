@@ -6,9 +6,9 @@ require_once('C:/xampp/htdocs/Quiz/Model/reponse.php');
 
 
 
+
 $questionC = new questionC();
 $questions = $questionC->afficherQuestions();
-
 $reponseC = new reponseC();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -158,11 +158,20 @@ button:hover {
               </div>
               <div class="card-body">
                 <p class="text-uppercase text-sm">Informations Réponses</p>
-                <div class="row">
-                  <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
-                      <label for="id_user" class="form-control-label">ID User</label>
-                      <input class="form-control" type="text" name="id_user" required>
+                    <label for="id_user">User :</label>
+    <select id="id_user" name="id_user" class="input-field">
+      <option value="">-- Sélectionnez un auteur --</option>
+      <option value="rima">Rima</option>
+      <option value="fatma">Fatma</option>
+      <option value="mahmoud">Mahmoud</option>
+      <option value="malek">Malek</option>
+      <option value="rayen">Rayen</option>
+      <option value="aziz">Aziz</option>
+    </select>
+    <span id="id_user-error" class="error-message"></span>
+    <br><br>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -200,5 +209,95 @@ button:hover {
       </div>
     </form>
   </main>
+  <script>
+  function checkInput() {
+    const id_user = document.getElementById("id_user");
+    const date = document.getElementById("date");
+    const id_question = document.getElementById("id_question");
+    const choix_rp = document.getElementById("choix_rp");
+
+    let isValid = true;
+
+    // Effacer les erreurs précédentes
+    clearErrors();
+
+    // Valider 'id_user' (doit être un nombre entier positif)
+    const idUserRegex = /^[0-9]+$/;
+    if (id_user.value.trim().length === 0) {
+      showError('id_user-error', "Le champ 'ID Utilisateur' est obligatoire.");
+      id_user.classList.add('error');
+      isValid = false;
+    } else if (!idUserRegex.test(id_user.value.trim())) {
+      showError('id_user-error', "L'ID Utilisateur doit être un nombre entier positif.");
+      id_user.classList.add('error');
+      isValid = false;
+    }
+
+    // Valider 'date' (doit correspondre au format YYYY-MM-DD)
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Format date: YYYY-MM-DD
+    if (date.value.trim().length === 0) {
+      showError('date-error', "Le champ 'Date' est obligatoire.");
+      date.classList.add('error');
+      isValid = false;
+    } else if (!dateRegex.test(date.value.trim())) {
+      showError('date-error', "Le champ 'Date' doit être au format YYYY-MM-DD.");
+      date.classList.add('error');
+      isValid = false;
+    } else {
+      // Vérification de la validité de la date (si nécessaire)
+      const dateObj = new Date(date.value.trim());
+      if (isNaN(dateObj.getTime())) {
+        showError('date-error', "La date spécifiée est invalide.");
+        date.classList.add('error');
+        isValid = false;
+      }
+    }
+
+    // Valider 'id_question' (doit être un nombre entier positif)
+    if (id_question.value.trim().length === 0) {
+      showError('id_question-error', "Le champ 'ID Question' est obligatoire.");
+      id_question.classList.add('error');
+      isValid = false;
+    } else if (!idUserRegex.test(id_question.value.trim())) {
+      showError('id_question-error', "L'ID Question doit être un nombre entier positif.");
+      id_question.classList.add('error');
+      isValid = false;
+    }
+
+    // Valider 'choix_rp' (maximum 255 caractères, sans caractères spéciaux)
+    if (choix_rp.value.trim().length === 0) {
+      showError('choix_rp-error', "Le champ 'Choix Réponse' est obligatoire.");
+      choix_rp.classList.add('error');
+      isValid = false;
+    } else if (choix_rp.value.trim().length > 255) {
+      showError('choix_rp-error', "Le champ 'Choix Réponse' ne peut pas dépasser 255 caractères.");
+      choix_rp.classList.add('error');
+      isValid = false;
+    } else {
+      const specialCharsRegex = /[!@#$%^&*(),.?":{}|<>]/;
+      if (specialCharsRegex.test(choix_rp.value.trim())) {
+        showError('choix_rp-error', "Le champ 'Choix Réponse' ne doit pas contenir de caractères spéciaux.");
+        choix_rp.classList.add('error');
+        isValid = false;
+      }
+    }
+
+    return isValid; // Si 'isValid' est false, le formulaire ne sera pas soumis
+  }
+
+  // Affichage des messages d'erreur
+  function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    errorElement.textContent = message;
+  }
+
+  // Effacer les erreurs de validation
+  function clearErrors() {
+    const errorElements = document.querySelectorAll('.error-message');
+    errorElements.forEach(el => el.textContent = "");
+    const inputFields = document.querySelectorAll('.input-field');
+    inputFields.forEach(field => field.classList.remove('error'));
+  }
+</script>
 </body>
 </html>
