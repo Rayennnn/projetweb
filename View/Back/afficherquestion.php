@@ -9,7 +9,7 @@ $listequestion = $questionC->affichequestion();
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Admin Panel - Manage Questions</title>
+  <title>liste Questions</title>
 
   <!-- External CSS (Bootstrap, Icons) -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -21,7 +21,7 @@ $listequestion = $questionC->affichequestion();
   <!-- Custom CSS -->
   <style>
   body {
-    background: linear-gradient(135deg, #f7f9fc, #eaf1f8);
+    background: linear-gradient(135deg, #fff, #eaf1f8);
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
@@ -201,11 +201,11 @@ $listequestion = $questionC->affichequestion();
 
   .btn-add-question {
     background-color: #021a30
-    color: #fff;
+    color: #007bff;
   }
 
   .btn-add-question:hover {
-    background-color: #343a40;
+    background-color: #007bff;
     transform: scale(1.05);
   }
 
@@ -213,7 +213,7 @@ $listequestion = $questionC->affichequestion();
   .position-absolute {
     position: absolute;
     top: 160px;
-    right: 700px;
+    right:350px;
   }
 
   /* Responsive Design */

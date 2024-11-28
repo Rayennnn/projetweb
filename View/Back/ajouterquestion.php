@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>webproject</title>
+  <title>ajoutquestion</title>
   <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -125,8 +125,8 @@ button {
     padding: 12px 20px;
     font-size: 1rem;
     font-weight: bold;
-    color: #ffffff;
-    background-color: #4e73df;
+    color: #4e73df;
+    background-color: #ffffff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -161,7 +161,7 @@ button:hover {
             <div class="card">
               <div class="card-header pb-0">
                 <div class="d-flex align-items-center">
-                  <p class="mb-0">Ajouter questions</p>
+                  
                   <button class="btn btn-primary btn-sm ms-auto" type="submit" name="submit">Ajouter question</button>
                 </div>
               </div>
