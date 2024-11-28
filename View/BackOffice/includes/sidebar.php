@@ -33,6 +33,25 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- Ajout du menu Formations -->
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            <span>Formations</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="addFormation.php">
+                                    Ajouter une formation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="listFormations.php">
+                                    Liste des formations
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>

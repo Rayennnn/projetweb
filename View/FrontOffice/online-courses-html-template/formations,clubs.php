@@ -2,6 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/Model/clubs.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/Controller/clubC.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/Model/formations.php'); // Inclure le modèle des formations
+require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/Controller/formationC.php'); // Inclure le contrôleur des formations
 
 $clubC = new ClubC();
 $clubs = $clubC->getAllClubs();
@@ -18,6 +20,10 @@ $total_pages = ceil($total_clubs / $clubs_per_page);
 
 // Récupérer les clubs pour la page actuelle
 $clubs_page = array_slice($clubs, $offset, $clubs_per_page);
+
+// Récupérer les formations
+$formationC = new Formationc();
+$formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // Récupérer toutes les formations
 ?>
 
 
@@ -177,54 +183,33 @@ $clubs_page = array_slice($clubs, $offset, $clubs_per_page);
                     </div>
 
                     <div class="row mt-5 formations-container">
-                        <!-- Formation 1 -->
+                    <div class="row mt-5 formations-container">
+                    <div class="row mt-5 formations-container">
+                    <?php foreach ($formations as $formation): ?>
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="formation-card">
                                 <div class="formation-image">
-                                    <img src="img/dev web.jpg" alt="Formation Web">
-                                    
+                                    <img src="/PROJETWEB/uploads/<?php echo htmlspecialchars($formation['image']); ?>" alt="<?php echo htmlspecialchars($formation['nom_formation']); ?>" class="formation-image">
                                 </div>
                                 <div class="formation-content">
-                                    <h3>Développement Web</h3>
-                                    <p>Maîtrisez HTML, CSS et JavaScript pour créer des sites web modernes et responsifs.</p>
+                                    <h3><?php echo htmlspecialchars($formation['nom_formation']); ?></h3>
+                                    <?php echo htmlspecialchars($formation['description_formation']); ?><br>
+                                    <p><strong>Organisme :</strong> <?php echo htmlspecialchars($formation['organisme']); ?></p>
+                                    <p><strong>Prix :</strong> <?php echo htmlspecialchars($formation['prix']); ?> TND</p>
                                     
-                                    <a href="formations/web-dev.html" class="btn-formation">En savoir plus</a>
+                                    <?php
+                                    // Récupérer le nom du club à partir de l'ID du club
+                                    $nom_club = $clubC->getNomClubById($formation['id_club']);
+                                    ?>
+                                    <p><strong>Club :</strong> <?php echo htmlspecialchars($nom_club); ?></p> <!-- Afficher le nom du club -->
+                                    
+                                    <!-- Bouton pour visiter le site -->
+                                    <a href="<?php echo htmlspecialchars($formation['lien_formation']); ?>" class="btn-formation" target="_blank">Visitez le site</a>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Formation 2 -->
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="formation-card">
-                                <div class="formation-image">
-                                    <img src="img/marketing dig.jpg" alt="Formation Marketing">
-                                    
-                                </div>
-                                <div class="formation-content">
-                                    <h3>Marketing Digital</h3>
-                                    <p>Apprenez les stratégies de marketing digital et les outils essentiels du secteur.</p>
-                                    
-                                    <a href="formations/marketing.html" class="btn-formation">En savoir plus</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Formation 3 -->
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="formation-card">
-                                <div class="formation-image">
-                                    <img src="img/data science.avif" alt="Formation Data">
-                                    
-                                </div>
-                                <div class="formation-content">
-                                    <h3>Data Science</h3>
-                                    <p>Découvrez l'analyse de données, le machine learning et la visualisation de données.</p>
-                                    
-                                    <a href="formations/data-science.html" class="btn-formation">En savoir plus</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
+                </div>
                     <!-- Pagination des formations -->
                     <div class="container mt-5">
                         <div class="pagination-container text-center">
@@ -235,13 +220,46 @@ $clubs_page = array_slice($clubs, $offset, $clubs_per_page);
                             </div>
                         </div>
                     </div>
+                    <!-- Formulaire de recherche de formations par club -->
+                    <div class="container mt-5">
+                        <h2>Rechercher des Formations par Club</h2>
+                        <form method="GET" action="/PROJETWEB/View/BackOffice/searchFormation.php">
+                            <label for="id_club">Sélectionnez un club :</label>
+                            <select name="id_club" id="id_club">
+                                <option value="">-- Choisissez un club --</option>
+                                <?php
+                                // Remplir le menu déroulant avec les clubs
+                                foreach ($clubs as $club) {
+                                    $selected = (isset($id_club) && $id_club == $club['id_club']) ? 'selected' : '';
+                                    echo '<option value="' . htmlspecialchars($club['id_club']) . '" ' . $selected . '>' . htmlspecialchars($club['nom_club']) . '</option>';
+                                }
+                                ?>
+                            </select>
+                            <button type="submit">Rechercher</button>
+                        </form>
+                        <!-- Affichage des formations -->
+                        <?php if (!empty($formations)): ?>
+                            <h2>Formations disponibles pour le club sélectionné :</h2>
+                            <ul>
+                                <?php foreach ($formations as $formation): ?>
+                                    <li>
+                                        <strong><?php echo htmlspecialchars($formation['nom_formation']); ?></strong><br>
+                                        <?php echo htmlspecialchars($formation['description_formation']); ?><br>
+                                        Organisme : <?php echo htmlspecialchars($formation['organisme']); ?><br>
+                                        Prix : <?php echo htmlspecialchars($formation['prix']); ?> TND<br>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php elseif (isset($id_club)): ?>
+                            <p>Aucune formation trouvée pour ce club.</p>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- Blog End -->
-
 
     <!-- Formations Section -->
     
