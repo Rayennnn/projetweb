@@ -1,6 +1,5 @@
 <?php
 
-
 require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/config.php'); // Inclure le fichier pour la connexion à la base de données
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/Model/clubs.php');
 class Clubc
@@ -60,6 +59,20 @@ class Clubc
         }
     }
 
+    public function getNomClubById($id_club)
+    {
+        $db = config::getConnexion();
+        $sql = "SELECT nom_club FROM `clubs et associations` WHERE id_club = :id_club";
+        try {
+            $query = $db->prepare($sql);
+            $query->execute(['id_club' => $id_club]);
+            return $query->fetchColumn(); // Retourne le nom du club
+        } catch (Exception $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            return null;
+        }
+    }
+
     // Fonction pour mettre à jour un club
     public function updateClub($club)
     {
@@ -109,8 +122,32 @@ class Clubc
             echo 'Erreur : ' . $e->getMessage(); // Gérer l'erreur en cas d'échec
         }
     }
+
+    // Fonction pour afficher les formations d'un club
+    public function afficherFormations($id_club)
+    {
+        $db = config::getConnexion();
+        $sql = "SELECT 
+                    f.id_formation,
+                    f.nom_formation,
+                    f.description AS description_formation,
+                    f.organisme,
+                    f.prix,
+                    f.image,
+                    f.lien AS lien_formation
+                FROM 
+                    formations f
+                WHERE 
+                    f.id_club = :id_club";
+        try {
+            $query = $db->prepare($sql);
+            $query->execute(['id_club' => $id_club]);
+            return $query->fetchAll();
+        } catch (Exception $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            return [];
+        }
+    }
 }
-
-
 
 ?>
