@@ -1,3 +1,24 @@
+<?php
+
+session_start();
+
+include 'C:\xampp\htdocs\parcouri\db.php';
+include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
+
+$controller = new UserController($pdo);
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $controller->login($email,$password);
+
+       
+
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,17 +123,25 @@
                 <div class="col-lg-8">
                     <div class="login-form bg-secondary rounded p-5">
                         <div id="success"></div>
-                        <form name="sentMessage" id="loginForm" novalidate="novalidate">
+                        <form name="userForm" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                       
                             <div class="control-group">
-                                <input type="email" class="form-control border-0 p-4" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
+                                <input type="email" class="form-control border-0 p-4" name="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
-                                <input type="password" class="form-control border-0 p-4" id="password" placeholder="password" required="required" data-validation-required-message="Please enter a password" />
+                                <input type="password" class="form-control border-0 p-4" name="password" placeholder="password" required="required" data-validation-required-message="Please enter a password" />
                                 <p class="help-block text-danger"></p>
                             </div>
-                           
+                            <div class="col-sm-8">
+                            </div>
+                            <div class="col-sm-4 text-right">
+                              </div>
+                              <p class="text-center">mot de passe oublié? <a href="pages-signin.html">cliquez ici </a> 
+                        </div>
+
+                    
+
                             <div class="text-center">
                                 <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton"> login</button>
                             </div>

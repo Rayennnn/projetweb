@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html class="fixed">
 	<head>
@@ -231,7 +234,7 @@
 							<figure class="profile-picture">
 								<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
 							</figure>
-							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+							<div class="profile-info" data-lock-name="John doe" data-lock-email="johndoe@okler.com">
 								<span class="name">John Doe Junior</span>
 								<span class="role">administrator</span>
 							</div>
@@ -745,8 +748,9 @@
 									<div class="thumb-info mb-md">
 										<img src="assets/images/!logged-user.jpg" class="rounded img-responsive" alt="John Doe">
 										<div class="thumb-info-title">
-											<span class="thumb-info-inner">John Doe</span>
+											<span class="thumb-info-inner"> <?php echo $_SESSION['user_name']; ?>  <?php echo $_SESSION['user_last_name']; ?></span>
 											<span class="thumb-info-type">CEO</span>
+											<a href="../front/logout.php" onclick="return confirm('do you want to logout?')">Se déconnecter</a>
 										</div>
 									</div>
 
@@ -927,28 +931,7 @@
 								</ul>
 								<div class="tab-content">
 									<div id="overview" class="tab-pane active">
-										<h4 class="mb-md">Update Status</h4>
-
-										<section class="simple-compose-box mb-xlg">
-											<form method="get" action="/">
-												<textarea name="message-text" data-plugin-textarea-autosize placeholder="What's on your mind?" rows="1"></textarea>
-											</form>
-											<div class="compose-box-footer">
-												<ul class="compose-toolbar">
-													<li>
-														<a href="#"><i class="fa fa-camera"></i></a>
-													</li>
-													<li>
-														<a href="#"><i class="fa fa-map-marker"></i></a>
-													</li>
-												</ul>
-												<ul class="compose-btn">
-													<li>
-														<a class="btn btn-primary btn-xs">Post</a>
-													</li>
-												</ul>
-											</div>
-										</section>
+										
 
 										<h4 class="mb-xlg">Timeline</h4>
 
@@ -1074,76 +1057,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-12 col-lg-3">
-
-							<h4 class="mb-md">Sale Stats</h4>
-							<ul class="simple-card-list mb-xlg">
-								<li class="primary">
-									<h3>488</h3>
-									<p>Nullam quris ris.</p>
-								</li>
-								<li class="primary">
-									<h3>$ 189,000.00</h3>
-									<p>Nullam quris ris.</p>
-								</li>
-								<li class="primary">
-									<h3>16</h3>
-									<p>Nullam quris ris.</p>
-								</li>
-							</ul>
-
-							<h4 class="mb-md">Projects</h4>
-							<ul class="simple-bullet-list mb-xlg">
-								<li class="red">
-									<span class="title">Porto Template</span>
-									<span class="description truncate">Lorem ipsom dolor sit.</span>
-								</li>
-								<li class="green">
-									<span class="title">Tucson HTML5 Template</span>
-									<span class="description truncate">Lorem ipsom dolor sit amet</span>
-								</li>
-								<li class="blue">
-									<span class="title">Porto HTML5 Template</span>
-									<span class="description truncate">Lorem ipsom dolor sit.</span>
-								</li>
-								<li class="orange">
-									<span class="title">Tucson Template</span>
-									<span class="description truncate">Lorem ipsom dolor sit.</span>
-								</li>
-							</ul>
-
-							<h4 class="mb-md">Messages</h4>
-							<ul class="simple-user-list mb-xlg">
-								<li>
-									<figure class="image rounded">
-										<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
-									</figure>
-									<span class="title">Joseph Doe Junior</span>
-									<span class="message">Lorem ipsum dolor sit.</span>
-								</li>
-								<li>
-									<figure class="image rounded">
-										<img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle">
-									</figure>
-									<span class="title">Joseph Junior</span>
-									<span class="message">Lorem ipsum dolor sit.</span>
-								</li>
-								<li>
-									<figure class="image rounded">
-										<img src="assets/images/!sample-user.jpg" alt="Joe Junior" class="img-circle">
-									</figure>
-									<span class="title">Joe Junior</span>
-									<span class="message">Lorem ipsum dolor sit.</span>
-								</li>
-								<li>
-									<figure class="image rounded">
-										<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
-									</figure>
-									<span class="title">Joseph Doe Junior</span>
-									<span class="message">Lorem ipsum dolor sit.</span>
-								</li>
-							</ul>
-						</div>
+							
 
 					</div>
 					<!-- end: page -->

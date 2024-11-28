@@ -1,3 +1,32 @@
+<?php
+
+session_start();
+
+include 'C:\xampp\htdocs\parcouri\db.php';
+include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
+
+$controller = new UserController($pdo);
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = $_POST['name'];
+    $lastName = $_POST['last_name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirm_password'];
+
+    if ($password === $confirmPassword) {
+        if ($controller->createclient($name, $lastName, $email, $password)) {
+            header("Location: login.php");
+            exit;
+        } else {
+            $error = "Failed to create user.";
+        }
+    } else {
+        $error = "Passwords do not match!";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +36,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
+    <script src="../formValidation.js"></script>
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -103,31 +132,65 @@
                 <div class="col-lg-8">
                     <div class="contact-form bg-secondary rounded p-5">
                         <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                            <div class="control-group">
-                                <input type="text" class="form-control border-0 p-4" id="name" placeholder="nom et prenom" required="required" data-validation-required-message="nom et prenom" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="text" class="form-control border-0 p-4" id="name" placeholder="+216 55 555 555" required="required" data-validation-required-message="numero de telephone" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="email" class="form-control border-0 p-4" id="email" placeholder="Email" required="required" data-validation-required-message=" email" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="password" class="form-control border-0 p-4" id="password" placeholder="mot de passe" required="required" data-validation-required-message="mot de passe" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="password" class="form-control border-0 p-4" id="passwordc" placeholder="confirmez votre mot de passe" required="required" data-validation-required-message="confirmez le mot de passe" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton">sign up</button>
-                            </div>
-                        </form>
+                        <form name="userForm" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                        <div class="form-group mb-lg">
+        <label for="name">Name:</label>
+        <input type="text" name="name"  class="form-control input-lg" required><br>
+        </div>
+
+        <div class="form-group mb-lg">
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name"  class="form-control input-lg" required><br>
+        </div>
+
+        <div class="form-group mb-lg">
+        <label for="email">Email:</label>
+        <input type="email" name="email"  class="form-control input-lg" required><br>
+        </div>
+
+        <div class="form-group mb-lg">
+        <label for="password">Password:</label>
+        <input type="password" name="password"  class="form-control input-lg" required><br>
+        </div>
+
+        <div class="form-group mb-lg">
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" name="confirm_password"  class="form-control input-lg" required><br>
+        </div>
+
+
+        <div class="form-group mb-lg">
+        <label for="photo">Photo:</label>
+        <input type="file" name="photo"  class="form-control input-lg"><br>
+        </div>
+
+        <div class="form-group mb-lg">
+        <label for="fac">Faculty:</label>
+        <input type="text" name="fac"  class="form-control input-lg"><br>
+        </div>
+
+        <div class="form-group mb-lg">
+        <label for="domaine">Domain:</label>
+        <input type="text" name="domaine"  class="form-control input-lg"><br>
+        </div>
+        <div class="row">
+								<div class="col-sm-8">
+									<div class="checkbox-custom checkbox-default">
+										<input id="AgreeTerms" name="agreeterms" type="checkbox"/>
+										<label for="AgreeTerms">I agree with <a href="#">terms of use</a></label>
+									</div>
+								</div>
+								<div class="col-sm-4 text-right">
+									<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg" value="Create User">Sign Up</button>
+								</div>
+							</div>
+
+
+						
+
+							<p class="text-center">Already have an account? <a href="login.html">Sign In!</a>
+
+    </form>   
                     </div>
                 </div>
             </div>

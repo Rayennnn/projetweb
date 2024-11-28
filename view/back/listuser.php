@@ -1,3 +1,4 @@
+
 <?php
 include 'C:\xampp\htdocs\parcouri\db.php';
 include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
@@ -779,7 +780,7 @@ include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
                     <td><?= htmlspecialchars($user->getEmail()) ?></td>
                     <td><?= htmlspecialchars($user->getRole()) ?></td>
                     <td>
-                        <a href="updateuser.php?id=<?= $user->getId() ?>">Edit</a>
+                        <a href="pages-update.php?id=<?= $user->getId() ?>">Edit</a>
                         <a href="deleteuser.php?id=<?= $user->getId() ?>" onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
