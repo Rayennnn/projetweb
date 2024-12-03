@@ -273,6 +273,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                    value="<?php echo htmlspecialchars($bourse['lien']); ?>" required>
                                         </div>
                                     </div>
+                                    
+                                      <!-- Autres champs ici -->
+                                     <div class="form-group">
+                                      <label for="id_prog">ID Programme</label>
+                                     <input type="number" name="id_prog" id="id_prog" value="<?php echo $bourse->getIdProg(); ?>" required>
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">

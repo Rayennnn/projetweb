@@ -7,6 +7,30 @@ class ProgrammeC {
     public function __construct() {
         $this->pdo = Config::getConnexion();
     }
+    public function listProgrammesById($id_prog) {
+        try {
+            $query = "SELECT * FROM programme WHERE id_prog = :id_prog";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute(['id_prog' => $id_prog]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo 'Erreur: ' . $e->getMessage();
+            return [];
+        }
+    }
+    public function rechercherProgrammes($searchTerm) {
+        // Connexion à la base de données
+        $db = config::getConnexion();
+        
+        // Préparer la requête SQL avec une jointure si nécessaire
+        $query = "SELECT * FROM programme WHERE nom_prog LIKE :searchTerm OR organisme LIKE :searchTerm"; // Changer 'programmes' en 'programme'
+        
+        $stmt = $db->prepare($query);
+        $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
+        
+        // Récupérer les résultats
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
     public function ajouterProgramme($programme) {
         try {

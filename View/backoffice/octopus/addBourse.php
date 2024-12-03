@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bourse->setPays($_POST['pays']);
         $bourse->setLien($_POST['lien']);
         $bourse->setImage($imageName);
+        $bourse->setIdProg($_POST['id_prog']);
 
         // Créer une instance du contrôleur
         $bourseC = new BourseC();
@@ -220,6 +221,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
 
                                     <div class="form-group">
+                                        <label class="col-md-3 control-label">ID Programme</label>
+                                        <div class="col-md-6">
+                                            <input type="number" name="id_prog" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
                                             <button type="submit" class="btn btn-primary">
                                                 <i class="fa fa-save"></i> Enregistrer
@@ -348,6 +356,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!urlPattern.test(lien.value)) {
             alert('Le format du lien est invalide');
             lien.focus();
+            return false;
+        }
+
+        // Validation de l'ID programme
+        const id_prog = document.querySelector('input[name="id_prog"]');
+        if (!id_prog.value) {
+            alert('L\'ID programme est obligatoire');
+            id_prog.focus();
             return false;
         }
 

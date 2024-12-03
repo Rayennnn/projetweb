@@ -12,6 +12,7 @@ class Bourse
     private $pays;
     private $lien;
     private $image;
+    private $id_prog;
 
     // Getters
     public function getId() { return $this->id; }
@@ -24,6 +25,7 @@ class Bourse
     public function getPays() { return $this->pays; }
     public function getLien() { return $this->lien; }
     public function getImage() { return $this->image; }
+    public function getIdProg() { return $this->id_prog; }
 
     // Setters
     public function setId($id) { $this->id = $id; }
@@ -36,6 +38,7 @@ class Bourse
     public function setPays($pays) { $this->pays = $pays; }
     public function setLien($lien) { $this->lien = $lien; }
     public function setImage($image) { $this->image = $image; }
+    public function setIdProg($id_prog) { $this->id_prog = $id_prog; }
 }
 
 

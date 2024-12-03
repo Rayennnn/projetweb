@@ -100,7 +100,17 @@ $baseUrl = './assets/';
             </div>
         </div>
     </div>
-</header>
+                     <form method="GET" action="index.php" class="form-inline mb-3">
+                            <div class="form-group mr-2">
+                                <input type="text" name="search" class="form-control" placeholder="Rechercher un programme" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" style="border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">Rechercher</button>
+                        </form>
+                        </header>
+                    
+                      
+                                  
+                  
 
             <div class="inner-wrapper">
                 <!-- start: sidebar -->
@@ -163,77 +173,81 @@ $baseUrl = './assets/';
 
                     <!-- start: page -->
                 
-
+                    <div class="row">
+    <div class="col-lg-12">
+        <div class="panel">
+            
+            <div class="panel-body">
+                     <div class="mb-md text-center">
+                                 <a href="addprogramme.php" class="btn btn-primary btn-lg">
+                                        <i class="fa fa-plus-circle"></i> Ajouter programme d'échange
+                                </a>
+                                               
+                     </div>
+                                            
+             </div>
+                                    
+                <h1> les programmes d'échanges</h1>
+                <table class="table table-bordered table-striped table-hover mb-none">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Titre</th>
+                            <th>Organisme</th>
+                            <th>Pays</th>
+                            <th>Date limite</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Vérifier si une recherche a été effectuée
+                        if (isset($_GET['search'])) {
+                            $searchTerm = htmlspecialchars($_GET['search']);
+                            $programmes = $programmeC->rechercherProgrammes($searchTerm); // Appel à la méthode de recherche
+                        } else {
+                            $programmes = $programmeC->afficherProgrammes(); // Récupérer tous les programmes
+                        }
+                        foreach ($programmes as $programme): 
+                        ?>
+                            <tr>
+                                <td>
+                                    <?php if (!empty($programme['image'])): ?>
+                                        <img src="../../../uploads/<?php echo htmlspecialchars($programme['image']); ?>" 
+                                             alt="Image programme" style="max-width: 50px;">
+                                    <?php else: ?>
+                                        <span>Pas d'image</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo htmlspecialchars($programme['nom_prog']); ?></td>
+                                <td><?php echo htmlspecialchars($programme['organisme']); ?></td>
+                                <td><?php echo htmlspecialchars($programme['pays']); ?></td>
+                                <td><?php echo htmlspecialchars($programme['date_limite']); ?></td>
+                                <td class="actions">
+                                    <a href="updateProgramme.php?id_prog=<?php echo htmlspecialchars($programme['id_prog']); ?>" 
+                                       class="btn btn-primary btn-sm text-white" 
+                                       style="color: white !important;">
+                                        <i class="fa fa-pencil"></i> Modifier
+                                    </a>
+                                    <a href="deleteProgramme.php?id_prog=<?php echo htmlspecialchars($programme['id_prog']); ?>" 
+                                       class="btn btn-danger btn-sm text-white" 
+                                       style="color: white !important;"
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce programme ?');">
+                                        <i class="fa fa-trash-o"></i> Supprimer
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
                     
                      
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                        <div class="mb-md text-center">
-                                                <a href="addprogramme.php" class="btn btn-primary btn-lg">
-                                                    <i class="fa fa-plus-circle"></i> Ajouter programme d'échange
-                                                </a>
-                                               
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    
-                                    <h1>tableau des programmes d'echanges</h1>
-                                    <table class="table table-bordered table-striped table-hover mb-none">
-                                        <thead>
-                                            <tr>
-                                                <th>Image</th>
-                                                <th>Titre</th>
-                                                <th>Organisme</th>
-                                                <th>Pays</th>
-                                                <th>Date limite</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $programmes = $programmeC->afficherProgrammes();
-                                            foreach ($programmes as $programme): 
-                                            ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php if ($programme['image']): ?>
-                                                            <img src="../../../uploads/<?php echo htmlspecialchars($programme['image']); ?>" 
-                                                                 alt="Image programme" style="max-width: 50px;">
-                                                        <?php else: ?>
-                                                            <span>Pas d'image</span>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td><?php echo htmlspecialchars($programme['nom_prog']); ?></td>
-                                                    <td><?php echo htmlspecialchars($programme['organisme']); ?></td>
-                                                    <td><?php echo htmlspecialchars($programme['pays']); ?></td>
-                                                    <td><?php echo htmlspecialchars($programme['date_limite']); ?></td>
-                                                    <td class="actions">
-                                                        <a href="updateProgramme.php?id_prog=<?php echo htmlspecialchars($programme['id_prog']); ?>" 
-                                                           class="btn btn-primary btn-sm text-white" 
-                                                           style="color: white !important;">
-                                                            <i class="fa fa-pencil"></i> Modifier
-                                                        </a>
-                                                        <a href="deleteProgramme.php?id_prog=<?php echo htmlspecialchars($programme['id_prog']); ?>" 
-                                                           class="btn btn-danger btn-sm text-white" 
-                                                           style="color: white !important;"
-                                                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce programme ?');">
-                                                            <i class="fa fa-trash-o"></i> Supprimer
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                 
                     <!-- end: page -->
                 </section>
             </div>

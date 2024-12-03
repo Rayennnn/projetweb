@@ -10,8 +10,8 @@ class BourseC {
 
     public function ajouterBourse($bourse) {
         try {
-            $query = "INSERT INTO bourse (nom_bourse, description, organisme, date_limite, age_limite, niveau_etude, pays, lien, image) 
-                      VALUES (:nom_bourse, :description, :organisme, :date_limite, :age_limite, :niveau_etude, :pays, :lien, :image)";
+            $query = "INSERT INTO bourse (nom_bourse, description, organisme, date_limite, age_limite, niveau_etude, pays, lien, image, id_prog) 
+                      VALUES (:nom_bourse, :description, :organisme, :date_limite, :age_limite, :niveau_etude, :pays, :lien, :image, :id_prog)";
             
             $stmt = $this->pdo->prepare($query);
             
@@ -24,7 +24,8 @@ class BourseC {
                 'niveau_etude' => $bourse->getNiveauEtude(),
                 'pays' => $bourse->getPays(),
                 'lien' => $bourse->getLien(),
-                'image' => $bourse->getImage()
+                'image' => $bourse->getImage(),
+                'id_prog' => $bourse->getIdProg()
             ]);
             
             return true;
@@ -45,6 +46,8 @@ class BourseC {
             return [];
         }
     }
+   
+    
 
     public function getBourseById($id) {
         try {
@@ -67,7 +70,8 @@ class BourseC {
                          age_limite = :age_limite,
                          niveau_etude = :niveau_etude,
                          pays = :pays,
-                         lien = :lien";
+                         lien = :lien,
+                         id_prog = :id_prog";
             
             $params = [
                 'id' => $bourse->getId(),
@@ -78,7 +82,8 @@ class BourseC {
                 'age_limite' => $bourse->getAgeLimite(),
                 'niveau_etude' => $bourse->getNiveauEtude(),
                 'pays' => $bourse->getPays(),
-                'lien' => $bourse->getLien()
+                'lien' => $bourse->getLien(),
+                'id_prog' => $bourse->getIdProg()
             ];
 
             if ($bourse->getImage()) {
@@ -115,6 +120,14 @@ class BourseC {
         } catch (PDOException $e) {
             throw new Exception('Erreur lors de la suppression : ' . $e->getMessage());
         }
+    }
+
+    public function rechercherBourses($searchTerm) {
+        // Exemple de code pour rechercher des bourses dans la base de données
+        $query = "SELECT * FROM bourse WHERE nom_bourse LIKE :searchTerm";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>

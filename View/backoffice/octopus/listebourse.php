@@ -100,6 +100,14 @@ $baseUrl = './assets/';
             </div>
         </div>
     </div>
+    <form method="GET" action="listebourse.php" class="form-inline mb-3">
+                            <div class="form-group mr-2">
+                                <input type="text" name="search" class="form-control" placeholder="Rechercher une bourse" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" style="border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">Rechercher</button>
+                        </form>
+                        </header>
+                    
 </header>
 
             <div class="inner-wrapper">
@@ -163,76 +171,78 @@ $baseUrl = './assets/';
 
                     <!-- start: page -->
                 
-
-                    
-                     
-
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                        <div class="mb-md text-center">
+    <div class="col-lg-12">
+        <div class="panel">
+            <div class="panel-body">
+            <div class="mb-md text-center">
                                                 
                                                 <a href="addBourse.php" class="btn btn-primary btn-lg" style="padding: 12px 25px; font-weight: 600; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                                                     <i class="fa fa-plus" style="margin-right: 8px;"></i>
                                                     Ajouter une bourse
                                                 </a>
                                             </div>
-                                            
-                                        </div>
-                                    </div>
-                                    <h1>tableau des bourses</h1>
-                                    <table class="table table-bordered table-striped table-hover mb-none">
-                                        <thead>
-                                            <tr>
-                                                <th>Image</th>
-                                                <th>Titre</th>
-                                                <th>Pays</th>
-                                                <th>Date limite</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $bourses = $bourseC->afficherBourses();
-                                            foreach ($bourses as $bourse): 
-                                            ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php if ($bourse['image']): ?>
-                                                            <img src="../../../uploads/<?php echo htmlspecialchars($bourse['image']); ?>" 
-                                                                 alt="Image bourse" style="max-width: 50px;">
-                                                        <?php else: ?>
-                                                            <span>Pas d'image</span>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td><?php echo htmlspecialchars($bourse['nom_bourse']); ?></td>
-                                                    <td><?php echo htmlspecialchars($bourse['pays']); ?></td>
-                                                    <td><?php echo htmlspecialchars($bourse['date_limite']); ?></td>
-                                                    <td class="actions">
-                                                        <a href="updateBourse.php?id=<?php echo htmlspecialchars($bourse['id']); ?>" 
-                                                           class="btn btn-primary btn-sm text-white" 
-                                                           style="color: white !important;">
-                                                            <i class="fa fa-pencil"></i> Modifier
-                                                        </a>
-                                                        <a href="deleteBourse.php?id=<?php echo htmlspecialchars($bourse['id']); ?>" 
-                                                           class="btn btn-danger btn-sm text-white" 
-                                                           style="color: white !important;"
-                                                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette bourse ?');">
-                                                            <i class="fa fa-trash-o"></i> Supprimer
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <h1>les bourses</h1>
+                <table class="table table-bordered table-striped table-hover mb-none">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Titre</th>
+                            <th>Organisme</th>
+                            <th>Pays</th>
+                            <th>Date limite</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Vérifier si une recherche a été effectuée
+                        if (isset($_GET['search'])) {
+                            $searchTerm = htmlspecialchars($_GET['search']);
+                            $bourse = $bourseC->rechercherBourses($searchTerm); // Correction du nom de la méthode
+                        } else {
+                            $bourse = $bourseC->afficherBourses(); // Récupérer tous les programmes
+                        }
+                        foreach ($bourse as $bourse): 
+                        ?>
+                            <tr>
+                                <td>
+                                    <?php if (!empty($bourse['image'])): ?>
+                                        <img src="../../../uploads/<?php echo htmlspecialchars($bourse['image']); ?>" 
+                                             alt="Image programme" style="max-width: 50px;">
+                                    <?php else: ?>
+                                        <span>Pas d'image</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo htmlspecialchars($bourse['nom_bourse']); ?></td>
+                                <td><?php echo htmlspecialchars($bourse['organisme']); ?></td>
+                                <td><?php echo htmlspecialchars($bourse['pays']); ?></td>
+                                <td><?php echo htmlspecialchars($bourse['date_limite']); ?></td>
+                                <td class="actions">
+                                    <a href="updateProgramme.php?id_prog=<?php echo htmlspecialchars($bourse['id']); ?>" 
+                                       class="btn btn-primary btn-sm text-white" 
+                                       style="color: white !important;">
+                                        <i class="fa fa-pencil"></i> Modifier
+                                    </a>
+                                    <a href="deleteProgramme.php?id_prog=<?php echo htmlspecialchars($bourse['id']); ?>" 
+                                       class="btn btn-danger btn-sm text-white" 
+                                       style="color: white !important;"
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce programme ?');">
+                                        <i class="fa fa-trash-o"></i> Supprimer
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+                    
+                     
+
+                   
                     <!-- end: page -->
                 </section>
             </div>
