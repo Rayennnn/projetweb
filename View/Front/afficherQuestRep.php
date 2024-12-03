@@ -1,3 +1,38 @@
+<?php
+session_start(); // Appelé au tout début, avant toute sortie
+
+// Inclure les fichiers nécessaires
+require_once 'C:/xampp/htdocs/Quiz/Controller/questionC.php';
+require_once 'C:/xampp/htdocs/Quiz/Model/question.php';
+require_once 'C:/xampp/htdocs/Quiz/Controller/reponseC.php';
+require_once 'C:/xampp/htdocs/Quiz/Model/reponse.php';
+
+// Instancier les classes
+$questionC = new questionC();
+$reponseC = new reponseC();
+
+// Récupérer toutes les questions
+$questions = $questionC->affichequestion();
+
+// Définir le nombre de questions par page
+$questionsPerPage = 2;
+
+// Obtenir le numéro de la page actuelle
+$page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
+
+// Calculer l'index de début et de fin
+$startIndex = ($page - 1) * $questionsPerPage;
+$endIndex = $startIndex + $questionsPerPage;
+
+// Obtenir les questions pour la page actuelle
+$totalQuestions = count($questions);
+$questionsOnPage = array_slice($questions, $startIndex, $questionsPerPage);
+
+// Déterminer si c'est la dernière page
+$isLastPage = $endIndex >= $totalQuestions;
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -293,22 +328,6 @@
 
 
 
-        <?php
-// Inclure les fichiers nécessaires
-require_once 'C:/xampp/htdocs/Quiz/Controller/questionC.php';
-require_once 'C:/xampp/htdocs/Quiz/Model/question.php';
-require_once 'C:/xampp/htdocs/Quiz/Controller/reponseC.php';
-require_once 'C:/xampp/htdocs/Quiz/Model/reponse.php';
-
-// Instancier les classes
-$questionC = new questionC();
-$reponseC = new reponseC();
-
-// Récupérer toutes les questions
-$questions = $questionC->affichequestion();
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -357,30 +376,39 @@ $questions = $questionC->affichequestion();
 <body>
     <main class="main-content position-relative border-radius-lg">
         <form id="account-check-form" class="quiz-form" method="POST">
-            <?php foreach ($questions as $question) : ?>
+            <?php foreach ($questionsOnPage as $question) : ?>
                 <div class="question-container">
                     <p class="text-center" style="font-size: 22px; font-weight: bold;">
                         <?php echo $question['titre']; ?>
                     </p>
 
                     <?php
-                    // Récupérer les réponses pour chaque question
                     $reponses = $reponseC->getReponsesByQuestionId($question['id']);
                     ?>
                     <div class="response-buttons">
                         <?php foreach ($reponses as $reponse) : ?>
-                            <button type="submit" name="reponse" value="<?php echo $reponse['id_reponse']; ?>" class="btn btn-outline-primary">
+                            <button type="submit" name="reponse[<?php echo $question['id']; ?>]" value="<?php echo $reponse['id_reponse']; ?>" class="btn btn-outline-primary">
                                 <?php echo $reponse['choix_rp']; ?>
                             </button>
                         <?php endforeach; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
+
             <div class="text-center">
-                <button type="submit" class="btn btn-success">Soumettre Réponses</button>
+                <?php if ($page > 1) : ?>
+                    <button type="submit" name="page" value="<?php echo $page - 1; ?>" class="btn btn-secondary">Previous</button>
+                <?php endif; ?>
+
+                <?php if (!$isLastPage) : ?>
+                    <button type="submit" name="page" value="<?php echo $page + 1; ?>" class="btn btn-primary">Next</button>
+                <?php else : ?>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                <?php endif; ?>
             </div>
         </form>
     </main>
 </body>
+
 
 </html>
