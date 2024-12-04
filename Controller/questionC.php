@@ -134,6 +134,30 @@ public function afficherQuestions() {
 }
 
 
+function recherche($search_value)
+{
+    $pdo = Config::getConnexion();
+
+    // Requête SQL sécurisée pour éviter les injections SQL
+    $sql = "SELECT * FROM question 
+            WHERE id LIKE :search_value 
+               OR date LIKE :search_value
+               OR id_auteur LIKE :search_value 
+               OR type LIKE :search_value 
+               OR titre LIKE :search_value";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['search_value' => '%' . $search_value . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner les résultats sous forme de tableau associatif
+    } catch (Exception $e) {
+        die('Erreur: ' . $e->getMessage());
+    }
+}
+
+
+
+
 }
 
 

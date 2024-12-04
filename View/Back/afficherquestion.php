@@ -1,7 +1,12 @@
 <?php
-include "../../Controller/questionC.php";
+// Inclure le contrôleur des questions
+require_once "../../Controller/questionC.php";
+
+// Créer une instance du contrôleur
 $questionC = new questionC();
-$listequestion = $questionC->affichequestion();
+
+// Récupérer toutes les questions par défaut
+$result = $questionC->affichequestion();
 ?>
 
 <!DOCTYPE html>
@@ -201,7 +206,7 @@ $listequestion = $questionC->affichequestion();
 
   .btn-add-question {
     background-color: #021a30
-    color: #007bff;
+    color #007bff;
   }
 
   .btn-add-question:hover {
@@ -246,7 +251,6 @@ $listequestion = $questionC->affichequestion();
 
 </head>
 <body class="g-sidenav-show bg-primary">
-
   <!-- Sidebar -->
   <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
     <div class="sidenav-header">
@@ -255,10 +259,7 @@ $listequestion = $questionC->affichequestion();
         <span class="ms-1 font-weight-bold">ADMINS</span>
       </a>
     </div>
-    
   </aside>
-
-  <!-- Main Content -->
   <main class="main-content position-relative border-radius-lg">
     <div class="container-fluid py-4">
       <div class="row">
@@ -266,46 +267,54 @@ $listequestion = $questionC->affichequestion();
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Liste des Questions</h6>
-              <div class="position-absolute top-3 start-100 translate-middle-x">
-              <button type="button" class="btn btn-add-question" onclick="location.href='ajouterquestion.php'">
-  Ajouter des Questions
-</button>
-
+              <div class="d-flex justify-content-between">
+                <!-- Barre de recherche -->
+                <input 
+                    type="text" 
+                    id="search_value" 
+                    class="form-control" 
+                    placeholder="Rechercher..." 
+                    oninput="rechercherQuestions()" 
+                />
+                <button type="button" class="btn btn-primary" onclick="location.href='ajouterquestion.php'">
+                  Ajouter une Question
+                </button>
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
+                <table id="questionTable" class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th>id</th>
-                      <th>titre</th>
-                      <th>id_auteur</th>
-                      <th>date</th>
-                      <th>type</th>
-                      
+                      <th>ID</th>
+                      <th>Titre</th>
+                      <th>Auteur</th>
+                      <th>Date</th>
+                      <th>Type</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <?php 
-                    foreach ($listequestion as $question) {
-                      ?>
-                      <tr>
-                        <td class="text-center"><?php echo $question['id']; ?></td>
-                        <td class="text-center"><?php echo $question['titre']; ?></td>
-                        <td class="text-center"><?php echo $question['id_auteur']; ?></td>
-                        <td class="text-center"><?php echo $question['date']; ?></td>
-                        <td class="text-center"><?php echo $question['type']; ?></td>
-                        <td class="text-center">
-                        <button class="btn btn-primary " onclick="window.location.href='modifierquestion.php?id=<?php echo $question['id']; ?>'">
-  <i class="fas fa-pencil-alt" aria-hidden="true"></i> Edit✏️
-</button>
-
-<button class="btn btn-danger rounded-circle btn-icon" onclick="window.location.href='supprimerquestion.php?id=<?php echo $question['id']; ?>'">
-  <i class="fas fa-pencil-alt" aria-hidden="true"></i> 🗑️
-</button>
-                        </td>
-                      </tr>
+                  <tbody id="questionTableBody">
+                    <?php if (!empty($result)) { ?>
+                      <?php foreach ($result as $question) { ?>
+                        <tr>
+                          <td class="text-center"><?php echo $question['id']; ?></td>
+                          <td class="text-center"><?php echo $question['titre']; ?></td>
+                          <td class="text-center"><?php echo $question['id_auteur']; ?></td>
+                          <td class="text-center"><?php echo $question['date']; ?></td>
+                          <td class="text-center"><?php echo $question['type']; ?></td>
+                          <td class="text-center">
+                            <button class="btn btn-primary" onclick="window.location.href='modifierquestion.php?id=<?php echo $question['id']; ?>'">
+                              <i class="fas fa-pencil-alt"></i> ✏️
+                            </button>
+                            <button class="btn btn-danger rounded-circle btn-icon" onclick="window.location.href='supprimerquestion.php?id=<?php echo $question['id']; ?>'">
+                              <i class="fas fa-trash-alt"></i> 🗑️
+                            </button>
+                          </td>
+                        </tr>
+                      <?php } ?>
+                    <?php } else { ?>
+                      <tr><td colspan="6" class="text-center">Aucune question disponible.</td></tr>
                     <?php } ?>
                   </tbody>
                 </table>
@@ -317,5 +326,24 @@ $listequestion = $questionC->affichequestion();
     </div>
   </main>
 
+  <!-- JavaScript -->
+  <script>
+    function rechercherQuestions() {
+        const searchValue = document.getElementById('search_value').value;
+
+        // Effectuer une requête AJAX
+        fetch('search_question.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'search_value=' + encodeURIComponent(searchValue)
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Insérer les résultats dans le tableau
+            document.getElementById('questionTableBody').innerHTML = data;
+        })
+        .catch(error => console.error('Erreur:', error));
+    }
+  </script>
 </body>
 </html>

@@ -387,9 +387,14 @@ $isLastPage = $endIndex >= $totalQuestions;
                     ?>
                     <div class="response-buttons">
                         <?php foreach ($reponses as $reponse) : ?>
-                            <button type="submit" name="reponse[<?php echo $question['id']; ?>]" value="<?php echo $reponse['id_reponse']; ?>" class="btn btn-outline-primary">
-                                <?php echo $reponse['choix_rp']; ?>
-                            </button>
+                            <div>
+                                <input type="radio" id="reponse-<?php echo $reponse['id_reponse']; ?>" 
+                                       name="reponse[<?php echo $question['id']; ?>]" 
+                                       value="<?php echo $reponse['id_reponse']; ?>" required>
+                                <label for="reponse-<?php echo $reponse['id_reponse']; ?>">
+                                    <?php echo $reponse['choix_rp']; ?>
+                                </label>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -407,6 +412,18 @@ $isLastPage = $endIndex >= $totalQuestions;
                 <?php endif; ?>
             </div>
         </form>
+    </main>
+    <main class="main-content position-relative border-radius-lg">
+        <?php if ($isLastPage && isset($message)): ?>
+            <div class="text-center">
+                <h2>Résultat final</h2>
+                <p><?php echo $message; ?></p>
+            </div>
+        <?php else: ?>
+            <form id="account-check-form" class="quiz-form" method="POST">
+                <!-- Questions et navigation déjà définies -->
+            </form>
+        <?php endif; ?>
     </main>
 </body>
 
