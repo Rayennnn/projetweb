@@ -23,7 +23,8 @@ $list = $suggestionC->listSuggestions();
         <div class="sidebar-menu">
             <a href="addrepsuggestion.php"><i class="fas fa-plus"></i> Ajouter une réponse</a>
             <a href="listrepsuggestion.php"><i class="fas fa-list"></i> Liste des réponses</a>
-            <!-- Ajoutez d'autres liens de menu ici -->
+            <a href="listSuggestions.php"><i class="fas fa-list"></i> Liste des suggestions et reclamtions</a>
+            <a href="statistiques.php" class="nav-link"><i class="fas fa-chart-pie"></i>Statistiques</a>
         </div>
         
     </div>

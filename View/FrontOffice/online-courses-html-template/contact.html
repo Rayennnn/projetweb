@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>contact parcouri</title>
     <link rel="stylesheet" href="css/site.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   </head> 
@@ -172,7 +173,7 @@
 
           <!-- Formulaire à droite -->
           <div class="col-md-6 form-box">
-            <form method="POST" action="" id="suggestionForm" >
+            <form method="POST" action="/projetweb/view/backoffice/addsuggestion.php" id="suggestionForm">
               <input type="text" id="user_id" name="id_utilisateur" class="input-field" placeholder="Votre ID" />
               <select id="subject" name="type_feedback" class="input-field">
                   <option value="" disabled selected>Choisir un sujet</option>
@@ -181,17 +182,20 @@
               </select>
               <textarea id="message" name="contenu" class="input-field message-field" placeholder="Votre message"></textarea>
               <button type="submit" class="main-button">Envoyer</button>
-            </form>          
-          </div>
+            </form>
+          
+         </div>
           
         </div>
       </div>
     </section>
     
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/contact.js" ></script>
+    
 
      
   </body>

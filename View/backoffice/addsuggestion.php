@@ -1,53 +1,36 @@
 <?php
-include '../../controller/suggestionC.php';
-include '../../model/suggestion.php';
+include_once '../../config.php';
+include_once '../../model/suggestion.php';
+include_once '../../controller/suggestionC.php';
 
-$error = "";
-$success = "";
-$suggestionC = new SuggestionC();
+// Activer l'affichage des erreurs
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Ajout de débogage
-    var_dump($_POST);  // Pour voir les données reçues
+try {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Création de l'objet suggestion
+        $suggestion = new Suggestion(
+            null,
+            $_POST['contenu'],
+            date('Y-m-d H:i:s'),
+            'en attente',
+            $_POST['type_feedback'],
+            $_POST['id_utilisateur']
+        );
 
-    if (
-        isset($_POST["contenu"]) && 
-        isset($_POST["type_feedback"]) && 
-        isset($_POST["id_utilisateur"]) &&
-        !empty($_POST["contenu"]) && 
-        !empty($_POST["type_feedback"]) && 
-        !empty($_POST["id_utilisateur"])
-    ) {
-        try {
-            $suggestion = new Suggestion(
-                null,
-                $_POST['contenu'],
-                date('Y-m-d'),
-                'en attente',
-                $_POST['type_feedback'],
-                $_POST['id_utilisateur']
-            );
-
-            if ($suggestionC->addSuggestion($suggestion)) {
-                $success = "Suggestion ajoutée avec succès";
-                // Rediriger vers une page de confirmation
-                header('Location: ../contact.html');  // Créez cette page
-                exit();
-            } else {
-                $error = "Erreur lors de l'ajout de la suggestion";
-            }
-        } catch (Exception $e) {
-            $error = "Erreur : " . $e->getMessage();
+        // Ajout de la suggestion
+        $suggestionC = new SuggestionC();
+        $result = $suggestionC->addSuggestion($suggestion);
+        
+        if ($result) {
+            header('Location: /projetweb/view/FrontOffice/online-courses-html-template/contact.html?success=1');
+        } else {
+            throw new Exception("Erreur lors de l'ajout de la suggestion");
         }
-    } else {
-        $error = "Veuillez remplir tous les champs obligatoires";
     }
-}
-
-// Si c'est une requête AJAX ou si une erreur s'est produite
-if (!empty($error)) {
-    echo json_encode(['error' => $error]);
-} elseif (!empty($success)) {
-    echo json_encode(['success' => $success]);
+} catch (Exception $e) {
+    header('Location: /projetweb/view/FrontOffice/online-courses-html-template/contact.html?error=' . urlencode($e->getMessage()));
 }
 ?>
