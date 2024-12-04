@@ -9,14 +9,28 @@ $controller = new UserController($pdo);
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+// Your reCAPTCHA secret key
+$secretKey = "6LdyiZIqAAAAAOP54s2U3-rAdVNoAicFRAy0SWZj";
+    
+// The reCAPTCHA response from the form
+$recaptchaResponse = $_POST['g-recaptcha-response'];
 
+// Verify reCAPTCHA response with Google
+$verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+$response = file_get_contents($verifyUrl . "?secret=" . $secretKey . "&response=" . $recaptchaResponse);
+$responseKeys = json_decode($response, true);
+
+// Check if reCAPTCHA verification was successful
+if (intval($responseKeys["success"]) !== 1) {
+    echo "reCAPTCHA verification failed. Please try again.";
+} else {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
     $controller->login($email,$password);
 
        
-
+}
     }
 ?>
 <!DOCTYPE html>
@@ -44,6 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+ <!-- Add this script tag in the <head> section -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+
 </head>
 
 <body>
@@ -86,8 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
                         <a href="contact.html" class="nav-item nav-link active">Contact</a>
                     </div>
-                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.html">Sign in</a>
-                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.html">login</a>    
+                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.php">Sign in</a>
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>    
                     </div>
             </nav>
         </div>
@@ -124,28 +143,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div class="login-form bg-secondary rounded p-5">
                         <div id="success"></div>
                         <form name="userForm" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                      
-                            <div class="control-group">
-                                <input type="email" class="form-control border-0 p-4" name="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="password" class="form-control border-0 p-4" name="password" placeholder="password" required="required" data-validation-required-message="Please enter a password" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="col-sm-8">
-                            </div>
-                            <div class="col-sm-4 text-right">
-                              </div>
-                              <p class="text-center">mot de passe oublié? <a href="pages-signin.html">cliquez ici </a> 
-                        </div>
+    <div class="control-group">
+        <input type="email" class="form-control border-0 p-4" name="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
+        <p class="help-block text-danger"></p>
+    </div>
+    <div class="control-group">
+        <input type="password" class="form-control border-0 p-4" name="password" placeholder="password" required="required" data-validation-required-message="Please enter a password" />
+        <p class="help-block text-danger"></p>
+    </div>
 
-                    
+    <!-- reCAPTCHA Widget -->
+    <div class="g-recaptcha" data-sitekey="6LdyiZIqAAAAAJKT73l5X0ho0q1Jr1yMaDbyKYIF"></div>
+    <p class="text-center">mot de passe oublié? <a href="send_reset_token.php">cliquez ici </a> 
+    </p>
 
-                            <div class="text-center">
-                                <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton"> login</button>
-                            </div>
-                        </form>
+    <div class="text-center">
+        <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton"> login</button>
+    </div>
+</form>
                     </div>
                 </div>
             </div>

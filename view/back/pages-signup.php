@@ -12,9 +12,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
     $role = $_POST['role'];
+	$statusCompte = $_POST['status_compte'];
+	$fac  = $_POST['fac'];
+	$domaine = $_POST['domaine'];
+// Gestion de l'upload de la photo
+$photoName = null;
+if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+	$uploadDir = "../uploads/";
+	$photoName = uniqid() . "-" . basename($_FILES['photo']['name']);
+	$targetPath = $uploadDir . $photoName;
 
+	// Vérifiez si le dossier d'upload existe
+	if (!is_dir($uploadDir)) {
+		mkdir($uploadDir, 0777, true);
+	}
+
+	move_uploaded_file($_FILES['photo']['tmp_name'], $targetPath);
+}
     if ($password === $confirmPassword) {
-        if ($controller->createUser($name, $lastName, $email, $password, $role)) {
+        if ($controller->createUser($name, $lastName, $email, $password, $role, $statusCompte, $fac, $domaine, $photoName)) {
             header("Location: listuser.php");
             exit;
         } else {

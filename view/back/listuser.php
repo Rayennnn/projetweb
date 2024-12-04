@@ -768,6 +768,11 @@ include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Role</th>
+				<th>status</th>
+				<th>fac</th>
+				<th>domaine</th>
+				<th>photo</th>
+
                 <th>Actions</th>
             </tr>
         </thead>
@@ -779,6 +784,16 @@ include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
                     <td><?= htmlspecialchars($user->getLastName()) ?></td>
                     <td><?= htmlspecialchars($user->getEmail()) ?></td>
                     <td><?= htmlspecialchars($user->getRole()) ?></td>
+					<td><?= htmlspecialchars($user->getStatusCompte()) ?></td>
+                    <td><?= htmlspecialchars($user->getFac()) ?></td>
+                    <td><?= htmlspecialchars($user->getDomaine()) ?></td>
+					<td>
+    <?php if ($user->getPhoto()): ?>
+        <img src="../uploads/<?= htmlspecialchars($user->getPhoto()) ?>" alt="Photo de profil" width="50">
+    <?php else: ?>
+        Pas de photo
+    <?php endif; ?>
+</td>		
                     <td>
                         <a href="pages-update.php?id=<?= $user->getId() ?>">Edit</a>
                         <a href="deleteuser.php?id=<?= $user->getId() ?>" onclick="return confirm('Are you sure?')">Delete</a>

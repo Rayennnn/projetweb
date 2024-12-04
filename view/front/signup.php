@@ -14,9 +14,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
+    $statusCompte = $_POST['status_compte'];
+	$fac  = $_POST['fac'];
+	$domaine = $_POST['domaine'];
+// Gestion de l'upload de la photo
+$photoName = null;
+if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+	$uploadDir = "../uploads/";
+	$photoName = uniqid() . "-" . basename($_FILES['photo']['name']);
+	$targetPath = $uploadDir . $photoName;
 
+	// Vérifiez si le dossier d'upload existe
+	if (!is_dir($uploadDir)) {
+		mkdir($uploadDir, 0777, true);
+	}
+    
+	move_uploaded_file($_FILES['photo']['tmp_name'], $targetPath);
+}
     if ($password === $confirmPassword) {
-        if ($controller->createclient($name, $lastName, $email, $password)) {
+        if ($controller->createclient($name, $lastName, $email, $password, $statusCompte, $fac, $domaine, $photoName)) {
             header("Location: login.php");
             exit;
         } else {
@@ -94,8 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
                         <a href="contact.html" class="nav-item nav-link active">Contact</a>
                     </div>
-                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.html">Sign in</a>
-                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.html">login</a>    
+                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.php">Sign in</a>
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>    
                     </div>
             </nav>
         </div>
@@ -188,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 						
 
-							<p class="text-center">Already have an account? <a href="login.html">Sign In!</a>
+							<p class="text-center">Already have an account? <a href="login.php">Sign In!</a>
 
     </form>   
                     </div>

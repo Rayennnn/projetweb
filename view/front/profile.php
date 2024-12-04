@@ -77,8 +77,8 @@ $controller = new UserController($pdo);
                         <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
                         <a href="contact.html" class="nav-item nav-link active">Contact</a>
                     </div>
-                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.html">Sign in</a>
-                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.html">login</a>    
+                    <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.php">Sign in</a>
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>    
                     </div>
             </nav>
         </div>
@@ -100,11 +100,18 @@ $controller = new UserController($pdo);
                     <div class="row pb-3">
                         <div class="col-lg-6 mb-4">
                             <div class="blog-item position-relative overflow-hidden rounded mb-2">
-                                <img class="img-fluid" src="img/blog-1.jpg" alt="">
+                            <?php if ($_SESSION['photo']): ?>
+        <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Photo de profil" width="450 ">
+    <?php else: ?>
+        <h5 class="text-white mb-3">   Pas de photo </h5>
+    <?php endif; ?>
+                     
                                 <a class="blog-overlay text-decoration-none" href="logout.php" onclick="return confirm('do you want to logout?')">
                                     <h5 class="text-white mb-3"><strong>Email: </strong><?php echo $_SESSION['user_email']; ?></h5>
                                     <h5 class="text-white mb-3"><strong>nom: </strong><?php echo $_SESSION['user_name']; ?></h5>
                                     <h5 class="text-white mb-3"><strong>prenom: </strong><?php echo $_SESSION['user_last_name']; ?></h5>
+                                    <h5 class="text-white mb-3"><strong>FAC: </strong><?php echo $_SESSION['fac']; ?></h5>
+                                    <h5 class="text-white mb-3"><strong>DOMAINE: </strong><?php echo $_SESSION['domaine']; ?></h5>
                                   
                                 </a>
                               

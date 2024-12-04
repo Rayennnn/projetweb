@@ -9,16 +9,17 @@ class UserController {
         $this->pdo = $pdo;
     }
 
-    // Create a new user
-    public function createUser($name, $lastName, $email, $password, $role) {
+  
+
+    public function createUser($name, $lastName, $email, $password, $role , $statusCompte, $fac, $domaine, $photoName) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $this->pdo->prepare("INSERT INTO utilisateur (name, last_name, email, password, role) VALUES (?, ?, ?, ?, ?)");
-        return $stmt->execute([$name, $lastName, $email, $hashedPassword, $role]);
+        $stmt = $this->pdo->prepare("INSERT INTO utilisateur (name, last_name, email, password, role, status_compte, fac, domaine, photo) VALUES (?, ?, ?, ?, ?,?, ?, ?, ?)");
+        return $stmt->execute([$name, $lastName, $email, $hashedPassword, $role, $statusCompte, $fac, $domaine, $photoName]);
     }
-    public function createclient($name, $lastName, $email, $password) {
+    public function createclient($name, $lastName, $email, $password , $statusCompte, $fac, $domaine, $photoName) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $this->pdo->prepare("INSERT INTO utilisateur (name, last_name, email, password, role) VALUES (?, ?, ?, ?, 0)");
-        return $stmt->execute([$name, $lastName, $email, $hashedPassword]);
+        $stmt = $this->pdo->prepare("INSERT INTO utilisateur (name, last_name, email, password, role ,status_compte, fac, domaine, photo) VALUES (?, ?, ?, ?, 0,?, ?, ?, ?)");
+        return $stmt->execute([$name, $lastName, $email, $hashedPassword ,$statusCompte, $fac, $domaine, $photoName]);
     }
 
     // Read all users
@@ -26,7 +27,7 @@ class UserController {
         $stmt = $this->pdo->query("SELECT * FROM utilisateur");
         $users = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $users[] = new User($row['id'], $row['name'], $row['last_name'], $row['email'], null, $row['role']);
+            $users[] = new User($row['id'], $row['name'], $row['last_name'], $row['email'],  null, $row['role'],  $row['status_compte'], $row['photo']  , $row['fac'], $row['domaine'] );
         }
         return $users;
     }
@@ -69,6 +70,11 @@ class UserController {
             $_SESSION['user_role'] = $user['role'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_last_name'] = $user['last_name']; 
+            $_SESSION['photo'] = $user['photo'];
+            $_SESSION['status_compte'] = $user['status_compte'];
+            $_SESSION['fac'] = $user['fac']; 
+            $_SESSION['domaine'] = $user['domaine']; 
+
 
     
             // Redirection en fonction du rôle de l'utilisateur
