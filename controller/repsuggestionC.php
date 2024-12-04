@@ -6,7 +6,9 @@ class ReponseSuggestionC {
     // Récupérer toutes les réponses
     public function listReponses() {
         $db = config::getConnexion();
-        $sql = "SELECT * FROM reponse_suggestion";
+        $sql = "SELECT rs.id_rep_sugges, rs.reponse, rs.date_reponse, rs.id_suggestion, s.contenu 
+                FROM reponse_suggestion rs
+                INNER JOIN suggestions s ON rs.id_suggestion = s.id_suggestion";
         try {
             $list = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             return $list;
@@ -14,6 +16,7 @@ class ReponseSuggestionC {
             die('Erreur : ' . $e->getMessage());
         }
     }
+    
 
     // Ajouter une réponse
     public function addReponse($reponse) {

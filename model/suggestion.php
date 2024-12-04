@@ -7,13 +7,13 @@ class Suggestion {
     private $type_feedback;
     private $id_utilisateur;
 
-    public function __construct($id = null, $contenu = null, $date = null, $statut = null, $type = null, $user_id = null) {
-        $this->id_suggestion = $id;
+    public function __construct($id_suggestion, $contenu, $date_soumission, $statut, $type_feedback, $id_utilisateur) {
+        $this->id_suggestion = $id_suggestion;
         $this->contenu = $contenu;
-        $this->date_soumission = $date;
+        $this->date_soumission = $date_soumission;
         $this->statut = $statut;
-        $this->type_feedback = $type;
-        $this->id_utilisateur = $user_id;
+        $this->type_feedback = $type_feedback;
+        $this->id_utilisateur = $id_utilisateur;
     }
 
     // Getters

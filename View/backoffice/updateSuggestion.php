@@ -102,5 +102,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById('updateSuggestionForm').addEventListener('submit', function(event) {
+            const contenu = document.getElementById('contenu').value.trim();
+            const typeFeedback = document.getElementById('type_feedback').value;
+            const statut = document.getElementById('statut').value;
+
+            // Validate 'Contenu' field (should not be empty)
+            if (!contenu) {
+                alert('Veuillez entrer le contenu.');
+                event.preventDefault();
+            }
+            // Validate 'Type de feedback' field (should not be empty)
+            else if (!typeFeedback) {
+                alert('Veuillez sélectionner un type de feedback.');
+                event.preventDefault();
+            }
+            // Validate 'Statut' field (should not be empty)
+            else if (!statut) {
+                alert('Veuillez sélectionner un statut.');
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
