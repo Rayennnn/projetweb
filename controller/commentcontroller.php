@@ -1,30 +1,28 @@
 <?php
-require_once 'CommentModel.php';
+require_once 'EventDispatcher.php';
+require_once 'EmailNotificationListener.php';
+require_once '../model/comment model.php';
 
 class CommentController {
-    private $model;
+    private $dispatcher;
 
-    public function __construct($pdo) {
-        $this->model = new CommentModel($pdo);
+    public function __construct() {
+        $this->dispatcher = new EventDispatcher();
+
+        // Add listener for comment submission
+        $this->dispatcher->addListener('comment.submitted', [new EmailNotificationListener(), 'onCommentSubmitted']);
     }
 
-    public function handleRequest() {
-        $method = $_SERVER['REQUEST_METHOD'];
-        $response = ['status' => 'error', 'message' => 'Invalid Request'];
+    public function submitComment($commentData) {
+        $model = new CommentModel();
+        $isSaved = $model->saveComment($commentData['name'], $commentData['email'], $commentData['comment']);
 
-        if ($method === 'POST') {
-            $data = json_decode(file_get_contents('php://input'), true);
-            if ($this->model->createComment($data)) {
-                $response = ['status' => 'success', 'message' => 'Comment added successfully'];
-            }
-        } elseif ($method === 'DELETE') {
-            $comment_id = $_GET['comment_id'] ?? null;
-            if ($comment_id && $this->model->deleteComment($comment_id)) {
-                $response = ['status' => 'success', 'message' => 'Comment deleted successfully'];
-            }
+        if ($isSaved) {
+            // Dispatch event for comment submission
+            $this->dispatcher->dispatch('comment.submitted', $commentData);
         }
 
-        echo json_encode($response);
+        return $isSaved;
     }
 }
 ?>

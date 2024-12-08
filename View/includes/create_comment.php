@@ -1,6 +1,7 @@
 <?php
 require_once 'db_connect.php';
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $json = file_get_contents('php://input');
   $data = json_decode($json, true);
@@ -20,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     die('Invalid email address!');
   }
+  
 
   try {
     $stmt = $pdo->prepare('INSERT INTO comments (email, username, job, type, comment, stars) VALUES (:email, :username, :job, :type, :comment, :stars)');
