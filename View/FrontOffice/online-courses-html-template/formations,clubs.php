@@ -9,7 +9,7 @@ $clubC = new ClubC();
 $clubs = $clubC->getAllClubs();
 
 // Configuration de la pagination
-$clubs_per_page = 10; // Nombre de clubs par page
+$clubs_per_page = 3; // Nombre de clubs par page
 $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($current_page - 1) * $clubs_per_page;
 
@@ -24,6 +24,14 @@ $clubs_page = array_slice($clubs, $offset, $clubs_per_page);
 // Récupérer les formations
 $formationC = new Formationc();
 $formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // Récupérer toutes les formations
+
+if (isset($_GET['id_club']) && !empty($_GET['id_club'])) {
+    $id_club = intval($_GET['id_club']);
+    // Récupérer les formations du club sélectionné
+    $formations = $clubC->afficherFormations($id_club);
+}
+
+
 ?>
 
 
@@ -56,6 +64,24 @@ $formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // R�
 
     <!-- Formations,clubs CSS -->
     <link href="formations,clubs.css" rel="stylesheet">
+    <script src="/clubClicks.js"></script> <!-- ou clubClicks.js -->
+    <script>
+        function loadClubs(page) {
+            fetch('formations,clubs.php?page=' + page) // Remplacez par le chemin correct vers votre fichier PHP
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text(); // Récupérer le contenu HTML
+                })
+                .then(html => {
+                    // Remplacer le contenu de la section des clubs avec le nouveau contenu
+                    document.getElementById('clubsContainer').innerHTML = html; // Assurez-vous d'avoir un conteneur avec cet ID
+                })
+                .catch(error => console.error('There was a problem with the fetch operation:', error));
+        }
+    </script>
+    
 </head>
 
 <body>
@@ -138,37 +164,36 @@ $formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // R�
                     </div>
 
                     <!-- Clubs Page -->
-                    <div class="container mt-4 clubs-page" id="clubsPage<?php echo $current_page; ?>">
-                        <div class="row justify-content-center">
-                            <?php foreach ($clubs_page as $club): ?>
-                                <div class="col-auto">
-                                <div class="club-tile" onclick="window.location.href='/PROJETWEB/View/FrontOffice/online-courses-html-template/club-details.php?id=<?php echo htmlspecialchars($club['id_club']); ?>';">
-                                        <div class="cube">
-                                            <div class="face front">
-                                                <img src="/PROJETWEB/uploads/<?php echo htmlspecialchars($club['logo']); ?>" alt="<?php echo htmlspecialchars($club['nom_club']); ?>" class="club-logo">
-                                            </div>
-                                            <div class="face back">
-                                                <div class="text"><?php echo htmlspecialchars($club['nom_club']); ?></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                            <!-- Pagination -->
                     <div class="container mt-5">
-                        <div class="pagination-container text-center">
-                            <div class="pagination">
-                                <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                                    <button class="page-btn <?php echo ($i == $current_page) ? 'active' : ''; ?>" 
-                                            onclick="window.location.href='?page=<?php echo $i; ?>'">
-                                        <?php echo $i; ?>
-                                    </button>
-                                <?php endfor; ?>
+        <div id="clubsContainer" class="row justify-content-center">
+            <?php foreach ($clubs_page as $club): ?>
+                <div class="col-auto">
+                    <div class="club-tile" onclick="incrementClubClicks(<?php echo htmlspecialchars($club['id_club']); ?>);">
+                        <div class="cube">
+                            <div class="face front">
+                                <img src="/PROJETWEB/uploads/<?php echo htmlspecialchars($club['logo']); ?>" alt="<?php echo htmlspecialchars($club['nom_club']); ?>" class="club-logo">
+                            </div>
+                            <div class="face back">
+                                <div class="text"><?php echo htmlspecialchars($club['nom_club']); ?></div>
                             </div>
                         </div>
                     </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="pagination-container text-center">
+            <div class="pagination">
+                <?php for($i = 1; $i <= $total_pages; $i++): ?>
+                    <button class="page-btn <?php echo ($i == $current_page) ? 'active' : ''; ?>" 
+                            onclick="loadClubs(<?php echo $i; ?>)">
+                        <?php echo $i; ?>
+                    </button>
+                <?php endfor; ?>
+            </div>
+        </div>
+    </div>
+    
 
                     <!-- Séparateur -->
                     <div class="section-divider mt-5 mb-5"></div>
@@ -186,28 +211,28 @@ $formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // R�
                     <div class="row mt-5 formations-container">
                     <div class="row mt-5 formations-container">
                     <?php foreach ($formations as $formation): ?>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="formation-card">
-                                <div class="formation-image">
-                                    <img src="/PROJETWEB/uploads/<?php echo htmlspecialchars($formation['image']); ?>" alt="<?php echo htmlspecialchars($formation['nom_formation']); ?>" class="formation-image">
-                                </div>
-                                <div class="formation-content">
-                                    <h3><?php echo htmlspecialchars($formation['nom_formation']); ?></h3>
-                                    <?php echo htmlspecialchars($formation['description_formation']); ?><br>
-                                    <p><strong>Organisme :</strong> <?php echo htmlspecialchars($formation['organisme']); ?></p>
-                                    <p><strong>Prix :</strong> <?php echo htmlspecialchars($formation['prix']); ?> TND</p>
-                                    
-                                    <?php
-                                    // Récupérer le nom du club à partir de l'ID du club
-                                    $nom_club = $clubC->getNomClubById($formation['id_club']);
-                                    ?>
-                                    <p><strong>Club :</strong> <?php echo htmlspecialchars($nom_club); ?></p> <!-- Afficher le nom du club -->
-                                    
-                                    <!-- Bouton pour visiter le site -->
-                                    <a href="<?php echo htmlspecialchars($formation['lien_formation']); ?>" class="btn-formation" target="_blank">Visitez le site</a>
-                                </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="formation-card">
+                            <div class="formation-image">
+                                <img src="/PROJETWEB/uploads/<?php echo htmlspecialchars($formation['image']); ?>" alt="<?php echo htmlspecialchars($formation['nom_formation']); ?>" class="formation-image">
+                            </div>
+                            <div class="formation-content">
+                                <h3><?php echo htmlspecialchars($formation['nom_formation']); ?></h3>
+                                <p><strong>Description :</strong> <?php echo !empty($formation['description']) ? htmlspecialchars($formation['description']) : 'Description non disponible'; ?></p>
+                                <p><strong>Organisme :</strong> <?php echo htmlspecialchars($formation['organisme']); ?></p>
+                                <p><strong>Prix :</strong> <?php echo htmlspecialchars($formation['prix']); ?> TND</p>
+                                
+                                <?php
+                                // Récupérer le nom du club à partir de l'ID du club
+                                $nom_club = $clubC->getNomClubById($formation['id_club']);
+                                ?>
+                                <p><strong>Club :</strong> <?php echo htmlspecialchars($nom_club); ?></p> <!-- Afficher le nom du club -->
+                                
+                                <!-- Bouton pour visiter le site -->
+                                <a href="<?php echo htmlspecialchars($formation['lien']); ?>" class="btn-formation" target="_blank">Visitez le site</a>
                             </div>
                         </div>
+                    </div>
                     <?php endforeach; ?>
                 </div>
                     <!-- Pagination des formations -->
@@ -223,7 +248,7 @@ $formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // R�
                     <!-- Formulaire de recherche de formations par club -->
                     <div class="container mt-5">
                         <h2>Rechercher des Formations par Club</h2>
-                        <form method="GET" action="/PROJETWEB/View/BackOffice/searchFormation.php">
+                        <form method="GET" action="formations,clubs.php">
                             <label for="id_club">Sélectionnez un club :</label>
                             <select name="id_club" id="id_club">
                                 <option value="">-- Choisissez un club --</option>
@@ -237,21 +262,37 @@ $formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // R�
                             </select>
                             <button type="submit">Rechercher</button>
                         </form>
+                    </div>
                         <!-- Affichage des formations -->
+                        <div class="row mt-5 formations-container">
                         <?php if (!empty($formations)): ?>
-                            <h2>Formations disponibles pour le club sélectionné :</h2>
-                            <ul>
-                                <?php foreach ($formations as $formation): ?>
-                                    <li>
-                                        <strong><?php echo htmlspecialchars($formation['nom_formation']); ?></strong><br>
-                                        <?php echo htmlspecialchars($formation['description_formation']); ?><br>
-                                        Organisme : <?php echo htmlspecialchars($formation['organisme']); ?><br>
-                                        Prix : <?php echo htmlspecialchars($formation['prix']); ?> TND<br>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php elseif (isset($id_club)): ?>
-                            <p>Aucune formation trouvée pour ce club.</p>
+                            <h2>Formations disponibles :</h2>
+                            <?php foreach ($formations as $formation): ?>
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="formation-card">
+                                        <div class="formation-image">
+                                            <img src="/PROJETWEB/uploads/<?php echo htmlspecialchars($formation['image']); ?>" alt="<?php echo htmlspecialchars($formation['nom_formation']); ?>" class="formation-image">
+                                        </div>
+                                        <div class="formation-content">
+                                            <h3><?php echo htmlspecialchars($formation['nom_formation']); ?></h3>
+                                            <p><strong>Description :</strong> <?php echo !empty($formation['description']) ? htmlspecialchars($formation['description']) : 'Description non disponible'; ?></p>
+                                            <p><strong>Organisme :</strong> <?php echo htmlspecialchars($formation['organisme']); ?></p>
+                                            <p><strong>Prix :</strong> <?php echo htmlspecialchars($formation['prix']); ?> TND</p>
+                                            
+                                            <?php
+                                            // Récupérer le nom du club à partir de l'ID du club
+                                            $nom_club = $clubC->getNomClubById($formation['id_club']);
+                                            ?>
+                                            <p><strong>Club :</strong> <?php echo htmlspecialchars($nom_club); ?></p> <!-- Afficher le nom du club -->
+                                            
+                                            <!-- Bouton pour visiter le site -->
+                                            <a href="<?php echo htmlspecialchars($formation['lien']); ?>" class="btn-formation" target="_blank">Visitez le site</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>Aucune formation trouvée.</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -375,6 +416,8 @@ $formations = $formationC->getAllFormations()->fetchAll(PDO::FETCH_ASSOC); // R�
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+    
 </body>
 
 </html>

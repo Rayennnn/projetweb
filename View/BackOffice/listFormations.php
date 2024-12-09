@@ -1,7 +1,10 @@
 <?php
 include ('../../Controller/formationC.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/Controller/clubC.php');
 $formationC = new Formationc();
 $list = $formationC->getAllFormations();
+$clubC = new ClubC();
 ?>
 
 <!doctype html>
@@ -96,7 +99,9 @@ $list = $formationC->getAllFormations();
                                                         <i class="fa fa-link"></i> Visiter
                                                     </a>
                                                 </td>
-                                                <td><?php echo $formation['id_club']; ?></td>
+                                                <!-- Récupérer le nom du club à partir de l'ID du club -->
+                                                <?php $nom_club = $clubC->getNomClubById($formation['id_club']);?> 
+                                                <td><?php echo htmlspecialchars($nom_club); ?></td>
                                                 <td>
                                                     <a href="updateFormation.php?id_formation=<?php echo $formation['id_formation']; ?>" class="btn btn-warning btn-sm">
                                                         <i class="fa fa-pencil"></i>
