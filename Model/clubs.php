@@ -11,6 +11,7 @@ class Club
     private ?string $lieu = null;
     private ?string $logo = null;
     private ?string $lien = null;
+    private ?int $clicks = null;
 
     // Constructeur pour initialiser les attributs
     public function __construct(
@@ -21,7 +22,8 @@ class Club
         ?string $categorie = null,
         ?string $lieu = null,
         ?string $logo = null,
-        ?string $lien = null
+        ?string $lien = null,
+        ?int $clicks = null,
     ) {
         $this->id_club = $id_club;
         $this->nom_club = $nom_club;
@@ -31,6 +33,7 @@ class Club
         $this->lieu = $lieu;
         $this->logo = $logo;
         $this->lien = $lien;
+        $this->clicks = $clicks;
     }
 
     // Getters et setters pour chaque attribut
@@ -120,6 +123,15 @@ class Club
     public function setLien(?string $lien): self
     {
         $this->lien = $lien;
+        return $this;
+    }
+    public function getClicks(): ?int
+    {
+        return $this->clicks;
+    }
+    public function setClicks(?int $clicks): self
+    {
+        $this->clicks = $clicks;
         return $this;
     }
 }

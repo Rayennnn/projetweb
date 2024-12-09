@@ -134,7 +134,7 @@ class Clubc
                     f.organisme,
                     f.prix,
                     f.image,
-                    f.lien AS lien_formation
+                    f.lien AS lien_formation,
                 FROM 
                     formations f
                 WHERE 
@@ -148,6 +148,30 @@ class Clubc
             return [];
         }
     }
+    public function incrementClicks($id_club) {
+        $db = config::getConnexion(); // Obtenir la connexion à la base de données
+        $sql = "UPDATE `clubs et associations` SET clicks = clicks + 1 WHERE id_club = :id_club"; // Assurez-vous que le nom de la table est correct
+        
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':id_club', $id_club, PDO::PARAM_INT);
+            
+            // Vérifier si la requête est bien exécutée
+            if ($stmt->execute()) {
+                echo "Mise à jour réussie : " . $stmt->rowCount() . " ligne(s) affectée(s).";
+            } else {
+                echo "Erreur lors de la mise à jour.";
+            }
+            
+        } catch (Exception $e) {
+            error_log('Erreur lors de l\'incrémentation des clics : ' . $e->getMessage());
+            echo 'Erreur lors de l\'incrémentation des clics : ' . $e->getMessage();
+        }
+    }
+    
+    
+    
 }
+
 
 ?>
