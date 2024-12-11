@@ -186,6 +186,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                 </div>
 
+                                <!-- Date de la formation -->
+                                <div class="form-group">
+                                    <label for="date_formation">Date de la formation :</label>
+                                    <input type="date" class="form-control" id="date_formation" 
+                                           name="date_formation" required>
+                                </div>
+
                                 <!-- Bouton de soumission -->
                                 <div class="form-group">
                                     <div class="col-lg-9 col-lg-offset-3">

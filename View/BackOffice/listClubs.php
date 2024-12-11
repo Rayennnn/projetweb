@@ -144,16 +144,8 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
                             </section>
                         </div>
                     </div>
-                </section>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            <h2 class="panel-title">Clubs les Plus Populaires</h2>
-                        </header>
-                        <div class="panel-body">
-                            <div class="popular-clubs-container">
+                    <div class="popular-clubs-container">
+                    <h2 class="panel-title">Clubs les Plus Populaires</h2>
                                 <?php foreach ($topClubs as $club): 
                                     $percentage = $totalClicks > 0 ? ($club['clicks'] / $totalClicks) * 100 : 0; ?>
                                 <div class="popular-club">
@@ -162,10 +154,9 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
                                 </div>
                                 <?php endforeach; ?>
                             </div>
-                        </div>
-                    </section>
-                </div>
+                </section>
             </div>
+            
         </section>
 
         <!-- Vendor -->
@@ -189,14 +180,20 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
         <style>
             .popular-clubs-container {
                 display: flex;
+                justify-content: right;
                 overflow: hidden;
                 position: relative;
-                animation: slide 10s infinite alternate;
+                animation: slide 5s infinite alternate;
+                background-color: #f0f4f8; /* Couleur de fond douce */
+                padding: 20px; /* Rembourrage autour du conteneur */
+                border-radius: 10px; /* Coins arrondis */
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+                margin-top: 0;
             }
 
             .popular-club {
                 border: 1px solid #ddd;
-                border-radius: 5px;
+                border-radius: 50px;
                 padding: 15px;
                 margin: 10px;
                 text-align: center;
@@ -205,16 +202,27 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
                 flex: 0 0 auto; /* Ne pas permettre à l'élément de se réduire */
                 transition: transform 0.5s ease;
             }
+            .popular-club:hover {
+            transform: translateY(-5px); /* Légère élévation au survol */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée au survol */
+            }
+
+            h3 {
+            color: #b22222; /* Rouge foncé */
+            font-size: 1.5em; /* Taille de la police */
+            margin-bottom: 10px; /* Espacement inférieur */
+            font-weight: bold; /* Mettre en gras */
+            }
 
             .percentage {
-                font-size: 1.5em; /* Agrandir la taille de la police */
+                font-size: 1.2em; /* Taille de la police */
                 font-weight: bold; /* Mettre en gras */
-                color: #007bff; /* Couleur du texte */
+                color: #000000; /* Noir */
             }
 
             @keyframes slide {
                 0% { transform: translateX(0); }
-                100% { transform: translateX(-30%); }
+                100% { transform: translateX(-20%); }
             }
         </style>
         <script>

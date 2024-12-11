@@ -124,28 +124,19 @@ class Clubc
     }
 
     // Fonction pour afficher les formations d'un club
-    public function afficherFormations($id_club)
-    {
-        $db = config::getConnexion();
-        $sql = "SELECT 
-                    f.id_formation,
-                    f.nom_formation,
-                    f.description AS description_formation,
-                    f.organisme,
-                    f.prix,
-                    f.image,
-                    f.lien AS lien_formation,
-                FROM 
-                    formations f
-                WHERE 
-                    f.id_club = :id_club";
+    public function afficherFormations($id_club) {
         try {
-            $query = $db->prepare($sql);
+            $db = config::getConnexion();
+            $query = $db->prepare(
+                "SELECT id_formation, nom_formation, description, organisme, prix, 
+                        image, lien, id_club, date 
+                 FROM formations 
+                 WHERE id_club = :id_club"
+            );
             $query->execute(['id_club' => $id_club]);
-            return $query->fetchAll();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo 'Erreur : ' . $e->getMessage();
-            return [];
+            die('Erreur: '.$e->getMessage());
         }
     }
     public function incrementClicks($id_club) {

@@ -78,6 +78,7 @@ $clubC = new ClubC();
                                                 <th>Image</th>
                                                 <th>Lien</th>
                                                 <th>ID Club</th>
+                                                <th>Date</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -102,6 +103,14 @@ $clubC = new ClubC();
                                                 <!-- Récupérer le nom du club à partir de l'ID du club -->
                                                 <?php $nom_club = $clubC->getNomClubById($formation['id_club']);?> 
                                                 <td><?php echo htmlspecialchars($nom_club); ?></td>
+                                                <td><?php 
+                                                    if (!empty($formation['date'])) {
+                                                        $date = new DateTime($formation['date']);
+                                                        echo $date->format('d/m/Y');
+                                                    } else {
+                                                        echo "Date non définie";
+                                                    }
+                                                ?></td>
                                                 <td>
                                                     <a href="updateFormation.php?id_formation=<?php echo $formation['id_formation']; ?>" class="btn btn-warning btn-sm">
                                                         <i class="fa fa-pencil"></i>
