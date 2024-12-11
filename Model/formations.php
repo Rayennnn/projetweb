@@ -11,6 +11,7 @@ class Formation
     private ?string $image = null; // Remplacé de logo à image
     private ?string $lien = null;
     private ?int $id_club = null; // ID de club pour la clé étrangère
+    private $date_formation;
 
     // Constructeur pour initialiser les attributs
     public function __construct(
@@ -21,7 +22,8 @@ class Formation
         ?int $prix = null,
         ?string $image = null, // Remplacé de logo à image
         ?string $lien = null,
-        ?int $id_club = null
+        ?int $id_club = null,
+        string $date_formation
     ) {
         $this->id_formation = $id_formation;
         $this->nom_formation = $nom_formation;
@@ -31,6 +33,7 @@ class Formation
         $this->image = $image; // Remplacé de logo à image
         $this->lien = $lien;
         $this->id_club = $id_club;
+        $this->date_formation = $date_formation;
     }
 
     // Getters et setters pour chaque attribut
@@ -120,6 +123,16 @@ class Formation
     public function setIdClub(?int $id_club): self
     {
         $this->id_club = $id_club;
+        return $this;
+    }
+    public function getDateFormation(): string  // Retourne toujours une string
+    {
+        return $this->date_formation;
+    }
+
+    public function setDateFormation(string $date_formation): self  // Accepte uniquement une string
+    {
+        $this->date_formation = $date_formation;
         return $this;
     }
 }

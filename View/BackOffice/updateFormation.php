@@ -14,7 +14,7 @@ if (isset($_GET['id_formation'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Gestion de l'image
-        $image = $formation['logo']; // Garde l'ancienne image par défaut
+        $image = $formation['image']; // Changé de 'logo' à 'image'
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $image = uniqid() . '_' . $_FILES['image']['name'];
             $upload_dir = "../../uploads/";
@@ -39,7 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $prixValue,
             $image,
             $_POST['lien'],
-            !empty($_POST['id_club']) ? (int)$_POST['id_club'] : null
+            !empty($_POST['id_club']) ? (int)$_POST['id_club'] : null,
+            $_POST['date_formation'] // Ajout de la date
         );
 
         // Tentative de mise à jour
@@ -164,12 +165,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <div class="col-lg-9">
                                                 <input type="file" class="form-control" name="image">
                                                 <span class="error-message" id="imageError"></span>
-                                                <?php if (!empty($formation['logo'])): ?>
+                                                <?php if (!empty($formation['image'])): ?>
                                                     <div id="currentImage">
-                                                        <img src="../../uploads/<?php echo htmlspecialchars($formation['logo']); ?>" style="max-width: 200px; margin-top: 10px;">
+                                                        <img src="../../uploads/<?php echo htmlspecialchars($formation['image']); ?>" 
+                                                             style="max-width: 200px; margin-top: 10px;">
                                                     </div>
                                                 <?php endif; ?>
-                                                <div id="imagePreview"></div>
                                             </div>
                                         </div>
 
@@ -188,6 +189,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <div class="col-lg-9">
                                                 <input type="number" class="form-control" name="id_club" value="<?php echo htmlspecialchars($formation['id_club']); ?>">
                                                 <span class="error-message" id="idClubError"></span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Date de la formation -->
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 control-label text-lg-right pt-2">Date de la formation</label>
+                                            <div class="col-lg-9">
+                                                <input type="date" class="form-control" name="date_formation" 
+                                                       value="<?php echo !empty($formation['date']) ? htmlspecialchars($formation['date']) : ''; ?>" 
+                                                       required>
+                                                <span class="error-message" id="dateError"></span>
                                             </div>
                                         </div>
 

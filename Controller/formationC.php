@@ -65,30 +65,33 @@ class Formationc
     {
         try {
             $db = config::getConnexion();
-            $sql = "UPDATE `formations` SET 
+            $sql = "UPDATE formations SET 
                     nom_formation = :nom_formation,
                     description = :description,
                     organisme = :organisme,
                     prix = :prix,
                     image = :image,
                     lien = :lien,
-                    id_club = :id_club
+                    id_club = :id_club,
+                    date = :date_formation  
                     WHERE id_formation = :id_formation";
             
             $query = $db->prepare($sql);
-            return $query->execute([
+            $query->execute([
                 'id_formation' => $formation->getIdFormation(),
                 'nom_formation' => $formation->getNomFormation(),
                 'description' => $formation->getDescription(),
                 'organisme' => $formation->getOrganisme(),
                 'prix' => $formation->getPrix(),
-                'image' => $formation->getimage(),
+                'image' => $formation->getImage(),
                 'lien' => $formation->getLien(),
                 'id_club' => $formation->getIdClub(),
+                'date_formation' => $formation->getDateFormation()
             ]);
             
+            return true;
         } catch (Exception $e) {
-            error_log('Erreur : ' . $e->getMessage());
+            echo 'Erreur: ' . $e->getMessage();
             return false;
         }
     }
@@ -107,6 +110,41 @@ class Formationc
             echo 'Erreur : ' . $e->getMessage();
         }
     }
+    public function getNextFormationDate() {
+    $sql = "SELECT MIN(date) as next_date FROM formations";
+    $db = config::getConnexion();
+
+    try {
+        $query = $db->query($sql);
+        return $query->fetch(PDO::FETCH_ASSOC)['next_date'];
+    } catch (Exception $e) {
+        die('Erreur: '.$e->getMessage());
+    }
+    }
+    public function getNextFormationDetails() {
+        $sql = "SELECT id_formation, nom_formation, image, date FROM formations ORDER BY date ASC LIMIT 1";
+        $db = config::getConnexion();
+
+        try {
+            $query = $db->query($sql);
+            return $query->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die('Erreur: '.$e->getMessage());
+        }
+    }
+    public function deleteFormationdate($id_formation) {
+        $db = config::getConnexion();
+        $sql = "DELETE FROM formations WHERE id_formation = :id_formation";
+    
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':id_formation', $id_formation, PDO::PARAM_INT);
+            $query->execute();
+        } catch (Exception $e) {
+            die('Erreur: '.$e->getMessage());
+        }
+    }
 }
+
 
 ?>
