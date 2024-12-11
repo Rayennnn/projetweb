@@ -3,6 +3,13 @@ include '../../controller/suggestionC.php';
 
 $suggestionC = new SuggestionC();
 $stats = $suggestionC->getStatistiques();
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$limit = 6; // Ou toute autre limite souhaitée
+$offset = ($page - 1) * $limit;
+
+// Appeler la méthode avec les arguments nécessaires
+$suggestions = $suggestionC->getSuggestions($limit, $offset);
+
 ?>
 
 <!DOCTYPE html>
@@ -153,8 +160,40 @@ $stats = $suggestionC->getStatistiques();
             </div>
 
         </div>
+                <div class="statistics-section">
+            <h3>Statistiques des Suggestions</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        
+                        <th>Suggestion</th>
+                        <th>Date de Soumission</th>
+                        <th>Likes</th>
+                        <th>Dislikes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                        // Assurez-vous de vérifier si $suggestions contient des données
+                        if (isset($suggestions) && is_array($suggestions)) {
+                            foreach ($suggestions as $index => $suggestion) {
+                                echo "<tr>
+                                    
+                                        <td>{$suggestion['contenu']}</td>
+                                        <td>{$suggestion['date_soumission']}</td>
+                                        <td>{$suggestion['likes']}</td>
+                                        <td>{$suggestion['dislikes']}</td>
+                                    </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>Aucune suggestion disponible.</td></tr>";
+                        }
+                        ?>
+                </tbody>
+            </table>
+        </div>
     </div>
-
+                
     <script>
            const chartOptions = {
     responsive: true,
@@ -193,13 +232,13 @@ new Chart(document.getElementById('statusChart'), {
                 display: true,
                 text: 'Répartition par statut',
                 font: {
-                    size: 18 // Taille du texte du titre
+                    size: 24 // Taille du texte du titre
                 }
             },
             legend: {
                 labels: {
                     font: {
-                        size: 14 // Taille du texte des légendes
+                        size: 20 // Taille du texte des légendes
                     }
                 }
             }
@@ -216,7 +255,7 @@ new Chart(document.getElementById('typeChart'), {
                 <?php echo $stats['par_type']['suggestion']['count']; ?>,
                 <?php echo $stats['par_type']['reclamation']['count']; ?>
             ],
-            backgroundColor: ['#3498db', '#9b59b6']
+            backgroundColor: ['#3498db', '#e6680e']
         }]
     },
     options: {
@@ -227,13 +266,13 @@ new Chart(document.getElementById('typeChart'), {
                 display: true,
                 text: 'Répartition par type',
                 font: {
-                    size: 18 // Taille du texte du titre
+                    size: 24 // Taille du texte du titre
                 }
             },
             legend: {
                 labels: {
                     font: {
-                        size: 14 // Taille du texte des légendes
+                        size: 20 // Taille du texte des légendes
                     }
                 }
             }
@@ -241,8 +280,51 @@ new Chart(document.getElementById('typeChart'), {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const likeButtons = document.querySelectorAll('.like-btn');
+    const dislikeButtons = document.querySelectorAll('.dislike-btn');
+
+    // Fonction pour gérer les votes
+    function sendVote(id, action) {
+        fetch('/projetweb/view/backoffice/updateVotes.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${id}&action=${action}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Rafraîchir la page ou mettre à jour les éléments du DOM pour refléter les nouveaux votes
+                location.reload(); // Recharger la page pour voir les votes mis à jour
+            } else {
+                alert('Une erreur est survenue lors du vote');
+            }
+        })
+        .catch(error => console.error('Erreur lors du vote:', error));
+    }
+
+    // Ajouter les écouteurs d'événements sur les boutons "Like"
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            sendVote(id, 'like');
+        });
+    });
+
+    // Ajouter les écouteurs d'événements sur les boutons "Dislike"
+    dislikeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            sendVote(id, 'dislike');
+        });
+    });
+});
 
 
     </script>
+    
+
 </body>
 </html>

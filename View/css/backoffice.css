@@ -82,10 +82,10 @@ body {
 }
 
 /* Contenu principal */
-.main-content {
-    margin-left: 260px;
+.main-content{
+   
     padding: 20px;
-    width: calc(100% - 260px);
+    margin-left: 260px; 
     transition: all 0.3s ease;
 }
 
@@ -383,4 +383,80 @@ tr:hover {
 canvas#statusChart, canvas#typeChart {
     max-height: 250px !important;
     width: 100% !important;
+}
+.filter-form {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 80px;
+    padding: 14px 20px;
+    background-color: #fff;
+    border: 1.2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    max-width: 1200px; /* Limiter la largeur du formulaire */
+    margin: 15 auto; /* Centrer le formulaire */
+}
+
+/* Groupes de champs */
+.filter-form .form-group {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    margin-right: 15px;
+    flex-basis: 220px; /* Limiter la largeur des éléments de formulaire */
+}
+
+/* Labels des champs */
+.filter-form .form-group label {
+    margin-bottom: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Sélecteurs déroulants */
+.filter-form .form-group select {
+    padding: 7px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #333;
+    width: 100%; /* Adapter la largeur */
+}
+
+/* Boutons */
+.filter-form .btn {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.filter-form .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.filter-form .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.filter-form .btn-reset {
+    background-color: #6c757d;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.filter-form .btn-reset:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
 }
