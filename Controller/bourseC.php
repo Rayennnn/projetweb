@@ -10,8 +10,8 @@ class BourseC {
 
     public function ajouterBourse($bourse) {
         try {
-            $query = "INSERT INTO bourse (nom_bourse, description, organisme, date_limite, age_limite, niveau_etude, pays, lien, image, id_prog) 
-                      VALUES (:nom_bourse, :description, :organisme, :date_limite, :age_limite, :niveau_etude, :pays, :lien, :image, :id_prog)";
+            $query = "INSERT INTO bourse (nom_bourse, description, organisme, date_limite, age_limite, niveau_etude, pays, lien, image, prog, frais) 
+                      VALUES (:nom_bourse, :description, :organisme, :date_limite, :age_limite, :niveau_etude, :pays, :lien, :image, :prog, :frais)";
             
             $stmt = $this->pdo->prepare($query);
             
@@ -25,12 +25,13 @@ class BourseC {
                 'pays' => $bourse->getPays(),
                 'lien' => $bourse->getLien(),
                 'image' => $bourse->getImage(),
-                'id_prog' => $bourse->getIdProg()
+                'prog' => $bourse->getProg(),
+                'frais' =>$bourse->getfrais()
             ]);
             
             return true;
         } catch (PDOException $e) {
-            echo 'Erreur: ' . $e->getMessage();
+            echo 'Erreur lors de l\'ajout de la bourse : ' . $e->getMessage();
             return false;
         }
     }
@@ -71,7 +72,8 @@ class BourseC {
                          niveau_etude = :niveau_etude,
                          pays = :pays,
                          lien = :lien,
-                         id_prog = :id_prog";
+                         frais = :frais";
+                         
             
             $params = [
                 'id' => $bourse->getId(),
@@ -83,7 +85,8 @@ class BourseC {
                 'niveau_etude' => $bourse->getNiveauEtude(),
                 'pays' => $bourse->getPays(),
                 'lien' => $bourse->getLien(),
-                'id_prog' => $bourse->getIdProg()
+                'frais' =>$bourse->getfrais(),
+                
             ];
 
             if ($bourse->getImage()) {
@@ -128,6 +131,74 @@ class BourseC {
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function verifierProgramme($id_prog) {
+        $query = "SELECT COUNT(*) FROM programme WHERE id_prog = :id_prog";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id_prog', $id_prog);
+        $stmt->execute();
+        
+        return $stmt->fetchColumn() > 0; // Retourne true si le programme existe
+    }
+
+    public function afficherBoursesAvecProgrammes($searchTerm = '') {
+        try {
+            $query = "SELECT b.*, p.nom_prog, p.description AS prog_description
+                      FROM bourse b
+                      INNER JOIN programme p ON b.prog = p.id_prog";
+
+            if (!empty($searchTerm)) {
+                $query .= " WHERE b.nom_bourse LIKE :searchTerm";
+            }
+
+            $stmt = $this->pdo->prepare($query);
+
+            if (!empty($searchTerm)) {
+                $stmt->bindValue(':searchTerm', '%' . $searchTerm . '%');
+            }
+
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo 'Erreur: ' . $e->getMessage();
+            return []; // Retournez un tableau vide en cas d'erreur
+        }
+    }
+
+    public function getBourses() {
+        try {
+            $query = "SELECT * FROM bourse"; // Requête pour récupérer toutes les bourses
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            
+            // Récupérer les résultats et créer des objets Bourse
+            $bourses = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $bourse = new Bourse();
+                $bourse->setNomBourse($row['nom_bourse']);
+                $bourse->setDescription($row['description']);
+                $bourse->setOrganisme($row['organisme']);
+                $bourse->setDateLimite($row['date_limite']);
+                $bourse->setAgeLimite($row['age_limite']);
+                $bourse->setNiveauEtude($row['niveau_etude']);
+                $bourse->setPays($row['pays']);
+                $bourse->setFrais($row['frais']);
+                $bourse->setLien($row['lien']);
+                $bourse->setImage($row['image']);
+                $bourse->setProg($row['prog']); // Assurez-vous que prog est défini
+    
+                $bourses[] = $bourse; // Ajouter l'objet Bourse au tableau
+            }
+            
+            // Débogage : Vérifiez le nombre de bourses récupérées
+            echo "Nombre de bourses récupérées : " . count($bourses); // Ajoutez cette ligne pour déboguer
+            
+            return $bourses; // Retourner le tableau d'objets Bourse
+        } catch (PDOException $e) {
+            echo 'Erreur lors de la récupération des bourses : ' . $e->getMessage();
+            return []; // Retourner un tableau vide en cas d'erreur
+        }
     }
 }
 ?>

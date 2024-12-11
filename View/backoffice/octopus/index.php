@@ -8,7 +8,7 @@ require_once '../../../Model/programme.php';
 
 //test
 $programmeController = new ProgrammeC();
-$programmes = $programmeController->afficherProgrammesAvecBourses();
+    
 // Initialisation des contrôleurs
 $bourseC = new BourseC();
 $programmeC = new ProgrammeC();
@@ -139,6 +139,12 @@ $baseUrl = './assets/';
                         <a href="listebourse.php">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span>liste des bourses</span>
+                        </a>
+                    </li>
+                    <li class="nav-active">
+                        <a href="calcul.php">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>calculateur</span>
                         </a>
                     </li>
                     

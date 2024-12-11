@@ -8,7 +8,7 @@ require_once '../../../Model/programme.php';
 
 //test
 $programmeController = new ProgrammeC();
-$programmes = $programmeController->afficherProgrammesAvecBourses();
+
 // Initialisation des contrôleurs
 $bourseC = new BourseC();
 $programmeC = new ProgrammeC();
@@ -33,6 +33,15 @@ foreach ($programmeC->afficherProgrammes() as $programme) {
 
 // Définir le chemin de base pour les assets de manière relative
 $baseUrl = './assets/';
+
+// Créer une instance du contrôleur
+$bourseC = new BourseC();
+
+// Vérifiez si une recherche a été effectuée
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Récupérer les bourses avec les programmes
+$boursesAvecProgrammes = $bourseC->afficherBoursesAvecProgrammes($searchTerm);
 ?>
 
 
@@ -100,13 +109,50 @@ $baseUrl = './assets/';
             </div>
         </div>
     </div>
-    <form method="GET" action="listebourse.php" class="form-inline mb-3">
-                            <div class="form-group mr-2">
-                                <input type="text" name="search" class="form-control" placeholder="Rechercher une bourse" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" style="border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">Rechercher</button>
-                        </form>
-                        </header>
+    <div class="search-container">
+        <form method="GET" action="listebourse.php">
+            <input type="text" name="search" placeholder="Rechercher une bourse" />
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+</header>
+<style>
+    .search-container {
+        margin: 20px 0;
+        display: flex;
+        justify-content: flex-end; /* Aligne la barre de recherche à droite */
+    }
+
+    .search-container input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 300px; /* Largeur de la barre de recherche */
+        margin-right: 10px; /* Espace entre l'input et le bouton */
+    }
+
+    .search-container button {
+        padding: 10px 15px;
+        background-color: #007bff; /* Couleur du bouton */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .search-container button:hover {
+        background-color: #0056b3; /* Couleur du bouton au survol */
+    }
+    
+    img {
+        max-width: 100px; /* Largeur maximale */
+        max-height: 100px; /* Hauteur maximale */
+        object-fit: cover; /* Pour garder le ratio d'aspect */
+        vertical-align: middle; /* Aligne l'image au milieu de la ligne */
+        margin-right: 10px; /* Espace à droite de l'image */
+    }
+</style>
+</style>
                     
 </header>
 
@@ -139,6 +185,13 @@ $baseUrl = './assets/';
                             <span>liste des bourses</span>
                         </a>
                     </li>
+                    <li class="nav-active">
+                        <a href="calcul.php">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>calculateur</span>
+                        </a>
+                    </li>
+                    
                     
                 </ul>
             </nav>
@@ -183,30 +236,32 @@ $baseUrl = './assets/';
                                                 </a>
                                             </div>
                 <h1>les bourses</h1>
-                <table class="table table-bordered table-striped table-hover mb-none">
-                    <thead>
+                <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom de la Bourse</th>
+                    <th>Description</th>
+                    <th>Organisme</th>
+                    <th>Date Limite</th>
+                    <th>Programme</th>
+                    <th>Description du Programme</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($boursesAvecProgrammes)): ?>
+                    <?php foreach ($boursesAvecProgrammes as $bourse): ?>
                         <tr>
-                            <th>Image</th>
-                            <th>Titre</th>
-                            <th>Organisme</th>
-                            <th>Pays</th>
-                            <th>Date limite</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        // Vérifier si une recherche a été effectuée
-                        if (isset($_GET['search'])) {
-                            $searchTerm = htmlspecialchars($_GET['search']);
-                            $bourse = $bourseC->rechercherBourses($searchTerm); // Correction du nom de la méthode
-                        } else {
-                            $bourse = $bourseC->afficherBourses(); // Récupérer tous les programmes
-                        }
-                        foreach ($bourse as $bourse): 
-                        ?>
-                            <tr>
-                                <td>
+                            <td><?php echo htmlspecialchars($bourse['id']); ?></td>
+                            <td><?php echo htmlspecialchars($bourse['nom_bourse']); ?></td>
+                            <td><?php echo htmlspecialchars($bourse['description']); ?></td>
+                            <td><?php echo htmlspecialchars($bourse['organisme']); ?></td>
+                            <td><?php echo htmlspecialchars($bourse['date_limite']); ?></td>
+                            <td><?php echo htmlspecialchars($bourse['nom_prog']); ?></td>
+                            <td><?php echo htmlspecialchars($bourse['prog_description']); ?></td>
+                            <td>
                                     <?php if (!empty($bourse['image'])): ?>
                                         <img src="../../../uploads/<?php echo htmlspecialchars($bourse['image']); ?>" 
                                              alt="Image programme" style="max-width: 50px;">
@@ -214,27 +269,19 @@ $baseUrl = './assets/';
                                         <span>Pas d'image</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?php echo htmlspecialchars($bourse['nom_bourse']); ?></td>
-                                <td><?php echo htmlspecialchars($bourse['organisme']); ?></td>
-                                <td><?php echo htmlspecialchars($bourse['pays']); ?></td>
-                                <td><?php echo htmlspecialchars($bourse['date_limite']); ?></td>
-                                <td class="actions">
-                                    <a href="updateProgramme.php?id_prog=<?php echo htmlspecialchars($bourse['id']); ?>" 
-                                       class="btn btn-primary btn-sm text-white" 
-                                       style="color: white !important;">
-                                        <i class="fa fa-pencil"></i> Modifier
-                                    </a>
-                                    <a href="deleteProgramme.php?id_prog=<?php echo htmlspecialchars($bourse['id']); ?>" 
-                                       class="btn btn-danger btn-sm text-white" 
-                                       style="color: white !important;"
-                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce programme ?');">
-                                        <i class="fa fa-trash-o"></i> Supprimer
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                            <td>
+                                <a href="updateBourse.php?id=<?php echo htmlspecialchars($bourse['id']); ?>" class="btn btn-warning">Modifier</a>
+                                <a href="deleteBourse.php?id=<?php echo htmlspecialchars($bourse['id']); ?>" class="btn btn-danger">Supprimer</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="9">Aucune bourse trouvée.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
             </div>
         </div>
     </div>

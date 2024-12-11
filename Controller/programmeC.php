@@ -70,22 +70,7 @@ class ProgrammeC {
             return [];
         }
     }
-    public function afficherProgrammesAvecBourses() {
-        try {
-            $query = "SELECT p.*, b.nom_bourse, b.description AS description_bourse, b.organisme AS organisme_bourse, 
-                             b.date_limite AS date_limite_bourse, b.age_limite AS age_limite_bourse, 
-                             b.niveau_etude AS niveau_etude_bourse, b.pays AS pays_bourse, b.lien AS lien_bourse, 
-                             b.image AS image_bourse 
-                      FROM programme p
-                      LEFT JOIN bourse b ON p.id_prog = b.id_prog"; // Jointure sur id_prog
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo 'Erreur: ' . $e->getMessage();
-            return [];
-        }
-    }
+   
 
     public function getProgrammeById($id_prog) {
         try {

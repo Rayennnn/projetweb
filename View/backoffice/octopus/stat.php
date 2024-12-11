@@ -137,6 +137,13 @@ $baseUrl = ASSET_PATH;
                             <span>liste des bourses</span>
                         </a>
                     </li>
+                    <li class="nav-active">
+                        <a href="calcul.php">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>calculateur</span>
+                        </a>
+                    </li>
+                    
                                 </ul>
                             </nav>
                         </div>

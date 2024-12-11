@@ -10,13 +10,28 @@ if (!file_exists($uploadDir)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo '<pre>';
+    print_r($_POST); // Affichez les données soumises
+    echo '</pre>';
+
+    // Créer une instance du contrôleur
+    $bourseC = new BourseC();
+
     try {
+        // Définir l'ID du programme
+        $id_prog = 6; // Gardez la valeur de prog fixe
+        $programmeExists = $bourseC->verifierProgramme($id_prog); // Utilisez $id_prog ici
+
+        if (!$programmeExists) {
+            throw new Exception("Le programme avec l'ID spécifié n'existe pas.");
+        }
+
         // Traitement de l'image
         $imageName = '';
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $imageName = time() . '_' . basename($_FILES['image']['name']);
             $targetPath = $uploadDir . $imageName;
-            
+
             if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
                 throw new Exception("Erreur lors de l'upload de l'image.");
             }
@@ -31,15 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bourse->setAgeLimite($_POST['age_limite']);
         $bourse->setNiveauEtude($_POST['niveau']);
         $bourse->setPays($_POST['pays']);
+        $bourse->setFrais($_POST['frais']);
         $bourse->setLien($_POST['lien']);
         $bourse->setImage($imageName);
-        $bourse->setIdProg($_POST['id_prog']);
-
-        // Créer une instance du contrôleur
-        $bourseC = new BourseC();
+        $bourse->setProg($id_prog); // Assurez-vous que prog est défini
         
+
         if ($bourseC->ajouterBourse($bourse)) {
-            header('Location: index.php?success=add');
+            header('Location: listebourse.php?success=add');
             exit;
         } else {
             throw new Exception("Erreur lors de l'ajout de la bourse.");
@@ -211,6 +225,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">frais</label>
+                                        <div class="col-md-6">
+                                            <input type="number" name="frais" class="form-control">
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Lien</label>
@@ -218,21 +238,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <input type="url" name="lien" class="form-control" 
                                                    placeholder="https://example.com">
                                         </div>
+                                        
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">ID Programme</label>
-                                        <div class="col-md-6">
-                                            <input type="number" name="id_prog" class="form-control">
-                                        </div>
-                                    </div>
-
+                             
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
                                             <button type="submit" class="btn btn-primary">
                                                 <i class="fa fa-save"></i> Enregistrer
                                             </button>
-                                            <a href="index.php" class="btn btn-default">
+                                            <a href="listebourse.php" class="btn btn-default">
                                                 <i class="fa fa-arrow-left"></i> Annuler
                                             </a>
                                         </div>
