@@ -18,20 +18,23 @@ if (
     isset($_POST["titre"]) &&
     isset($_POST["id_auteur"]) &&
     isset($_POST["date"]) &&
-    isset($_POST["type"])
+    isset($_POST["type"])&&
+    isset($_POST["ideal_rep"])
 ) {
     if (
         !empty($_POST["titre"]) &&
         !empty($_POST["id_auteur"]) &&
         !empty($_POST["date"]) &&
-        !empty($_POST["type"])
+        !empty($_POST["type"])&&
+        !empty($_POST["ideal_rep"])  
     ) {
         // Create the updated question object
         $updatedQuestion = new question(
             $_POST["titre"],
             $_POST["id_auteur"],
             $_POST["date"],
-            $_POST["type"]
+            $_POST["type"],
+            $_POST["ideal_rep"]
         );
 
         // Update the question
@@ -173,6 +176,11 @@ button:hover {
                 <label for="type">Type:</label>
                 <input type="text" name="type" id="type" class="form-control" 
                     value="<?php echo htmlspecialchars($question['type']); ?>">
+            </div>
+            <div class="form-group">
+                <label for="ideal_rep">ideal_reponse:</label>
+                <input type="text" name="ideal_rep" id="ideal_rep" class="form-control" 
+                    value="<?php echo htmlspecialchars($question['ideal_rep']); ?>">
             </div>
             <button type="submit" class="btn btn-primary">Modifier</button>
         </div>

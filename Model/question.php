@@ -7,17 +7,23 @@ class question {
     private $date=NULL;
     private $type=NULL;
 
+    private $ideal_rep=NULL;
+
     // Constructeur
-    public function __construct(string $titre, string $id_auteur, string $date, string $type){
+    public function __construct(string $titre, string $id_auteur, string $date, string $type, string $ideal_rep) {
         $this->settitre($titre);
         $this->setid_auteur($id_auteur);
         $this->setdate($date);
         $this->settype($type);
+        $this->setideal_rep($ideal_rep);
     }
 
     // Getters et setters
     public function getId() {
         return $this->id;
+    }
+    public function getIdeal_rep(){
+        return $this->ideal_rep;
     }
 
     public function getTitre() {
@@ -35,12 +41,16 @@ class question {
     public function getType() {
         return $this->type;
     }
+    
     function setid(int $id): void{
         $this->id=$id;
     }
 
     function settitre(string $titre): void{
         $this->titre=$titre;
+    }
+    function setideal_rep(string $ideal_rep): void{
+        $this->ideal_rep=$ideal_rep;
     }
 
     function setid_auteur(string $id_auteur): void{
@@ -55,14 +65,12 @@ class question {
         $this->type=$type;
     }
  
-    function setid_reponse(int $id_reponse): void{
-        $this->id_reponse=$id_reponse;
-    }
+   
+    
+   
 
 
-    public function getid_reponse(): int{
-        return $this->id_reponse;
-    }
+    
 
 }
 ?>

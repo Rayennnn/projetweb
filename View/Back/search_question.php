@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search_value'])) {
             echo "<td class='text-center'>" . htmlspecialchars($question['id_auteur']) . "</td>";
             echo "<td class='text-center'>" . htmlspecialchars($question['date']) . "</td>";
             echo "<td class='text-center'>" . htmlspecialchars($question['type']) . "</td>";
+            echo "<td class='text-center'>" . htmlspecialchars($question['ideal_rep']) . "</td>";
             echo "<td class='text-center'>";
             echo "<button class='btn btn-primary' onclick=\"window.location.href='modifierquestion.php?id=" . htmlspecialchars($question['id']) . "'\">";
             echo "<i class='fas fa-pencil-alt'></i> ✏️</button>";
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search_value'])) {
         }
     } else {
         // Aucune correspondance trouvée
-        echo "<tr><td colspan='6' class='text-center'>Aucun question trouvé.</td></tr>";
+        echo "<tr><td colspan='6' class='text-center'>Aucune question trouvée.</td></tr>";
     }
 } else {
     echo "<tr><td colspan='6' class='text-center'>Requête invalide.</td></tr>";

@@ -7,15 +7,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST["titre"]) &&
         isset($_POST["id_auteur"]) &&
         isset($_POST["date"]) &&
+        isset($_POST["ideal_rep"]) &&
         isset($_POST["type"])
     ) {
         if (
             !empty($_POST["titre"]) &&
             !empty($_POST["id_auteur"]) &&
             !empty($_POST["date"]) &&
+            !empty($_POST["ideal_rep"]) &&
             !empty($_POST["type"])
         ) {
-            $question = new question($_POST["titre"], $_POST["id_auteur"], $_POST["date"], $_POST["type"], /*id: $_POST["id"]*/);
+            $question = new question($_POST["titre"], $_POST["id_auteur"], $_POST["date"], $_POST["type"], ideal_rep: $_POST["ideal_rep"]);
             $questionC->ajouterquestion($question);
             header('refresh:0;url=afficherquestion.php');
         }
@@ -179,6 +181,13 @@ button:hover {
                     <div class="form-group">
                       <label for="titre" class="form-control-label">Titre</label>
                       <input class="form-control input-field" type="text" name="titre" id="titre" />
+                      <span id="titre-error" class="error"></span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="ideal_rep" class="form-control-label">reponse ideal</label>
+                      <input class="form-control input-field" type="text" name="ideal_rep" id="ideal_rep" />
                       <span id="titre-error" class="error"></span>
                     </div>
                   </div>

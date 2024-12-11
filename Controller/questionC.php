@@ -12,8 +12,8 @@ class questionC{
 
 
     function ajouterquestion($question){
-        $sql="INSERT INTO question (titre,id_auteur,type,date) 
-            VALUES (:titre,:id_auteur,:type,:date)";
+        $sql="INSERT INTO question (titre,id_auteur,type,date,ideal_rep) 
+            VALUES (:titre,:id_auteur,:type,:date,:ideal_rep)";
             $db = config::getConnexion();
             try{
                 $query = $db->prepare($sql);
@@ -21,7 +21,8 @@ class questionC{
                     'titre' => $question->getTitre(),
                     'id_auteur' => $question->getId_auteur(),
                     'type' => $question->getType(),
-                    'date' => $question->getDate()
+                    'date' => $question->getDate(),
+                    'ideal_rep' => $question->getIdeal_rep()
                 ]);     
             }
             catch (Exception $e){
@@ -50,7 +51,7 @@ class questionC{
 public function listequestion($id) {
     $db = config::getConnexion();
     try {
-        $liste = $db->prepare('SELECT  q.titre ,q.id_auteur , q.date , q.type
+        $liste = $db->prepare('SELECT  q.titre ,q.id_auteur , q.date , q.type , q.ideal_rep
         FROM question q
         WHERE id=:id');
         $liste->execute(['id' => $id]);
@@ -106,7 +107,8 @@ function modifierquestion($question,$id){
                 titre= :titre,
                 date=:date,
                 type= :type, 
-                id_auteur=:id_auteur
+                id_auteur=:id_auteur,
+                ideal_rep= :ideal_rep
             WHERE id = :id'
         );
         $query->execute([
@@ -114,6 +116,7 @@ function modifierquestion($question,$id){
             'date' => $question->getDate(),
             'type' => $question->getType(),
             'id_auteur' => $question->getId_auteur(),
+            'ideal_rep' => $question->getIdeal_rep(),
             'id'=>$id
         ]);
     }
