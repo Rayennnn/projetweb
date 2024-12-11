@@ -82,12 +82,12 @@ body {
 }
 
 /* Contenu principal */
-.main-content {
-    margin-left: 260px;
-    padding: 20px;
-    width: calc(100% - 260px);
+.main-content{
+    padding: 0; /* Retirer le padding pour que la section commence directement après la sidebar */
+    margin-left: 260px; /* Pour compenser la largeur de la sidebar si nécessaire */
     transition: all 0.3s ease;
 }
+
 
 
 /* En-tête de page */
@@ -119,7 +119,7 @@ body {
 }
 
 table {
-    width: 100%;
+    width: 120%;
     border-collapse: collapse;
 }
 
@@ -163,7 +163,7 @@ tr:hover {
 }
 
 .form-control {
-    width: 95%;
+    width: 85%;
     padding: 10px 15px;
     border: 1px solid var(--border);
     border-radius: 5px;
@@ -355,7 +355,7 @@ tr:hover {
 }
 
 .stat-card.rejete {
-    background: #e74c3c;
+    background: #c47971;
     color: white;
 }
 
@@ -384,3 +384,4 @@ tr:hover {
     font-size: 1.2rem;
     font-weight: normal;
 }
+/* Style pour la barre de filtrage */

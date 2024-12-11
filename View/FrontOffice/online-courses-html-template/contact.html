@@ -172,7 +172,7 @@
           </div>
 
           <!-- Formulaire à droite -->
-          <div class="col-md-6 form-box">
+        <div class="col-md-6 form-box">
             <form method="POST" action="/projetweb/view/backoffice/addsuggestion.php" id="suggestionForm">
               <input type="text" id="user_id" name="id_utilisateur" class="input-field" placeholder="Votre ID" />
               <select id="subject" name="type_feedback" class="input-field">
@@ -182,13 +182,228 @@
               </select>
               <textarea id="message" name="contenu" class="input-field message-field" placeholder="Votre message"></textarea>
               <button type="submit" class="main-button">Envoyer</button>
-            </form>
-          
+            </form>          
          </div>
           
         </div>
       </div>
-    </section>
+    </section>    
+    <div class="suggestions-list">
+      <h3>Suggestions</h3>
+      <h4>Veuillez consulter les suggestions et donner votre avis pour nous aidez a mieux comprendre vos attentes !</h4>
+      <div id="suggestions-container"></div>
+      <div id="pagination-controls"></div>
+  </div>
+  
+
+  
+  <style>
+    .like-button, .dislike-button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.like-button {
+    background-color: #4caf50; /* Vert */
+    color: white;
+}
+
+.dislike-button {
+    background-color: #f44336; /* Rouge */
+    color: white;
+}
+
+.like-button:hover {
+    background-color: #45a049;
+}
+
+.dislike-button:hover {
+    background-color: #e53935;
+}
+
+    
+      .suggestions-list {
+          max-width: 1200px;
+          margin: 30px auto;
+          padding: 20px;
+          background: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+      
+  
+      .suggestions-list h3 {
+          font-size: 2rem;
+          margin-bottom: 30px;
+          color: #333;
+          font-weight: bold;
+      }
+  
+      .suggestions-list h4 {
+          font-size: 1.2rem;
+          color: #333;
+          margin-bottom: 30px;
+      }
+  
+      .suggestion-item {
+          padding: 15px;
+          margin-bottom: 15px;
+          background-color: #ffffff;
+          border-radius: 8px;
+          border: 1px solid #ddd;
+      }
+      .suggestion-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #ddd;
+        }
+  
+      /* Pagination */
+      #pagination-controls {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+      }
+  
+      .pagination-button {
+          padding: 8px 15px;
+          margin: 0 5px;
+          border-radius: 5px;
+          border: 1px solid #ddd;
+          background-color: #ffffff;
+          color: #333;
+          font-size: 1rem;
+          cursor: pointer;
+      }
+  
+      .pagination-button:hover {
+          background-color: #de4747;
+          color: #ffffff;
+      }
+  
+      .pagination-button.active {
+          background-color: #000;
+          color: #ffffff;
+      }
+  </style>
+  
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      const suggestionsContainer = document.getElementById('suggestions-container');
+      const paginationControls = document.getElementById('pagination-controls');
+      let currentPage = 1;
+      const suggestionsPerPage = 3;
+
+      function loadSuggestions(page) {
+          fetch(`/projetweb/view/backoffice/getSuggestions.php?page=${page}&limit=${suggestionsPerPage}`)
+              .then(response => response.json())
+              .then(data => {
+                  if (data.error) {
+                      console.error('Erreur:', data.error);
+                      return;
+                  }
+                  suggestionsContainer.innerHTML = '';
+                  data.suggestions.forEach(suggestion => {
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.classList.add('suggestion-item');
+                    suggestionDiv.dataset.id = suggestion.id_suggestion; // Ajout de l'ID
+
+                    suggestionDiv.innerHTML = `
+    <div style="display: flex; align-items: center;">
+        <div style="flex-grow: 1;">
+            <p>${suggestion.contenu}</p>
+            <small>${suggestion.date_soumission}</small>
+        </div>
+        <div>
+            <button class="like-button" onclick="handleLike(this)">Like (${suggestion.likes})</button>
+            <button class="dislike-button" onclick="handleDislike(this)">Dislike (${suggestion.dislikes})</button>
+        </div>
+    </div>
+`;
+
+                    suggestionsContainer.appendChild(suggestionDiv);
+                });
+
+
+
+                  // Pagination
+                  paginationControls.innerHTML = '';
+                  for (let i = 1; i <= Math.ceil(data.total / suggestionsPerPage); i++) {
+                      const pageLink = document.createElement('button');
+                      pageLink.textContent = i;
+                      pageLink.classList.add('pagination-button');
+                      if (i === page) pageLink.classList.add('active');
+                      pageLink.addEventListener('click', () => loadSuggestions(i));
+                      paginationControls.appendChild(pageLink);
+                  }
+              })
+              .catch(error => console.error('Erreur lors du chargement des suggestions:', error));
+      }
+
+      loadSuggestions(currentPage);
+     });
+     function handleLike(button) {
+    const suggestionId = button.closest('.suggestion-item').dataset.id;
+
+    fetch('/projetweb/view/backoffice/updateFeedback.php', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'  // Utiliser JSON
+        },
+        body: JSON.stringify({
+            id_suggestion: suggestionId,
+            action: 'like'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Votre "Like" a été enregistré!');
+            const likeButton = button;
+            const likeCount = likeButton.textContent.match(/\d+/);
+            likeButton.textContent = `Like (${parseInt(likeCount) + 1 || 1})`;
+        } else {
+            console.error('Erreur:', data.error);
+            alert('Une erreur est survenue lors de l\'enregistrement.');
+        }
+    })
+    .catch(error => console.error('Erreur réseau:', error));
+}
+
+function handleDislike(button) {
+    const suggestionId = button.closest('.suggestion-item').dataset.id;
+
+    fetch('/projetweb/view/backoffice/updateFeedback.php', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'  // Utiliser JSON
+        },
+        body: JSON.stringify({
+            id_suggestion: suggestionId,
+            action: 'dislike'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Votre "Dislike" a été enregistré!');
+            const dislikeButton = button;
+            const dislikeCount = dislikeButton.textContent.match(/\d+/);
+            dislikeButton.textContent = `Dislike (${parseInt(dislikeCount) + 1 || 1})`;
+        } else {
+            console.error('Erreur:', data.error);
+            alert('Une erreur est survenue lors de l\'enregistrement.');
+        }
+    })
+    .catch(error => console.error('Erreur réseau:', error));
+}
+
+    
+    </script>  
     
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

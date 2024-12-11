@@ -18,6 +18,30 @@ class SuggestionC {
             die('Erreur : ' . $e->getMessage());
         }
     }
+    public function listSuggestionsFiltered($type_feedback, $statut, $date_soumission) {
+        $db = config::getConnexion();
+        $query = "SELECT * FROM suggestions WHERE 1=1";
+        $params = [];
+        
+        if (!empty($type_feedback)) {
+            $query .= " AND type_feedback = :type_feedback";
+            $params['type_feedback'] = $type_feedback;
+        }
+        if (!empty($statut)) {
+            $query .= " AND statut = :statut";
+            $params['statut'] = $statut;
+        }
+        if (!empty($date_soumission)) {
+            $query .= " AND date_soumission = :date_soumission";
+            $params['date_soumission'] = $date_soumission;
+        }
+        
+        $stmt = $db->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+    
+    
     function deletesuggestion($id)
     {
         $sql = "DELETE FROM suggestions WHERE id_suggestion = :id";
@@ -189,8 +213,63 @@ class SuggestionC {
             throw new Exception("Erreur lors du calcul des statistiques : " . $e->getMessage());
         }
     }
+    public function getSuggestions($limit, $offset) {
+        try {
+            $db = config::getConnexion(); // Connexion à la base de données
+
+            // Filtrer les suggestions où type_feedback = 'suggestion'
+            $sql = "SELECT * FROM suggestions WHERE type_feedback = 'suggestion' LIMIT :limit OFFSET :offset";
+            $stmt = $db->prepare($sql);  // Préparation de la requête
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourne les suggestions filtrées
+        } catch (Exception $e) {
+            echo "Erreur: " . $e->getMessage();
+        }
+    }
+
+    // Compter le nombre total de suggestions de type "suggestion"
+    public function countSuggestions() {
+        try {
+            $db = config::getConnexion(); // Connexion à la base de données
+
+            // Compter uniquement les suggestions de type "suggestion"
+            $sql = "SELECT COUNT(*) FROM suggestions WHERE type_feedback = 'suggestion'";
+            $stmt = $db->prepare($sql);  // Préparation de la requête
+            $stmt->execute();
+            return $stmt->fetchColumn(); // Retourne le nombre de suggestions
+        } catch (Exception $e) {
+            echo "Erreur: " . $e->getMessage();
+        }
+    }
+   
+    public function updateFeedback($id_suggestion, $action) {
+        // Connexion à la base de données
+        $db = config::getConnexion();
+    
+        // Préparer la requête en fonction de l'action
+        if ($action === 'like') {
+            $query = "UPDATE suggestions SET likes = likes + 1 WHERE id_suggestion = :id_suggestion";
+        } elseif ($action === 'dislike') {
+            $query = "UPDATE suggestions SET dislikes = dislikes + 1 WHERE id_suggestion = :id_suggestion";
+        } else {
+            return ['success' => false, 'error' => 'Action non valide.'];
+        }
+    
+        // Préparer et exécuter la requête
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id_suggestion', $id_suggestion, PDO::PARAM_INT);
+    
+        if ($stmt->execute()) {
+            return ['success' => true];
+        } else {
+            return ['success' => false, 'error' => 'Erreur lors de la mise à jour.'];
+        }
+    }
+    
     
 
-
-}
+}  
 ?>
