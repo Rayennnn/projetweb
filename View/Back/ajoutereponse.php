@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         isset($_POST["id_question"]) && !empty($_POST["id_question"]) &&
         isset($_POST["choix_rp"]) && !empty($_POST["choix_rp"])
     ) {
-        $reponse = new reponse($_POST["id_user"], $_POST["date"], $_POST["id_question"], $_POST["choix_rp"]);
+        $reponse = new reponse($_POST["id_user"], $_POST["date"], $_POST["id_question"], $_POST["choix_rp"],$_POST["score"]);
 
         $reponseC = new reponseC();
         $reponseC->ajoutereponse($reponse);
@@ -201,6 +201,12 @@ button:hover {
                     <div class="form-group">
                       <label for="choix_rp" class="form-control-label">Choix Réponse</label>
                       <input class="form-control" type="text" name="choix_rp" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="score" class="form-control-label">score</label>
+                      <input class="form-control" type="text" name="score" required>
                     </div>
                   </div>
                 </div>

@@ -30,20 +30,23 @@ if (
     isset($_POST["id_user"]) &&
     isset($_POST["date"]) &&
     isset($_POST["id_question"]) &&
-    isset($_POST["choix_rp"])
+    isset($_POST["choix_rp"])&&
+    isset($_POST["score"]) 
 ) {
     if (
         !empty($_POST["id_user"]) &&
         !empty($_POST["date"]) &&
         !empty($_POST["id_question"]) &&
-        !empty($_POST["choix_rp"])
+        !empty($_POST["choix_rp"])&&
+        !empty($_POST["score"]) 
     ) {
          
         $updatedReponse = new reponse(
             $_POST["id_user"],
             $_POST["date"],
             $_POST["id_question"],
-            $_POST["choix_rp"]
+            $_POST["choix_rp"],
+            $_POST["score"]
         );
 
          
@@ -191,11 +194,16 @@ button:hover {
                 <input type="text" name="choix_rp" id="choix_rp" class="form-control" 
                     value="<?php echo htmlspecialchars($reponse['choix_rp']); ?>">
             </div>
+            <div class="form-group">
+    <label for="score">Score:</label>
+    <input type="text" name="score" id="score" class="form-control" 
+        value="<?php echo htmlspecialchars($reponse['score']); ?>">
+</div>
+
             <button type="submit" class="btn btn-primary">Modifier</button>
         </div>
     </div>
-</div>
-                  </div>
+</div> </div>
     </form>
 </body>
 </html>

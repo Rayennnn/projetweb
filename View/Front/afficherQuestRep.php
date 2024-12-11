@@ -1,7 +1,6 @@
 <?php
 session_start(); // Appelé au tout début, avant toute sortie
 
-// Inclure les fichiers nécessaires
 require_once 'C:/xampp/htdocs/Quiz/Controller/questionC.php';
 require_once 'C:/xampp/htdocs/Quiz/Model/question.php';
 require_once 'C:/xampp/htdocs/Quiz/Controller/reponseC.php';
@@ -30,14 +29,48 @@ $questionsOnPage = array_slice($questions, $startIndex, $questionsPerPage);
 
 // Déterminer si c'est la dernière page
 $isLastPage = $endIndex >= $totalQuestions;
-?>
 
+// Variable to track score
+$totalScore = 0;
+$message = "";
+
+// Handling form submission to calculate the score
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // This flag checks if the form is being fully submitted (not just navigation)
+    $submitForm = isset($_POST['submit_quiz']);
+
+    if ($submitForm) {
+        $userResponses = $_POST['reponse'] ?? [];
+
+        // Iterate over the responses to calculate score
+        foreach ($userResponses as $questionId => $responseId) {
+            // Fetch the score for the selected response
+            $response = $reponseC->getreponse($responseId);
+            
+            if ($response) {
+                $totalScore += $response['score']; // Assuming 'score' is stored in the 'reponse' table
+                // Debugging: Print the response score to check if it's correct
+                echo "Question ID: $questionId, Response ID: $responseId, Score: " . $response['score'] . "<br>";
+            }
+        }
+
+        // Display the result message after submitting the quiz
+        if ($totalScore >= 4) {
+            $message = '<img src="image.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">Excellent! You\'re highly motivated! 🌟.';
+            
+        } elseif ($totalScore >=2) {
+            $message = '<img src="image1.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">Youre not motivated yet 😞,but we got you!.';
+        } else {
+            $message = '<img src="image2.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">not motivated at all ? no worries , youre in good hands !.';
+        }
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
     <title>ECOURSES - Online Courses HTML Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
@@ -60,9 +93,8 @@ $isLastPage = $endIndex >= $totalQuestions;
     <link href="assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="quiz.css">
 </head>
-
 <body>
-<!-- Navbar Start -->
+   <!-- Navbar Start -->
 <div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
@@ -250,149 +282,199 @@ $isLastPage = $endIndex >= $totalQuestions;
     }
 }
 
-.d-flex.align-items-start {
-    animation: fadeInLogo 0.8s ease-out forwards;
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
 }
-    
-    .btn-check:checked + .btn-outline-primary {
-        background-color: #007bff;
-        color: white;
-    }
-    .btn-check:checked + .btn-outline-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-    .btn-check:checked + .btn-outline-success {
-        background-color: #28a745;
-        color: white;
-    }
 
+/* Header */
+.page-header {
+    background-color: #007bff;
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+}
 
-    .custom-container {
-        padding-top: 0px; /* Adjust this value as needed */
-    }
-    .custom-text {
-        margin-top: -20px; /* Adjust this value as needed */
-    }
-    .quiz-form {
-        background-color: #f9f9f92a;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .quiz-form h1 {
-        font-size: 2.5rem;
-        margin-bottom: 20px;
-    }
-    .quiz-form label {
-        font-weight: bold;
-    }
-    .quiz-form .form-label {
-        margin-bottom: 10px;
-    }
-    .quiz-form .form-check {
-        margin-bottom: 10px;
-    }
-    .quiz-form .btn {
-        margin-top: 20px;
-    }
+.page-header h3 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Quiz Container */
+.quiz-container {
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-header h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Question Styling */
+.question-container {
+    margin-bottom: 20px;
+}
+
+.question-container p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.response-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Radio Button Styling */
+.response-buttons input[type="radio"] {
+    display: none;
+}
+
+.response-buttons label {
+    font-size: 1.1rem;
+    padding: 12px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.response-buttons input[type="radio"]:checked + label {
+    background-color: #007bff;
+    color: white;
+}
+
+.response-buttons label:hover {
+    background-color: #f1f1f1;
+}
+
+.response-buttons input[type="radio"]:checked + label:hover {
+    background-color: #0056b3;
+}
+
+/* Buttons */
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Result Message */
+.result-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.result-container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.result-container p {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    font-size: 1rem;
+}
+
+/* Navigation Buttons */
+button[type="submit"] {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+    border: none;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Custom Styling for the Quiz Page */
+.quiz-form {
+    background-color: #f9f9f92a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-form label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.quiz-form .form-label {
+    margin-bottom: 10px;
+}
+
+.quiz-form .form-check {
+    margin-bottom: 10px;
+}
+
+.quiz-form .btn {
+    margin-top: 20px;
+}
+
 </style>
 
+    <div class="quiz-container">
+        <form id="quiz-form" method="POST">
+            <div class="quiz-header">
+                <h2>Quiz: Answer the questions</h2>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container-fluid custom-container py-5">
-    <div class="container pt-5 pb-5">
-        <!-- Heading Section -->
-        <div class="text-center mb-5 custom-text">
-            <h1 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Student Motivation Quiz</h1>
-            <p class="text-muted" style="font-size: 18px;">Let's find out what drives you! 🌟</p>
-        </div>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questions et Réponses Dynamiques</title>
-    <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <link href="assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-    <style>
-        /* Styles supplémentaires */
-        body {
-            background-color: #f5f7fa;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .quiz-form {
-            max-width: 800px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-        }
-
-        .question-container {
-            margin-bottom: 30px;
-        }
-
-        .response-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px; /* Espacement entre les boutons */
-            flex-wrap: wrap; /* Si la taille de l'écran est petite, les boutons passeront à la ligne suivante */
-        }
-
-        .btn {
-            font-size: 18px;
-            padding: 10px 20px;
-            margin: 5px;
-        }
-    </style>
-</head>
-
-<body>
-    <main class="main-content position-relative border-radius-lg">
-        <form id="account-check-form" class="quiz-form" method="POST">
-            <?php foreach ($questionsOnPage as $question) : ?>
+            <!-- Loop through the questions and display them -->
+            <?php foreach ($questionsOnPage as $question): ?>
                 <div class="question-container">
-                    <p class="text-center" style="font-size: 22px; font-weight: bold;">
-                        <?php echo $question['titre']; ?>
-                    </p>
-
+                    <p><?php echo $question['titre']; ?></p>
                     <?php
-                    $reponses = $reponseC->getReponsesByQuestionId($question['id']);
+                    $responses = $reponseC->getReponsesByQuestionId($question['id']);
                     ?>
                     <div class="response-buttons">
-                        <?php foreach ($reponses as $reponse) : ?>
+                        <?php foreach ($responses as $response): ?>
                             <div>
-                                <input type="radio" id="reponse-<?php echo $reponse['id_reponse']; ?>" 
+                                <input type="radio" id="reponse-<?php echo $response['id_reponse']; ?>" 
                                        name="reponse[<?php echo $question['id']; ?>]" 
-                                       value="<?php echo $reponse['id_reponse']; ?>" required>
-                                <label for="reponse-<?php echo $reponse['id_reponse']; ?>">
-                                    <?php echo $reponse['choix_rp']; ?>
+                                       value="<?php echo $response['id_reponse']; ?>" required>
+                                <label for="reponse-<?php echo $response['id_reponse']; ?>">
+                                    <?php echo $response['choix_rp']; ?>
                                 </label>
                             </div>
                         <?php endforeach; ?>
@@ -400,32 +482,30 @@ $isLastPage = $endIndex >= $totalQuestions;
                 </div>
             <?php endforeach; ?>
 
+            <!-- Navigation buttons for quiz pages -->
             <div class="text-center">
-                <?php if ($page > 1) : ?>
+                <?php if ($page > 1): ?>
                     <button type="submit" name="page" value="<?php echo $page - 1; ?>" class="btn btn-secondary">Previous</button>
                 <?php endif; ?>
 
-                <?php if (!$isLastPage) : ?>
+                <?php if (!$isLastPage): ?>
                     <button type="submit" name="page" value="<?php echo $page + 1; ?>" class="btn btn-primary">Next</button>
-                <?php else : ?>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                <?php else: ?>
+                    <!-- Add a hidden input to mark the form as "Submit" -->
+                    <button type="submit" name="submit_quiz" class="btn btn-success">Submit</button>
                 <?php endif; ?>
             </div>
         </form>
-    </main>
-    <main class="main-content position-relative border-radius-lg">
-        <?php if ($isLastPage && isset($message)): ?>
-            <div class="text-center">
-                <h2>Résultat final</h2>
+
+        <!-- Display result after submission -->
+        <?php if (isset($message) && $message !== ""): ?>
+            <div class="text-center result-container">
+                <h2>Final Result</h2>
                 <p><?php echo $message; ?></p>
             </div>
-        <?php else: ?>
-            <form id="account-check-form" class="quiz-form" method="POST">
-                <!-- Questions et navigation déjà définies -->
-            </form>
         <?php endif; ?>
-    </main>
+    </div>
+
+    
 </body>
-
-
 </html>

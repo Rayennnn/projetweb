@@ -7,22 +7,28 @@ class reponse
     private $id_question=NULL ;   
     private $date=NULL;
     private $choix_rp=NULL; 
+    private $score=NULL; 
 
 
     
-    public function __construct(string $id_user, string $date, int $id_question, string $choix_rp)
+    public function __construct(string $id_user, string $date, int $id_question, string $choix_rp, int $score)
     {
         $this->setid_user($id_user);
         $this->setdate($date);
         $this->setid_question($id_question);
         $this->setchoix_rp($choix_rp);
-       
+        $this->setscore($score);
+        
     }
 
     
     public function getId_reponse(): int
     {
         return $this->id_reponse;
+    }
+    public function getScore(): int
+    {
+        return $this->score;
     }
 
     public function getId_user(): string
@@ -54,6 +60,10 @@ class reponse
     public function setid_user(string $id_user): void
     {
         $this->id_user = $id_user;
+    }
+    public function setscore(int $score): void
+    {
+        $this->score = $score;
     }
 
     public function setdate(string $date): void

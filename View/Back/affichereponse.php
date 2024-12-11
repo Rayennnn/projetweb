@@ -46,7 +46,7 @@ $listereponse = $reponseC->affichereponse();
 <!-- Head Libs -->
 <script src="assets/vendor/modernizr/modernizr.js"></script>
 
-
+</head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>liste Reponses</title>
@@ -295,6 +295,7 @@ $listereponse = $reponseC->affichereponse();
                       <th>Date</th>
                       <th>ID Question</th>
                       <th>Choix RP</th>
+                      <th>score</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -308,6 +309,7 @@ $listereponse = $reponseC->affichereponse();
                         <td class="text-center"><?php echo $reponse['date']; ?></td>
                         <td class="text-center"><?php echo $reponse['id_question']; ?></td>
                         <td class="text-center"><?php echo $reponse['choix_rp']; ?></td>
+                        <td class="text-center"><?php echo $reponse['score']; ?></td>
                         <td class="text-center">
                           <button class="btn btn-primary" onclick="window.location.href='modifiereponse.php?id_reponse=<?php echo $reponse['id_reponse']; ?>'">
                             <i class="fas fa-pencil-alt" aria-hidden="true"></i>Edit✏️
