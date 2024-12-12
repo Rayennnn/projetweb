@@ -27,6 +27,48 @@
 
 <body>
     <!-- Navbar Start -->
+    <style>
+        #cookie-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        #cookie-banner button {
+            background-color: #145da0;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #cookie-banner button:hover {
+            background-color: #1b4a75;
+        }
+    </style>
+</head>
+<body>
+    <div id="cookie-banner">
+        Ce site utilise des cookies pour améliorer votre expérience. 
+        <button id="accept-cookies">Accepter</button>
+        <button id="reject-cookies">Refuser</button>
+    </div>
+
+
+
+    <script src="cookies.js"></script>
+
  <div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg- ml-auto mr-auto  d-none d-lg-block">
