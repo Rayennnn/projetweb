@@ -58,10 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($totalScore >= 4) {
             $message = '<img src="image.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">Excellent! You\'re highly motivated! 🌟.';
             
-        } elseif ($totalScore >=2) {
-            $message = '<img src="image1.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">Youre not motivated yet 😞,but we got you!.';
+        } elseif ($totalScore >= 2) {
+            $message = '<img src="image1.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">You\'re not motivated yet 😞, but we got you!.';
+           
         } else {
-            $message = '<img src="image2.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">not motivated at all ? no worries , youre in good hands !.';
+            $message = '<img src="image2.jpg" alt="Motivated" style="width: 200px; height: 200px; margin-right: 10px;">Not motivated at all? No worries, you\'re in good hands!.';
+           
         }
     }
 }
@@ -169,7 +171,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 <style>
+    /* Styling for the email form container */
+.email-form-container {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* Styling for the form inputs and buttons */
+.email-form-container input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.email-form-container button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.email-form-container button:hover {
+    background-color: #45a049;
+}
+
+/* Close button style */
+.email-form-container #close-email-form {
+    background-color: #f44336;
+}
+
+.email-form-container #close-email-form:hover {
+    background-color: #e53935;
+}
+
     /* Logo et texte */
+    
 .logo-img {
     width: 150px;
     margin-left: -15px;
@@ -452,6 +500,39 @@ button[type="submit"]:hover {
     margin-top: 20px;
 }
 
+.rating-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.stars {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ddd;
+    padding: 10px 0;
+}
+
+.stars i {
+    margin: 0 5px;
+    transition: all 0.2s ease;
+    color: #e4e4e4; /* Unselected star color */
+}
+
+.stars i.active {
+    color: #ffd700; /* Selected star color (gold) */
+}
+
+.stars i:hover {
+    transform: scale(1.1);
+}
+
+#rating-message {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+    min-height: 20px;
+}
+
 </style>
 
     <div class="quiz-container">
@@ -499,12 +580,216 @@ button[type="submit"]:hover {
 
         <!-- Display result after submission -->
         <?php if (isset($message) && $message !== ""): ?>
-            <div class="text-center result-container">
-                <h2>Final Result</h2>
-                <p><?php echo $message; ?></p>
-            </div>
-        <?php endif; ?>
+            <style>
+                .result-page {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: white;
+                    z-index: 1000;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                }
+
+                .result-content {
+                    max-width: 600px;
+                    width: 100%;
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                    text-align: center;
+                }
+
+                .result-message {
+                    margin-bottom: 30px;
+                }
+
+                .result-message img {
+                    max-width: 200px;
+                    margin: 20px auto;
+                    display: block;
+                    border-radius: 10px;
+                }
+
+                .rating-container {
+                    margin: 30px 0;
+                    padding: 20px;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                }
+
+                .mailing-button {
+                    margin-top: 30px;
+                }
+
+                .email-form-container {
+                    margin-top: 20px;
+                    padding: 20px;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                }
+
+                .btn-secondary {
+                    background-color: #6c757d;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                .btn-secondary:hover {
+                    background-color: #5a6268;
+                }
+            </style>
+
+            <!-- Hide the quiz form -->
+            <script>
+                document.getElementById('quiz-form').style.display = 'none';
+            </script>
+
+            <div class="result-page">
+                <div class="result-content">
+                    <div class="result-message">
+                        <h2>Your Quiz Result</h2>
+                        <p><?php echo $message; ?></p>
+                    </div>
+                    
+                    <!-- Rating System -->
+                    <div class="rating-container">
+                        <h3>Rate your experience</h3>
+                        <div class="stars">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                        <p id="rating-message"></p>
+                        <input type="hidden" id="user-rating" name="user-rating" value="0">
+                    </div>
+
+                    <!-- Mailing Button -->
+                    <div class="mailing-button">
+                        <button id="open-email-form" class="btn btn-secondary">Send Results by Email</button>
+                    </div>
+
+                    <!-- Hidden Email Form -->
+                    <div id="email-form-container" class="email-form-container" style="display: none;">
+                    <form id="emailForm" action="http://localhost/Quiz/View/Front/mail.php" method="POST">
+            <input type="email" id="email" name="email" required />
+            <input type="hidden" name="message" value="<?php echo htmlspecialchars($message); ?>">
+            <input type="hidden" name="score" value="<?php echo $totalScore; ?>">
+            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="button" id="close-email-form" class="btn btn-secondary">Cancel</button>
+        </form>
+
     </div>
+    
+<?php endif; ?>
+
+
+
+
+
+
+</div>
+    <script>
+    document.getElementById("open-email-form").addEventListener("click", function() {
+        document.getElementById("email-form-container").style.display = "block";
+    });
+
+    document.getElementById("close-email-form").addEventListener("click", function() {
+        document.getElementById("email-form-container").style.display = "none";
+    });
+    
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.stars');
+    const stars = container.querySelectorAll('i');
+    const messageElement = document.getElementById('rating-message');
+    let currentRating = 0; // Variable to store the current rating
+
+    const messages = {
+        1: "We'll work harder to improve! 😔",
+        2: "Thanks for your feedback! 🤔",
+        3: "We appreciate your rating! 😊",
+        4: "Thanks! We're glad you enjoyed it! 😄",
+        5: "Excellent! Thank you so much! 🌟"
+    };
+
+    function updateStars(rating) {
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+        
+        messageElement.textContent = messages[rating] || '';
+        currentRating = rating; // Store the current rating
+    }
+
+    // Handle click events
+    stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            const rating = index + 1;
+            updateStars(rating);
+            
+            // Update hidden input for the form
+            const ratingInput = document.createElement('input');
+            ratingInput.type = 'hidden';
+            ratingInput.name = 'rating';
+            ratingInput.value = rating;
+
+            // Remove any existing rating input
+            const existingRating = document.querySelector('input[name="rating"]');
+            if (existingRating) {
+                existingRating.remove();
+            }
+
+            // Add the new rating input to the form
+            const form = document.querySelector('form');
+            if (form) {
+                form.appendChild(ratingInput);
+            }
+        });
+
+        // Handle hover events
+        star.addEventListener('mouseover', () => {
+            updateStars(index + 1);
+        });
+    });
+
+    // Handle mouse leave from container
+    container.addEventListener('mouseleave', () => {
+        updateStars(currentRating);
+    });
+
+    // Update the email form submit handler
+    const emailForm = document.querySelector('form');
+    if (emailForm) {
+        emailForm.addEventListener('submit', function(e) {
+            if (!currentRating) {
+                const ratingInput = document.createElement('input');
+                ratingInput.type = 'hidden';
+                ratingInput.name = 'rating';
+                ratingInput.value = currentRating;
+                this.appendChild(ratingInput);
+            }
+        });
+    }
+});
+</script>
 
     
 </body>
