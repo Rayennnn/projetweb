@@ -4,7 +4,7 @@ include '../../controller/suggestionC.php';
 $suggestionC = new SuggestionC();
 $stats = $suggestionC->getStatistiques();
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$limit = 6; // Ou toute autre limite souhaitée
+$limit = 1000; // Ou toute autre limite souhaitée
 $offset = ($page - 1) * $limit;
 
 // Appeler la méthode avec les arguments nécessaires
@@ -96,7 +96,7 @@ $suggestions = $suggestionC->getSuggestions($limit, $offset);
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
                     text-align: center;
                     background: #f9f9f9;
-                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                    transition: transform 0.1s ease, box-shadow 0.2s ease;
                 }
 
                 /* Effet au survol */
