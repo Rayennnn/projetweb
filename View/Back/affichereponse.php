@@ -12,7 +12,7 @@ $listereponse = $reponseC->affichereponse();
 <!-- Basic -->
 <meta charset="UTF-8">
 
-<title>Dashboard | JSOFT Themes | JSOFT-Admin</title>
+<title>liste reponses</title>
 <meta name="keywords" content="HTML5 Admin Template" />
 <meta name="description" content="JSOFT Admin - Responsive HTML5 Template">
 <meta name="author" content="JSOFT.net">
@@ -20,44 +20,30 @@ $listereponse = $reponseC->affichereponse();
 <!-- Mobile Metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<!-- Web Fonts  -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
-<!-- Vendor CSS -->
-<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
-<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
-<!-- Specific Page Vendor CSS -->
-<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
-<link rel="stylesheet" href="assets/vendor/morris/morris.css" />
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+		<link rel="stylesheet" href="assets/vendor/morris/morris.css" />
 
-<!-- Theme CSS -->
-<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
 
-<!-- Skin CSS -->
-<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
 
-<!-- Theme Custom CSS -->
-<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
 
-<!-- Head Libs -->
-<script src="assets/vendor/modernizr/modernizr.js"></script>
-
-</head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>liste Reponses</title>
-
-  <!-- External CSS (Bootstrap, Icons) -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-
+		<!-- Head Libs -->
+		<script src="assets/vendor/modernizr/modernizr.js"></script>
   <!-- Custom CSS -->
   <style>
   body {
@@ -67,55 +53,7 @@ $listereponse = $reponseC->affichereponse();
     padding: 0;
   }
 
-  /* Side Navigation */
-  .sidenav {
-    background-color: #3f72af;
-    color: white;
-    border-radius: 10px;
-    padding: 10px 0;
-    position: fixed;
-    width: 220px;
-    height: 100vh;
-  }
-
-  .sidenav-header {
-    padding: 20px;
-    text-align: center;
-    background-color: #2a4d84;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .sidenav-header .navbar-brand {
-    color: #fff;
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-
-  .navbar-nav {
-    padding: 0;
-  }
-
-  .navbar-nav .nav-link {
-    color: #ddd;
-    padding: 15px 20px;
-    font-size: 1rem;
-    text-transform: uppercase;
-    display: block;
-    transition: all 0.3s ease;
-  }
-
-  .navbar-nav .nav-link:hover {
-    background-color: #2a4d84;
-    color: #fff;
-    border-radius: 5px;
-  }
-
-  .navbar-nav .nav-link.active {
-    background-color: #4e73df;
-    color: #fff;
-    border-radius: 5px;
-    font-weight: bold;
-  }
+  
 
   /* Main Content */
   .main-content {
@@ -255,6 +193,78 @@ $listereponse = $reponseC->affichereponse();
     top: 160px;
     right: 700px;
   }
+
+  /* Add these styles to match the dashboard theme */
+.sidebar-left {
+    background: #2C3E50; /* Base blue background */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    padding: 0;
+    z-index: 1000;
+}
+
+.logo-container {
+    background: #2C3E50; /* Darker blue for logo area - exact match */
+    padding: 15px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-container img {
+    max-height: 50px;
+    margin-right: 10px;
+}
+
+.sidebar-header {
+    position: relative;
+    color: #ffffff;
+    height: 50px;
+    background: #3f72af; /* Same as sidebar background */
+    padding: 15px;
+}
+
+.sidebar-title {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nav-main {
+    margin-top: 20px;
+}
+
+.nav-main li a {
+    color: #ffffff;
+    font-size: 13px;
+    padding: 12px 15px;
+    display: block;
+    text-decoration: none;
+}
+
+.nav-main li a:hover {
+    background: #2a4d84; /* Darker blue on hover - exact match */
+    color: #fff;
+}
+
+.nav-main li.nav-active > a {
+    background: #2a4d84; /* Darker blue for active state - exact match */
+    color: #fff;
+}
+
+.nav-children {
+    background: #2a4d84; /* Darker blue for child menus - exact match */
+    padding-left: 20px;
+}
+
+/* Adjust main content margin to match sidebar width */
+.main-content {
+    margin-left: 300px;
+}
   </style>
 
   
@@ -262,14 +272,225 @@ $listereponse = $reponseC->affichereponse();
 <body class="g-sidenav-show bg-primary">
 
   <!-- Sidebar -->
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
-    <div class="sidenav-header">
-      <a class="navbar-brand m-0" target="_blank">
-        <img src="logo1.PNG" class="navbar-brand-img h-50" alt="logo">
-        <span class="ms-1 font-weight-bold">ADMINS</span>
-      </a>
+  <aside id="sidebar-left" class="sidebar-left">
+    <!-- Add this logo container -->
+    <div class="logo-container">
+        <a href="../" class="logo">
+            <img src="logo1.PNG" height="35" alt="JSOFT Admin" />
+        </a>
+        <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
     </div>
-  </aside>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li class="nav-active">
+                        <a href="index.html">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-parent">
+										<a>
+											<i class="fa fa-copy" aria-hidden="true"></i>
+											<span>Pages</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="pages-signup.html">
+													 Sign Up
+												</a>
+											</li>
+											<li>
+												<a href="pages-signin.html">
+													 Sign In
+												</a>
+											</li>
+											<li>
+												<a href="pages-recover-password.html">
+													 Recover Password
+												</a>
+											</li>
+											<li>
+												<a href="pages-lock-screen.html">
+													 Locked Screen
+												</a>
+											</li>
+											<li>
+												<a href="pages-user-profile.html">
+													 User Profile
+												</a>
+											</li>
+											<li>
+												<a href="pages-session-timeout.html">
+													 Session Timeout
+												</a>
+											</li>
+											<li>
+												<a href="pages-calendar.html">
+													 Calendar
+												</a>
+											</li>
+											<li>
+												<a href="pages-timeline.html">
+													 Timeline
+												</a>
+											</li>
+											<li>
+												<a href="pages-media-gallery.html">
+													 Media Gallery
+												</a>
+											</li>
+											<li>
+												<a href="pages-invoice.html">
+													 Invoice
+												</a>
+											</li>
+											<li>
+												<a href="pages-blank.html">
+													 Blank Page
+												</a>
+											</li>
+											<li>
+												<a href="pages-404.html">
+													 404
+												</a>
+											</li>
+											<li>
+												<a href="pages-500.html">
+													 500
+												</a>
+											</li>
+											<li>
+												<a href="pages-log-viewer.html">
+													 Log Viewer
+												</a>
+											</li>
+											<li>
+												<a href="pages-search-results.html">
+													 Search Results
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-tasks" aria-hidden="true"></i>
+											<span>UI Elements</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="ui-elements-typography.html">
+													 Typography
+												</a>
+											</li>
+											<li>
+												
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-list-alt" aria-hidden="true"></i>
+											<span>Quiz</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="http://localhost/Quiz/View/Back/afficherquestion.php">
+													 questions
+												</a>
+											</li>
+											<li>
+												<a href="http://localhost/Quiz/View/Back/affichereponse.php">
+													 reponses
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-table" aria-hidden="true"></i>
+											<span>Tables</span>
+										</a>
+										<ul class="nav nav-children">
+											
+											<li>
+												<a href="tables-editable.html">
+													 Editable
+												</a>
+											</li>
+											<li>
+												<a href="tables-ajax.html">
+													 Ajax
+												</a>
+											</li>
+											<li>
+												<a href="tables-pricing.html">
+													 Pricing
+												</a>
+											</li>
+										</ul>
+									</li>
+									
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-columns" aria-hidden="true"></i>
+											<span>Layouts</span>
+										</a>
+										<ul class="nav nav-children">
+											
+											</li>
+											<li>
+												<a href="layouts-scroll.html">
+													 Scroll
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-align-left" aria-hidden="true"></i>
+											<span>Menu Levels</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a>First Level</a>
+											</li>
+											<li class="nav-parent">
+												<a>Second Level</a>
+												<ul class="nav nav-children">
+													<li class="nav-parent">
+														<a>Third Level</a>
+														<ul class="nav nav-children">
+															<li>
+																<a>Third Level Link #1</a>
+															</li>
+															<li>
+																<a>Third Level Link #2</a>
+															</li>
+														</ul>
+													</li>
+													<li>
+														<a>Second Level Link #1</a>
+													</li>
+													<li>
+														<a>Second Level Link #2</a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									
+								</ul>
+							</nav>
+				
+							
+				
+				</aside>
 
   <!-- Main Content -->
   <main class="main-content position-relative border-radius-lg">
@@ -330,5 +551,53 @@ $listereponse = $reponseC->affichereponse();
     </div>
   </main>
 
+  <!-- Vendor -->
+  <script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+		<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+		<script src="assets/vendor/jquery-appear/jquery.appear.js"></script>
+		<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+		<script src="assets/vendor/jquery-easypiechart/jquery.easypiechart.js"></script>
+		<script src="assets/vendor/flot/jquery.flot.js"></script>
+		<script src="assets/vendor/flot-tooltip/jquery.flot.tooltip.js"></script>
+		<script src="assets/vendor/flot/jquery.flot.pie.js"></script>
+		<script src="assets/vendor/flot/jquery.flot.categories.js"></script>
+		<script src="assets/vendor/flot/jquery.flot.resize.js"></script>
+		<script src="assets/vendor/jquery-sparkline/jquery.sparkline.js"></script>
+		<script src="assets/vendor/raphael/raphael.js"></script>
+		<script src="assets/vendor/morris/morris.js"></script>
+		<script src="assets/vendor/gauge/gauge.js"></script>
+		<script src="assets/vendor/snap-svg/snap.svg.js"></script>
+		<script src="assets/vendor/liquid-meter/liquid.meter.js"></script>
+		<script src="assets/vendor/jqvmap/jquery.vmap.js"></script>
+		<script src="assets/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
+		<script src="assets/vendor/jqvmap/maps/jquery.vmap.world.js"></script>
+		<script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js"></script>
+		<script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js"></script>
+		<script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js"></script>
+		<script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js"></script>
+		<script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
+		<script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+
+
+		<!-- Examples -->
+		<script src="assets/javascripts/dashboard/examples.dashboard.js"></script>
 </body>
 </html>
