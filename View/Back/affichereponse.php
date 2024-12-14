@@ -97,39 +97,39 @@ $listereponse = $reponseC->affichereponse();
 }
 
 .table {
-    width: 80%; /* Center the table */
-    margin: 20px auto; /* Add spacing around the table */
+    width: 100%;
+    margin: 20px auto;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-collapse: collapse; /* Remove extra spaces between cells */
+    border-collapse: collapse;
     overflow: hidden;
 }
 
 .table th, .table td {
-    padding: 12px 20px; /* Increase padding for a cleaner look */
-    text-align: left; /* Align text to the left */
-    font-size: 0.9rem;
+    padding: 15px 25px;
+    text-align: left;
+    font-size: 1.7rem;
+    font-weight: 500;
 }
 
 .table th {
     background-color: #f8f9fc;
-    color: #4e73df;
-    font-weight: bold;
+    color: #2C3E50;
+    font-weight:900;
+    font-size: 1.5rem;
     text-transform: uppercase;
     border-bottom: 2px solid #e2e6ea;
 }
 
-.table tr {
-    border-bottom: 1px solid #ddd; /* Add row separators */
-}
-
-.table tr:last-child {
-    border-bottom: none; /* Remove border for the last row */
-}
-
 .table td {
-    color: #333; /* Text color for cells */
+    color: #2C3E50;
+    line-height: 1.5;
+}
+
+.table tr:hover {
+    background-color: #f8f9fc;
+    transition: background-color 0.3s ease;
 }
 
   .btn-icon {
@@ -178,19 +178,19 @@ $listereponse = $reponseC->affichereponse();
   }
 
   .btn-add-question {
-    background-color: #021a30
+    background-color: #007bff;
     color: #fff;
   }
 
   .btn-add-question:hover {
-    background-color: #343a40;
+    background-color: #0056b3;
     transform: scale(1.05);
   }
 
   /* Position the Add Button */
   .position-absolute {
     position: absolute;
-    top: 160px;
+    top: 80px;
     right: 700px;
   }
 
