@@ -128,7 +128,7 @@ if ($type_feedback || $statut || $date_soumission) {
     justify-content: flex-start;
     flex-wrap: wrap;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     padding: 14px 20px;
     background-color: #fff;
     border: 1.2px solid #ddd;
