@@ -354,79 +354,143 @@ body {
 
 /* Quiz Container */
 .quiz-container {
-    max-width: 800px;
+    max-width: 1200px; /* Plus large pour l'alignement horizontal */
     margin: 30px auto;
-    background-color: #ffffff;
-    border-radius: 8px;
     padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease-in-out;
 }
 
-.quiz-header h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+/* Conteneur flex pour l'alignement horizontal des questions */
+.questions-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }
 
-/* Question Styling */
+/* Style individuel pour chaque question */
 .question-container {
+    flex: 0 1 calc(50% - 20px); /* Deux questions par ligne */
+    min-width: 300px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
 }
 
+/* Style pour le titre de la question */
 .question-container p {
     font-size: 1.2rem;
-    margin-bottom: 10px;
+    color: #2C3E50;
+    margin-bottom: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
 }
 
+/* Style pour les boutons de réponse */
 .response-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
-/* Radio Button Styling */
-.response-buttons input[type="radio"] {
-    display: none;
+.response-buttons div {
+    transform: translateX(-20px);
+    opacity: 0;
+    animation: slideIn 0.5s ease forwards;
 }
 
+/* Style pour les labels de réponse */
 .response-buttons label {
-    font-size: 1.1rem;
-    padding: 12px;
-    background-color: #f1f1f1;
-    border-radius: 8px;
+    display: block;
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.response-buttons input[type="radio"]:checked + label {
-    background-color: #007bff;
-    color: white;
+    font-size: 1.1rem;
+    color: #495057;
 }
 
 .response-buttons label:hover {
-    background-color: #f1f1f1;
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.response-buttons input[type="radio"]:checked + label:hover {
-    background-color: #0056b3;
-}
-
-/* Buttons */
-.btn {
-    background-color: #007bff;
+.response-buttons input[type="radio"]:checked + label {
+    background-color: #4e73df;
     color: white;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-color: #4e73df;
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animation delay pour les réponses */
+.response-buttons div:nth-child(1) { animation-delay: 0.1s; }
+.response-buttons div:nth-child(2) { animation-delay: 0.2s; }
+.response-buttons div:nth-child(3) { animation-delay: 0.3s; }
+.response-buttons div:nth-child(4) { animation-delay: 0.4s; }
+
+/* Style pour les boutons de navigation */
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.navigation-buttons button {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
     transition: all 0.3s ease;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+.navigation-buttons button:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Result Message */
@@ -541,30 +605,30 @@ button[type="submit"]:hover {
                 <h2>Quiz: Answer the questions</h2>
             </div>
 
-            <!-- Loop through the questions and display them -->
-            <?php foreach ($questionsOnPage as $question): ?>
-                <div class="question-container">
-                    <p><?php echo $question['titre']; ?></p>
-                    <?php
-                    $responses = $reponseC->getReponsesByQuestionId($question['id']);
-                    ?>
-                    <div class="response-buttons">
-                        <?php foreach ($responses as $response): ?>
-                            <div>
-                                <input type="radio" id="reponse-<?php echo $response['id_reponse']; ?>" 
-                                       name="reponse[<?php echo $question['id']; ?>]" 
-                                       value="<?php echo $response['id_reponse']; ?>" required>
-                                <label for="reponse-<?php echo $response['id_reponse']; ?>">
-                                    <?php echo $response['choix_rp']; ?>
-                                </label>
-                            </div>
-                        <?php endforeach; ?>
+            <div class="questions-wrapper">
+                <?php foreach ($questionsOnPage as $question): ?>
+                    <div class="question-container">
+                        <p><?php echo $question['titre']; ?></p>
+                        <?php
+                        $responses = $reponseC->getReponsesByQuestionId($question['id']);
+                        ?>
+                        <div class="response-buttons">
+                            <?php foreach ($responses as $response): ?>
+                                <div>
+                                    <input type="radio" id="reponse-<?php echo $response['id_reponse']; ?>" 
+                                           name="reponse[<?php echo $question['id']; ?>]" 
+                                           value="<?php echo $response['id_reponse']; ?>" required>
+                                    <label for="reponse-<?php echo $response['id_reponse']; ?>">
+                                        <?php echo $response['choix_rp']; ?>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
 
-            <!-- Navigation buttons for quiz pages -->
-            <div class="text-center">
+            <div class="navigation-buttons">
                 <?php if ($page > 1): ?>
                     <button type="submit" name="page" value="<?php echo $page - 1; ?>" class="btn btn-secondary">Previous</button>
                 <?php endif; ?>
@@ -572,7 +636,6 @@ button[type="submit"]:hover {
                 <?php if (!$isLastPage): ?>
                     <button type="submit" name="page" value="<?php echo $page + 1; ?>" class="btn btn-primary">Next</button>
                 <?php else: ?>
-                    <!-- Add a hidden input to mark the form as "Submit" -->
                     <button type="submit" name="submit_quiz" class="btn btn-success">Submit</button>
                 <?php endif; ?>
             </div>
@@ -789,6 +852,35 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+</script>
+
+<script>
+// Sauvegarder la position de défilement avant la soumission du formulaire
+document.getElementById('quiz-form').addEventListener('submit', function() {
+    // Stocker la position actuelle dans sessionStorage
+    sessionStorage.setItem('scrollPosition', window.scrollY);
+});
+
+// Restaurer la position de défilement après le chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    // Récupérer la position sauvegardée
+    const scrollPosition = sessionStorage.getItem('scrollPosition');
+    
+    if (scrollPosition) {
+        // Restaurer la position avec une petite animation
+        window.scrollTo({
+            top: scrollPosition,
+            behavior: 'smooth'
+        });
+        // Effacer la position sauvegardée
+        sessionStorage.removeItem('scrollPosition');
+    }
+});
+
+// Désactiver le comportement de défilement par défaut du navigateur
+if (window.history.scrollRestoration) {
+    window.history.scrollRestoration = 'manual';
+}
 </script>
 
     
