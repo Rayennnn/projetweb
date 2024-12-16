@@ -152,8 +152,12 @@
 
       <div class="address-image">
         <img src="img/ad.png" alt="Adresse" />
-        <button class="maps-button">Maps</button>
-      </div>
+        <a href="https://maps.google.com/maps?q=ESPRIT+Tunis&ll=36.8991066,10.1871424&z=15" 
+           target="_blank" 
+           class="maps-button">
+            Maps
+        </a>
+    </div>
     </section>
 
     <!-- Suggestion Section -->
@@ -172,20 +176,19 @@
           </div>
 
           <!-- Formulaire à droite -->
-        <div class="col-md-6 form-box">
-            <form method="POST" action="/projetweb/view/backoffice/addsuggestion.php" id="suggestionForm">
-              <input type="text" id="user_id" name="id_utilisateur" class="input-field" placeholder="Votre ID" />
-              <select id="subject" name="type_feedback" class="input-field">
-                  <option value="" disabled selected>Choisir un sujet</option>
-                  <option value="reclamation">Réclamation</option>
-                  <option value="suggestion">Suggestion</option>
-              </select>
-              <textarea id="message" name="contenu" class="input-field message-field" placeholder="Votre message"></textarea>
-              <button type="submit" class="main-button">Envoyer</button>
-            </form>          
-         </div>
-          
+          <div class="col-md-6 form-box">
+            <form method="POST" action="\projetweb\view\backoffice\octopus-master\octopus-master\octopus\addsuggestion.php" id="suggestionForm">
+                <input type="email" id="user_email" name="mail" class="input-field" placeholder="Votre Email"  />
+                <select id="subject" name="type_feedback" class="input-field">
+                    <option value="" disabled selected>Choisir un sujet</option>
+                    <option value="reclamation">Réclamation</option>
+                    <option value="suggestion">Suggestion</option>
+                </select>
+                <textarea id="message" name="contenu" class="input-field message-field" placeholder="Votre message"></textarea>
+                <button type="submit" class="main-button">Envoyer</button>
+            </form>
         </div>
+        
       </div>
     </section>    
     <div class="suggestions-list">
@@ -299,7 +302,7 @@
       const suggestionsPerPage = 3;
 
       function loadSuggestions(page) {
-          fetch(`/projetweb/view/backoffice/getSuggestions.php?page=${page}&limit=${suggestionsPerPage}`)
+          fetch(`/projetweb/view/backoffice/octopus-master/octopus-master/octopus/getSuggestions.php?page=${page}&limit=${suggestionsPerPage}`)
               .then(response => response.json())
               .then(data => {
                   if (data.error) {
@@ -349,7 +352,7 @@
      function handleLike(button) {
     const suggestionId = button.closest('.suggestion-item').dataset.id;
 
-    fetch('/projetweb/view/backoffice/updateFeedback.php', {
+    fetch('/projetweb/view/backoffice/octopus-master/octopus-master/octopus/updateFeedback.php', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json'  // Utiliser JSON
@@ -377,7 +380,7 @@
 function handleDislike(button) {
     const suggestionId = button.closest('.suggestion-item').dataset.id;
 
-    fetch('/projetweb/view/backoffice/updateFeedback.php', {
+    fetch('/projetweb/view/backoffice/octopus-master/octopus-master/octopus/updateFeedback.php', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json'  // Utiliser JSON
@@ -409,7 +412,8 @@ function handleDislike(button) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/contact.js" ></script>
+    
+   
     
 
      

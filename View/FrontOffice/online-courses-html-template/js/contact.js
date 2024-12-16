@@ -1,10 +1,10 @@
 document.getElementById('suggestionForm').addEventListener('submit', function(event) {
-    const userId = document.getElementById('user_id').value.trim();
+    const userId = document.getElementById('user_email').value.trim();
     const typeFeedback = document.getElementById('subject').value;
     const contenu = document.getElementById('message').value.trim();
 
     if (!userId || isNaN(userId)) {
-        alert('Veuillez entrer un ID valide.');
+        alert('Veuillez entrer un mail valide.');
         event.preventDefault();
     } else if (!typeFeedback) {
         alert('Veuillez choisir un sujet.');

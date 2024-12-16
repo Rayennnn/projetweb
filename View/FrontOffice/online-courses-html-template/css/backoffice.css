@@ -24,15 +24,14 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 260px;
-    background: var(--primary);
-    min-height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    background: #34495e;
+	box-shadow: -5px 0 0 #2f3139 inset;
+	color: #777777;
+	display: table-cell;
+	position: relative;
+	vertical-align: top;
+	width: 300px;
+	z-index: 1010;
 }
 
 .sidebar-header {

@@ -96,5 +96,18 @@ class ReponseSuggestionC {
             die('Erreur : ' . $e->getMessage());
         }
     }
+    public function getUserEmailBySuggestionId($id_suggestion) {
+        $db = config::getConnexion();
+        $query = "SELECT mail FROM suggestions WHERE id_suggestion = :id_suggestion"; // Assurez-vous que la colonne email existe
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id_suggestion', $id_suggestion, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['mail']; // Retourne l'adresse e-mail
+        }
+        return null; // Retourne null si aucune adresse e-mail n'est trouvée
+    }
 }
 ?>

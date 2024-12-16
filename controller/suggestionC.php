@@ -57,21 +57,19 @@ class SuggestionC {
     }
     public function addSuggestion($suggestion) {
         try {
-            $pdo = config::getConnexion();
-            
-            $sql = "INSERT INTO suggestions (contenu, date_soumission, statut, type_feedback, id_utilisateur) 
-                    VALUES (:contenu, :date_soumission, :statut, :type_feedback, :id_utilisateur)";
-            
-            $query = $pdo->prepare($sql);
-            
+            $db = config::getConnexion();
+            $sql = "INSERT INTO suggestions (contenu, date_soumission, statut, type_feedback, mail) 
+                    VALUES (:contenu, :date_soumission, :statut, :type_feedback, :mail)";
+            $query = $db->prepare($sql);
+
             $result = $query->execute([
                 'contenu' => $suggestion->getContenu(),
                 'date_soumission' => $suggestion->getDateSoumission(),
                 'statut' => $suggestion->getStatut(),
                 'type_feedback' => $suggestion->getTypeFeedback(),
-                'id_utilisateur' => $suggestion->getIdUtilisateur()
+                'mail' => $suggestion->getMail()
             ]);
-            
+
             return $result;
             
         } catch (PDOException $e) {
@@ -85,29 +83,28 @@ class SuggestionC {
         var_dump($suggestion); 
         try {
             $db = config::getConnexion();
-    
+
             $query = $db->prepare(
                 'UPDATE suggestions SET 
                     contenu = :contenu,
                     type_feedback = :type_feedback,
                     statut = :statut,
-                    id_utilisateur = :id_utilisateur
+                    mail = :mail
                 WHERE id_suggestion = :id'
             );
-    
+
             $query->execute([
                 'contenu' => $suggestion->getContenu(),
                 'type_feedback' => $suggestion->getTypeFeedback(),
                 'statut' => $suggestion->getStatut(),
-                'id_utilisateur' => $suggestion->getIdUtilisateur(),
+                'mail' => $suggestion->getMail(),
                 'id' => $id
             ]);
-            
-            var_dump($query->errorInfo()); // Affiche les erreurs SQL, le cas échéant
-            
+
             echo $query->rowCount() . " records UPDATED successfully <br>";
+
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage(); 
+            echo "Error: " . $e->getMessage();
         }
     }
     
@@ -268,6 +265,7 @@ class SuggestionC {
             return ['success' => false, 'error' => 'Erreur lors de la mise à jour.'];
         }
     }
+    
     
     
 
