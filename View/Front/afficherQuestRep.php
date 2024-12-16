@@ -125,11 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <a href="single.html" class="dropdown-item">Formations</a>
                             </div>
                         </div>
-                        <div class="nav-item quiz-link" style="margin-left: 5px;">
-                            <a href="course.html" class="nav-link">
-                                <span class="quiz-text">Quiz</span>
-                                
-                        </div>
+                        <a href="course.html" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
                         <a href="teacher.html" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
                         <a href="contact.html" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
                     </div>
@@ -145,20 +141,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- Navbar End -->
 
 
-   <!-- Header Start -->
-<div class="container-fluid page-header" style="margin-bottom: 90px; background-image: url('image8.png'); background-size: cover; background-position: center;">
-    <div class="container">
-        <div class="d-flex flex-column justify-content-center" style="min-height: 200px;">
-            <h3 class="display-4 text-white text-uppercase">quiz</h3>
-            <div class="d-inline-flex text-white">
-                <p class="m-0 text-uppercase"><a class="text-white" href="#">Home</a></p>
-                <i class="fa fa-angle-double-right pt-1 px-3"></i>
-                <p class="m-0 text-uppercase">quiz</p>
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 160px">
+                <h3 class="display-4 text-white text-uppercase">quiz</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">quiz</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
     <!-- Header End -->
 <!-- quiz Start -->
 
@@ -533,7 +528,7 @@ footer p {
 button[type="submit"] {
     margin: 10px 5px;
     padding: 10px 20px;
-    background-color: #145DA0;
+    background-color: #28a745;
     color: white;
     border-radius: 5px;
     font-size: 1rem;
@@ -541,7 +536,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color:  #145DA0;
+    background-color: #218838;
 }
 
 /* Custom Styling for the Quiz Page */
@@ -602,94 +597,51 @@ button[type="submit"]:hover {
     min-height: 20px;
 }
 
-/* Style pour le conteneur Quiz */
-.quiz-link {
-    position: relative;
-    overflow: hidden;
+/* Account Check Form Styles */
+#account-check-form {
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
 }
 
-.quiz-link a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    padding: 10px 15px;
+#account-check-form label {
+    margin-bottom: 25px;
+    display: block;
+}
+
+#account-yes {
+    padding: 15px 40px;
+    font-size: 18px;
     transition: all 0.3s ease;
+    background-color: #145DA0;
+    color: white;
+    border: none;
 }
 
-/* Style pour l'icône Quiz */
-.quiz-icon {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 5px;
-    transition: transform 0.3s ease;
-    opacity: 0.7;
-}
-
-/* Style pour le texte Quiz */
-.quiz-text {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #333;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-/* Style pour le sous-titre */
-.quiz-subtitle {
-    position: absolute;
-    bottom: -20px;
-    font-size: 0.8rem;
-    color: var(--primary);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-/* Effets au survol */
-.quiz-link:hover .quiz-icon {
-    transform: scale(1.2);
-    opacity: 1;
-}
-
-.quiz-link:hover .quiz-text {
-    color: var(--primary);
+#account-yes:hover {
     transform: translateY(-2px);
-}
-
-.quiz-link:hover .quiz-subtitle {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Animation de brillance */
-.quiz-link:hover::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    animation: shine 1s ease;
-}
-
-@keyframes shine {
-    to {
-        left: 100%;
-    }
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #1a73e8;
 }
 
 </style>
 
     <div class="quiz-container">
-        <form id="quiz-form" method="POST">
+        <!-- Account Check Section -->
+        <form id="account-check-form" class="quiz-form">
+            <div class="mb-4 text-center">
+                <label for="account-check" class="form-label" style="font-size: 22px; font-weight: bold; color: #4a90e2;">🚀 Ready to explore Yourself? 🎯</label>
+                <div class="d-flex justify-content-center">
+                    <button type="button" id="account-yes" class="btn btn-lg btn-outline-primary mx-3">Let's Rock This! 💪</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Quiz Form (Initially Hidden) -->
+        <form id="quiz-form" method="POST" style="display: none;">
             <div class="quiz-header">
                 <h2>Quiz: Answer the questions</h2>
             </div>
@@ -797,7 +749,7 @@ button[type="submit"]:hover {
                 }
 
                 .btn-secondary:hover {
-                    background-color:  #145DA0;
+                    background-color: #5a6268;
                 }
             </style>
 
@@ -970,6 +922,25 @@ document.addEventListener('DOMContentLoaded', function() {
 if (window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
 }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the elements
+    const accountCheckForm = document.getElementById('account-check-form');
+    const quizForm = document.getElementById('quiz-form');
+    const startButton = document.getElementById('account-yes');
+
+    // Add click event to the start button
+    startButton.addEventListener('click', function() {
+        // Hide the account check form
+        accountCheckForm.style.display = 'none';
+        // Show the quiz form
+        quizForm.style.display = 'block';
+        // Smooth scroll to the quiz
+        quizForm.scrollIntoView({ behavior: 'smooth' });
+    });
+});
 </script>
 
     
