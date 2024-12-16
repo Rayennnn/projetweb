@@ -142,8 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     <!-- Header Start -->
-    <div class="container-fluid page-header" style="margin-bottom: 90px;">
-        <div class="container">
+    <div class="container-fluid page-header" style="margin-bottom: 120px; background-image: url('image8.jpg'); background-size: cover; background-position: center;">
             <div class="d-flex flex-column justify-content-center" style="min-height: 160px">
                 <h3 class="display-4 text-white text-uppercase">quiz</h3>
                 <div class="d-inline-flex text-white">
@@ -528,7 +527,7 @@ footer p {
 button[type="submit"] {
     margin: 10px 5px;
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     border-radius: 5px;
     font-size: 1rem;
@@ -536,7 +535,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #007bff;
 }
 
 /* Custom Styling for the Quiz Page */
@@ -597,51 +596,10 @@ button[type="submit"]:hover {
     min-height: 20px;
 }
 
-/* Account Check Form Styles */
-#account-check-form {
-    text-align: center;
-    padding: 40px 20px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-}
-
-#account-check-form label {
-    margin-bottom: 25px;
-    display: block;
-}
-
-#account-yes {
-    padding: 15px 40px;
-    font-size: 18px;
-    transition: all 0.3s ease;
-    background-color: #145DA0;
-    color: white;
-    border: none;
-}
-
-#account-yes:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: #1a73e8;
-}
-
 </style>
 
     <div class="quiz-container">
-        <!-- Account Check Section -->
-        <form id="account-check-form" class="quiz-form">
-            <div class="mb-4 text-center">
-                <label for="account-check" class="form-label" style="font-size: 22px; font-weight: bold; color: #4a90e2;">🚀 Ready to explore Yourself? 🎯</label>
-                <div class="d-flex justify-content-center">
-                    <button type="button" id="account-yes" class="btn btn-lg btn-outline-primary mx-3">Let's Rock This! 💪</button>
-                </div>
-            </div>
-        </form>
-
-        <!-- Quiz Form (Initially Hidden) -->
-        <form id="quiz-form" method="POST" style="display: none;">
+        <form id="quiz-form" method="POST">
             <div class="quiz-header">
                 <h2>Quiz: Answer the questions</h2>
             </div>
@@ -739,7 +697,7 @@ button[type="submit"]:hover {
                 }
 
                 .btn-secondary {
-                    background-color: #6c757d;
+                    background-color: #007bff;
                     color: white;
                     padding: 10px 20px;
                     border: none;
@@ -922,25 +880,6 @@ document.addEventListener('DOMContentLoaded', function() {
 if (window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
 }
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the elements
-    const accountCheckForm = document.getElementById('account-check-form');
-    const quizForm = document.getElementById('quiz-form');
-    const startButton = document.getElementById('account-yes');
-
-    // Add click event to the start button
-    startButton.addEventListener('click', function() {
-        // Hide the account check form
-        accountCheckForm.style.display = 'none';
-        // Show the quiz form
-        quizForm.style.display = 'block';
-        // Smooth scroll to the quiz
-        quizForm.scrollIntoView({ behavior: 'smooth' });
-    });
-});
 </script>
 
     
