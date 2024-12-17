@@ -261,53 +261,61 @@
 
 			<div class="inner-wrapper">
 				<!-- start: sidebar -->
-				<aside id="sidebar-left" class="sidebar-left">
-				
-					<div class="sidebar-header">
-						<div class="sidebar-title">
-							Navigation
-						</div>
-						<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
-							<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-						</div>
-					</div>
-				
-					<div class="nano">
-						<div class="nano-content">
-							<nav id="menu" class="nav-main" role="navigation">
-								<ul class="nav nav-main">
-									<li>
-										<a target="_blank">
-											<i class="fa fa-th-large" aria-hidden="true"></i>
-											<span>Comments</span>
-										</a>
-									</li>
-									<li>
-										<a target="_blank">
-											<i class="fa fa-file" aria-hidden="true"></i>
-											<span>Profile</span>
-										</a>
-									</li>
-									<li>
-										<a target="_blank">
-											<i class="fa fa-gear" aria-hidden="true"></i>
-											<span>Settings</span>
-										</a>
-									</li>
-									<li>
-										<a target="_blank">
-											<i class="fa fa-external-link" aria-hidden="true"></i>
-											<span>Logout</span>
-										</a>
-									</li>
-								</ul>
-							</nav>
-				
-						</div>
-				
-					</div>
-				
-				</aside>
+				<!-- start: sidebar -->
+<aside id="sidebar-left" class="sidebar-left">
+  <div class="sidebar-header">
+    <div class="sidebar-title">Navigation</div>
+    <div
+      class="sidebar-toggle hidden-xs"
+      data-toggle-class="sidebar-left-collapsed"
+      data-target="html"
+      data-fire-event="sidebar-left-toggle"
+    >
+      <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+    </div>
+  </div>
+
+  <div class="nano">
+    <div class="nano-content">
+      <nav id="menu" class="nav-main" role="navigation">
+        <ul class="nav nav-main">
+          <!-- Comments Page -->
+          <li class="nav-item">
+            <a href="comments.html" class="nav-link">
+              <i class="fa fa-th-large" aria-hidden="true"></i>
+              <span>Comments</span>
+            </a>
+          </li>
+
+          <!-- Profile Page -->
+          <li class="nav-item">
+            <a href="profile.html" class="nav-link">
+              <i class="fa fa-file" aria-hidden="true"></i>
+              <span>Profile</span>
+            </a>
+          </li>
+
+          <!-- Settings Page -->
+          <li class="nav-item">
+            <a href="settings.html" class="nav-link">
+              <i class="fa fa-gear" aria-hidden="true"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item">
+            <a href="logout.html" class="nav-link">
+              <i class="fa fa-external-link" aria-hidden="true"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</aside>
+
 				<!-- end: sidebar -->
 
 				<section role="main" class="content-body">
