@@ -288,110 +288,14 @@ $listereponse = $reponseC->affichereponse();
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
                     <li class="nav-active">
-                        <a href="index.html">
+                        <a href="http://localhost/parcouri/view/back/profile.php">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     
                     <li class="nav-parent">
-										<a>
-											<i class="fa fa-copy" aria-hidden="true"></i>
-											<span>Pages</span>
-										</a>
-										<ul class="nav nav-children">
-											<li>
-												<a href="pages-signup.html">
-													 Sign Up
-												</a>
-											</li>
-											<li>
-												<a href="pages-signin.html">
-													 Sign In
-												</a>
-											</li>
-											<li>
-												<a href="pages-recover-password.html">
-													 Recover Password
-												</a>
-											</li>
-											<li>
-												<a href="pages-lock-screen.html">
-													 Locked Screen
-												</a>
-											</li>
-											<li>
-												<a href="pages-user-profile.html">
-													 User Profile
-												</a>
-											</li>
-											<li>
-												<a href="pages-session-timeout.html">
-													 Session Timeout
-												</a>
-											</li>
-											<li>
-												<a href="pages-calendar.html">
-													 Calendar
-												</a>
-											</li>
-											<li>
-												<a href="pages-timeline.html">
-													 Timeline
-												</a>
-											</li>
-											<li>
-												<a href="pages-media-gallery.html">
-													 Media Gallery
-												</a>
-											</li>
-											<li>
-												<a href="pages-invoice.html">
-													 Invoice
-												</a>
-											</li>
-											<li>
-												<a href="pages-blank.html">
-													 Blank Page
-												</a>
-											</li>
-											<li>
-												<a href="pages-404.html">
-													 404
-												</a>
-											</li>
-											<li>
-												<a href="pages-500.html">
-													 500
-												</a>
-											</li>
-											<li>
-												<a href="pages-log-viewer.html">
-													 Log Viewer
-												</a>
-											</li>
-											<li>
-												<a href="pages-search-results.html">
-													 Search Results
-												</a>
-											</li>
-										</ul>
-									</li>
-									<li class="nav-parent">
-										<a>
-											<i class="fa fa-tasks" aria-hidden="true"></i>
-											<span>UI Elements</span>
-										</a>
-										<ul class="nav nav-children">
-											<li>
-												<a href="ui-elements-typography.html">
-													 Typography
-												</a>
-											</li>
-											<li>
-												
-										</ul>
-									</li>
+										
 									<li class="nav-parent">
 										<a>
 											<i class="fa fa-list-alt" aria-hidden="true"></i>
@@ -411,79 +315,7 @@ $listereponse = $reponseC->affichereponse();
 											
 										</ul>
 									</li>
-									<li class="nav-parent">
-										<a>
-											<i class="fa fa-table" aria-hidden="true"></i>
-											<span>Tables</span>
-										</a>
-										<ul class="nav nav-children">
-											
-											<li>
-												<a href="tables-editable.html">
-													 Editable
-												</a>
-											</li>
-											<li>
-												<a href="tables-ajax.html">
-													 Ajax
-												</a>
-											</li>
-											<li>
-												<a href="tables-pricing.html">
-													 Pricing
-												</a>
-											</li>
-										</ul>
-									</li>
 									
-									<li class="nav-parent">
-										<a>
-											<i class="fa fa-columns" aria-hidden="true"></i>
-											<span>Layouts</span>
-										</a>
-										<ul class="nav nav-children">
-											
-											</li>
-											<li>
-												<a href="layouts-scroll.html">
-													 Scroll
-												</a>
-											</li>
-										</ul>
-									</li>
-									<li class="nav-parent">
-										<a>
-											<i class="fa fa-align-left" aria-hidden="true"></i>
-											<span>Menu Levels</span>
-										</a>
-										<ul class="nav nav-children">
-											<li>
-												<a>First Level</a>
-											</li>
-											<li class="nav-parent">
-												<a>Second Level</a>
-												<ul class="nav nav-children">
-													<li class="nav-parent">
-														<a>Third Level</a>
-														<ul class="nav nav-children">
-															<li>
-																<a>Third Level Link #1</a>
-															</li>
-															<li>
-																<a>Third Level Link #2</a>
-															</li>
-														</ul>
-													</li>
-													<li>
-														<a>Second Level Link #1</a>
-													</li>
-													<li>
-														<a>Second Level Link #2</a>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
 									
 								</ul>
 							</nav>
