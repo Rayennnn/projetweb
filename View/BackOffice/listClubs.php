@@ -4,7 +4,13 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/PROJETWEB/Model/clubs.php');
 
 $clubC = new Clubc();
-
+$chartData = array();
+foreach ($topClubs as $club) {
+    $chartData[] = array(
+        'label' => $club['nom_club'],
+        'value' => $club['clicks']
+    );
+}
 // Vérifiez si l'ID du club est passé en paramètre pour incrémenter les clics
 if (isset($_GET['id_club'])) {
     $clubC->incrementClicks($_GET['id_club']); // Incrémenter les clics pour le club spécifié
@@ -68,6 +74,8 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
 
         <!-- Head Libs -->
         <script src="assets/vendor/modernizr/modernizr.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
     <body>
         <section class="body">
@@ -146,14 +154,18 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
                     </div>
                     <div class="popular-clubs-container">
                     <h2 class="panel-title">Clubs les Plus Populaires</h2>
-                                <?php foreach ($topClubs as $club): 
-                                    $percentage = $totalClicks > 0 ? ($club['clicks'] / $totalClicks) * 100 : 0; ?>
-                                <div class="popular-club">
-                                    <h3><?php echo htmlspecialchars($club['nom_club']); ?></h3>
-                                    <p class="percentage">Pourcentage de Popularité : <span><?php echo number_format($percentage) . '%'; ?></span></p>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
+                    <?php foreach ($topClubs as $club): 
+                        $percentage = $totalClicks > 0 ? ($club['clicks'] / $totalClicks) * 100 : 0; ?>
+                    <div class="popular-club">
+                        <h3><?php echo htmlspecialchars($club['nom_club']); ?></h3>
+                        <p class="percentage">Pourcentage de Popularité : <span><?php echo number_format($percentage) . '%'; ?></span></p>
+                    </div>
+                    <?php endforeach; ?>
+                    
+                </div>
+                <div class="chart-container">
+                        <canvas id="chart" width="400" height="200"></canvas>
+                    </div>
                 </section>
             </div>
             
@@ -239,6 +251,38 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
             }
 
             setInterval(scrollClubs, 100); // Ajustez l'intervalle pour la vitesse de défilement
+            const ctx = document.getElementById('chart').getContext('2d');
+const chartData = <?php echo json_encode($chartData); ?>;
+const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: chartData.map(data => data.label),
+        datasets: [{
+            label: 'Clubs les Plus Populaires',
+            data: chartData.map(data => data.value),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
     </script>
 
     <script src="/clubClicks.js"></script> <!-- ou clubClicks.js -->

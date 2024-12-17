@@ -23,7 +23,7 @@ class Formation
         ?string $image = null, // Remplacé de logo à image
         ?string $lien = null,
         ?int $id_club = null,
-        string $date_formation
+        string $date_formation 
     ) {
         $this->id_formation = $id_formation;
         $this->nom_formation = $nom_formation;

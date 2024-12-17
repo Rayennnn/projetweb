@@ -354,104 +354,449 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             })
             .catch(error => console.error('Erreur:', error));
     }
+    //script calendrier
+        // Fonction pour récupérer les dates des formations favorites
+        async function getFavoriteFormationDates() {
+            try {
+                const response = await fetch('get_favorite_formation_dates.php');
+                if (!response.ok) {
+                    throw new Error('Erreur réseau');
+                }
+                const data = await response.json();
+                console.log('Formations récupérées:', data); // Pour vérifier les données
+                return data;
+            } catch (error) {
+                console.error('Erreur lors de la récupération des dates:', error);
+                return [];
+            }
+        }
+
+        async function generateCalendar(year, month) {
+            // Récupérer les formations favorites avec leurs dates
+            const favoriteFormations = await getFavoriteFormationDates();
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startingDay = firstDay.getDay();
+            const monthLength = lastDay.getDate();
+            
+            const calendarDays = document.getElementById('calendarDays');
+            calendarDays.innerHTML = '';
+            
+            // Ajouter les jours du mois précédent
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            for (let i = startingDay - 1; i >= 0; i--) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day other-month';
+                dayDiv.textContent = prevMonthDays - i;
+                calendarDays.appendChild(dayDiv);
+            }
+            
+            // Ajouter les jours du mois actuel
+            const today = new Date();
+            for (let i = 1; i <= monthLength; i++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+                
+                // Vérifier si c'est aujourd'hui
+                if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+                    dayDiv.classList.add('today');
+                }
+                
+                // Vérifier les formations pour ce jour
+                const currentDate = new Date(year, month, i);
+                const formationsForDay = favoriteFormations.filter(formation => {
+                    const formationDate = new Date(formation.date);
+                    return formationDate.getDate() === currentDate.getDate() &&
+                        formationDate.getMonth() === currentDate.getMonth() &&
+                        formationDate.getFullYear() === currentDate.getFullYear();
+                });
+                
+                if (formationsForDay.length > 0) {
+                    dayDiv.classList.add('has-formation');
+                    
+                    // Créer une liste des formations pour ce jour
+                    const formationsList = formationsForDay
+                        .map(formation => formation.nom_formation)
+                        .join('\n');
+                    
+                    dayDiv.setAttribute('data-formations', formationsList);
+                    
+                    // Ajouter l'indicateur visuel
+                    const indicator = document.createElement('div');
+                    indicator.className = 'formation-indicator';
+                    dayDiv.appendChild(indicator);
+                    
+                    // Ajouter un gestionnaire d'événements pour afficher les détails
+                    dayDiv.addEventListener('click', () => {
+                        alert(`Formations prévues:\n${formationsList}`);
+                    });
+                }
+                
+                dayDiv.textContent = i;
+                calendarDays.appendChild(dayDiv);
+            }
+            
+            // Ajouter les jours du mois suivant
+            const remainingDays = 42 - (startingDay + monthLength);
+            for (let i = 1; i <= remainingDays; i++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day other-month';
+                dayDiv.textContent = i;
+                calendarDays.appendChild(dayDiv);
+            }
+        }
+
+        // Mettre à jour la fonction updateCalendar pour être async
+        async function updateCalendar() {
+            const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+                            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+            document.getElementById('currentMonth').textContent = 
+                `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            await generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        // Mettre à jour les fonctions de navigation
+        async function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            await updateCalendar();
+        }
+
+        async function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            await updateCalendar();
+        }
+
+        // Initialiser le calendrier
+        let currentDate = new Date();
+        updateCalendar();
+
     </script>
+
     <style>
-.countdown-container {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-}
+        .countdown-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
 
-.countdown {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
-}
+        .countdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+        }
 
-.countdown-item {
-    margin: 0 15px;
-    text-align: center;
-}
+        .countdown-item {
+            margin: 0 15px;
+            text-align: center;
+        }
 
-.countdown-label {
-    display: block;
-    font-size: 0.8em;
-    color: #6c757d;
-}
-.favorite-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ff4081; /* Couleur de l'icône */
-    font-size: 1.5em; /* Taille de l'icône */
-    transition: color 0.3s;
-}
+        .countdown-label {
+            display: block;
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+        .favorite-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #e63946; /* Couleur rouge */
+            font-size: 1.5em; /* Taille de l'icône */
+            transition: color 0.3s;
+        }
 
-.favorite-btn:hover .fa-heart{
-    color: #e91e63; /* Couleur au survol */
-}
-#favoritesSection {
-    margin-top: 20px;
-    padding: 20px; /* Augmenter le rembourrage */
-    background-color: #f8f9fa; /* Couleur de fond */
-    border-radius: 10px; /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce */
-}
+        .favorite-btn:hover .fa-heart{
+            color: #d62839; /* Couleur rouge au survol */
+        }
+        #favoritesSection {
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
 
-#favoritesContainer {
-    margin-top: 10px; /* Espacement supérieur */
-}
+        #favoritesSection h2 {
+            text-align: center;
+            color: #e63946; /* Couleur rouge */
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            position: relative;
+        }
 
-#favoritesContainer ul {
-    list-style-type: none; /* Pas de puces */
-    padding: 0;
-}
+        #favoritesSection h2:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #e63946; /* Couleur rouge */
+            margin: 15px auto;
+        }
 
-#favoritesContainer li {
-    margin: 10px 0; /* Espacement entre les éléments */
-    padding: 15px; /* Rembourrage */
-    background-color: #ffffff; /* Couleur de fond des éléments */
-    border: 1px solid #ddd; /* Bordure */
-    border-radius: 5px; /* Coins arrondis */
-    transition: background-color 0.3s; /* Transition douce */
-}
+        #favoritesContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
 
-#favoritesContainer li:hover {
-    background-color: #f1f1f1; /* Couleur au survol */
-}
-#favoritesButton {
-    background-color: #e91e63; /* Couleur de fond */
-    color: white; /* Couleur du texte */
-    border: none; /* Pas de bordure */
-    border-radius: 5px; /* Coins arrondis */
-    padding: 10px 20px; /* Rembourrage */
-    font-size: 16px; /* Taille de la police */
-    cursor: pointer; /* Curseur en main */
-    transition: background-color 0.3s, transform 0.3s; /* Transition douce */
-    display: inline-flex; /* Pour centrer le contenu */
-    align-items: center; /* Centrer verticalement */
-}
+        #favoritesContainer li {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-#favoritesButton:hover {
-    background-color: #d81b60; /* Couleur au survol */
-    transform: scale(1.05); /* Légère augmentation de la taille */
-}
+        #favoritesContainer li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #e63946; /* Couleur rouge au survol */
+        }
 
-#favoritesButton i {
-    margin-right: 8px; /* Espacement entre l'icône et le texte */
-}
+        #favoritesContainer li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
 
-.favorite-btn .favorited {
-    color: #e91e63; /* Couleur pour les favoris */
-}
-.favorite-btn .fa-heart {
-    color: #ccc; /* Couleur par défaut pour les non-favoris */
-    transition: color 0.3s; /* Transition pour un effet doux */
-}
+        #favoritesContainer li a:hover {
+            color: #e91e63;
+        }
 
-</style>
+        #favoritesButton {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background-color: #e63946; /* Couleur rouge pour le bouton "Mes Favoris" */
+            color: white; /* Couleur du texte en blanc pour le contraste */
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #favoritesButton:hover {
+            background-color: #d81b60;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.3);
+        }
+
+        #favoritesButton i {
+            font-size: 1.2em;
+        }
+
+        #favoritesSection {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #favoritesContainer p {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            grid-column: 1 / -1;
+            padding: 20px;
+        }
+
+        .favorite-item-icon {
+            margin-right: 15px;
+            color: #e63946; /* Couleur rouge pour les icônes */
+            font-size: 1.2em;
+        }
+
+        .favorite-type-badge {
+            background-color: #e91e63;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        /*style calendrier*/
+        .calendar-day.has-formation {
+            position: relative;
+            background-color: #ffe6e6; /* Fond légèrement rouge pour les jours avec formation */
+        }
+
+        .formation-indicator {
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #e63946; /* Couleur rouge */
+        }
+
+        .calendar-day.has-formation:hover::after {
+            content: attr(data-formations); /* Utilise les noms des formations stockés dans l'attribut data */
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #e63946; /* Couleur rouge */
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        .calendar-wrapper {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .calendar-header h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #ff0000;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: bold;
+            color: #e63946; /* Couleur rouge pour les textes des jours (lundi, mardi, etc.) */
+            margin-bottom: 10px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: black; /* Couleur noire pour les numéros des jours */
+        }
+
+        .calendar-day:hover {
+            background-color: #f0f0f0;
+        }
+
+        .calendar-day.today {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        .calendar-day.has-event {
+            border: 2px solid #ff0000;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+
+        /* Style pour les favoris */
+        .favorites-section {
+            margin-bottom: 30px;
+        }
+
+        .favorites-title {
+            color: #e63946; /* Couleur rouge */
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .favorites-category {
+            margin-bottom: 20px;
+        }
+
+        .favorites-category-title {
+            color: #e63946; /* Couleur rouge */
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .favorites-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .favorites-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: #f8f9fa;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        .favorites-item i {
+            margin-right: 10px;
+            color: #ff0000;
+        }
+
+
+    </style>
     
 </head>
 
@@ -522,44 +867,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Blog Start -->
     <!-- Bouton pour afficher la section des favoris -->
-    <button id="favoritesButton" onclick="toggleFavorites()">
-        <i class="fas fa-star"></i> <!-- Utilisez une icône de votre choix -->
-        Favoris
-    </button>
+<button id="favoritesButton" onclick="toggleFavorites()">
+    <i class="fas fa-heart"></i>
+    Mes Favoris
+</button>
 
-    <!-- Section pour afficher les favoris -->
-    <div id="favoritesSection" style="display: none;">
-        <h2 style="text-align: center; color: #e91e63;">Mes Favoris</h2>
-        <div id="favoritesContainer">
-        <?php if (!empty($favorites)): ?>
-            <ul>
-                <?php foreach ($favorites as $favorite): ?>
-                    <?php if ($favorite['type'] === 'club'): ?>
-                        <?php 
-                        // Récupérer le nom du club
-                        $club = $clubC->getClubById($favorite['item_id']); // Assurez-vous d'avoir cette méthode
-                        ?>
+<!-- Section pour afficher les favoris -->
+<div id="favoritesSection" style="display: none;">
+    <h2 style="text-align: center; color: #e63946;">Mes Favoris</h2>
+    
+    <!-- Section Clubs Favoris -->
+    <div class="favorites-section">
+        <h3><i class="fas fa-users"></i> Clubs favoris</h3>
+        <div id="clubsFavorites">
+            <?php
+            $clubFavorites = array_filter($favorites, function($fav) {
+                return $fav['type'] === 'club';
+            });
+            
+            if (!empty($clubFavorites)): ?>
+                <ul>
+                    <?php foreach ($clubFavorites as $favorite): 
+                        $club = $clubC->getClubById($favorite['item_id']);
+                    ?>
                         <li>
-                            <a href="club.php?id_club=<?php echo $favorite['item_id']; ?>" target="_blank" style="text-decoration: none; color: #333;">
+                            <a href="club.php?id_club=<?php echo $favorite['item_id']; ?>">
+                                <i class="fas fa-users favorite-item-icon"></i>
                                 <?php echo htmlspecialchars($club['nom_club']); ?>
                             </a>
                         </li>
-                    <?php elseif ($favorite['type'] === 'formation'): ?>
-                        <?php 
-                        // Récupérer le nom de la formation
-                        $formation = $formationC->getFormationById($favorite['item_id']); // Assurez-vous d'avoir cette méthode
-                        ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p class="no-favorites">Vous n'avez pas encore de clubs en favoris</p>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- Section Formations Favorites -->
+    <div class="favorites-section">
+        <h3><i class="fas fa-graduation-cap"></i> Formations favorites</h3>
+        <div id="formationsFavorites">
+            <?php
+            $formationFavorites = array_filter($favorites, function($fav) {
+                return $fav['type'] === 'formation';
+            });
+            
+            if (!empty($formationFavorites)): ?>
+                <ul>
+                    <?php foreach ($formationFavorites as $favorite): 
+                        $formation = $formationC->getFormationById($favorite['item_id']);
+                    ?>
                         <li>
-                            <a href="formation.php?id_formation=<?php echo $favorite['item_id']; ?>" target="_blank">
+                            <a href="formation.php?id_formation=<?php echo $favorite['item_id']; ?>">
+                                <i class="fas fa-graduation-cap favorite-item-icon"></i>
                                 <?php echo htmlspecialchars($formation['nom_formation']); ?>
                             </a>
                         </li>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>Aucun favori trouvé.</p>
-        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+
+                <!-- Structure HTML du calendrier -->
+<div class="calendar-wrapper">
+    <div class="calendar-header">
+        <button class="calendar-nav-btn" onclick="previousMonth()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <h2 id="currentMonth">Décembre 2024</h2>
+        <button class="calendar-nav-btn" onclick="nextMonth()">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <div class="calendar-weekdays">
+        <div>Dim</div>
+        <div>Lun</div>
+        <div>Mar</div>
+        <div>Mer</div>
+        <div>Jeu</div>
+        <div>Ven</div>
+        <div>Sam</div>
+    </div>
+    
+    <div class="calendar-days" id="calendarDays">
+        <!-- Les jours seront générés en JavaScript -->
+    </div>
+</div>
+            <?php else: ?>
+                <p class="no-favorites">Vous n'avez pas encore de formations en favoris</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
     </div>
 </div>
     <div class="container-fluid py-3">
@@ -738,105 +1138,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
+
+<script>
+window.embeddedChatbotConfig = {
+chatbotId: "wIMt_Z_WK-QmHC-zDvou-",
+domain: "www.chatbase.co"
+}
+</script>
+<script
+src="https://www.chatbase.co/embed.min.js"
+chatbotId="wIMt_Z_WK-QmHC-zDvou-"
+domain="www.chatbase.co"
+defer>
+</script>
     
     <!-- Blog End -->
 
-    <!-- Formations Section -->
-    
 
-<!-- Recent Post -->
-<div class="mb-5">
-    <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Recent Post</h3>
-    <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-        <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-        <div class="pl-3">
-            <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-            <small>Jan 01, 2050</small>
+    <!--footer-->
+<footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>contactez nous</h3>
+        <p><i class="fas fa-map-marker-alt"></i> tunisie</p>
+        <p><i class="fas fa-phone"></i> 99 444 222</p>
+        <p><i class="fas fa-envelope"></i> parcouri@gmail.com</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
-    </a>
-    <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-        <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-        <div class="pl-3">
-            <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-            <small>Jan 01, 2050</small>
-        </div>
-    </a>
-    <a class="d-flex align-items-center text-decoration-none mb-3" href="">
-        <img class="img-fluid rounded" src="img/blog-80x80.jpg" alt="">
-        <div class="pl-3">
-            <h6 class="m-1">Diam lorem dolore justo eirmod lorem dolore</h6>
-            <small>Jan 01, 2050</small>
-        </div>
-    </a>
-</div>
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
-        <div class="row pt-5">
-            <div class="col-lg-7 col-md-12">
-                <div class="row">
-                    <div class="col-md-6 mb-5">
-                        <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Get In Touch</h5>
-                        <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
-                        <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                        <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
-                        <div class="d-flex justify-content-start mt-4">
-                            <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-outline-light btn-square" href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-5">
-                        <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Our Courses</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Web Design</a>
-                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Apps Design</a>
-                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Marketing</a>
-                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Research</a>
-                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>SEO</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 col-md-12 mb-5">
-                <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Newsletter</h5>
-                <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu kasd sed ea duo ipsum. Dolor duo eirmod sea justo no lorem est diam</p>
-                <div class="w-100">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Your Email Address">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary px-4">Sign Up</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
+  
+      <div class="footer-column">
+        <h3>SERVICES</h3>
+        <ul>
+          <li><a href="#">bourses</a></li>
+          <li><a href="#">programme d'echanges</a></li>
+          <li><a href="#">formation</a></li>
+          <li><a href="#">clubs</a></li>
+         
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h3>mail</h3>
+        <p>Abonnez-vous à notre newsletter pour les dernières mises à jour et offres.</p>
+        <form>
+          <input type="email" placeholder="Ton adresse mail">
+          <button type="submit">s'inscrire</button>
+        </form>
+      </div>
     </div>
-    <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
-        <div class="row">
-            <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0 text-white">&copy; <a href="#">Domain Name</a>. All Rights Reserved. Designed by <a href="https://htmlcodex.com">HTML Codex</a>
-                </p>
-            </div>
-            <div class="col-lg-6 text-center text-md-right">
-                <ul class="nav d-inline-flex">
-                    <li class="nav-item">
-                        <a class="nav-link text-white py-0" href="#">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white py-0" href="#">Terms</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white py-0" href="#">FAQs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white py-0" href="#">Help</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+  
+    <div class="footer-bottom">
+      <p>&copy; designed by team <a href="#">parcouri </a></p>
+     
     </div>
-    <!-- Footer End -->
+  </footer>
 
 
     <!-- Back to Top -->
