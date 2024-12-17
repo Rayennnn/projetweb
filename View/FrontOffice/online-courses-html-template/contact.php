@@ -72,7 +72,7 @@
                     >Activités</a
                   >
                   <div class="dropdown-menu rounded-0 m-0">
-                    <a href="blog.html" class="dropdown-item"
+                    <a href="formations,clubs.php" class="dropdown-item"
                       >Clubs/Associations</a
                     >
                     <a href="single.html" class="dropdown-item">Formations</a>

@@ -829,12 +829,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Activités</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="formations,clubs.html" class="dropdown-item">Clubs/Associations</a>
-                                <a href="formations,clubs.html#formations-section" class="dropdown-item">Formations</a>
+                                <a href="#formation" class="dropdown-item">Formations</a>
                             </div>
                         </div>
                         <a href="course.html" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
                         <a href="teacher.html" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
-                        <a href="contact.html" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
+                        <a href="contact.php" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
                     </div>
                     <div class="nav-buttons d-flex align-items-center">
                         <a class="btn btn-primary custom-btn" href="signup.html">Sign In</a>
@@ -1052,7 +1052,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
                     <!-- Formulaire de recherche de formations par club -->
-                    <div class="container mt-5">
+                    <div class="container mt-5" id="formation">
                         <h2>Rechercher des Formations par Club</h2>
                         <form id="searchForm" onsubmit="return searchFormations(event)">
                             <label for="id_club">Sélectionnez un club :</label>
