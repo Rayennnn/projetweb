@@ -1,0 +1,369 @@
+/* Style pour la page de détails du club */
+.club-details {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+}
+
+/* Style pour l'image du logo */
+.club-logo-details {
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Style pour le titre du club */
+.club-title {
+    color: #2878EB;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Style pour la date de création */
+.creation-date {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+/* Style pour la catégorie */
+.badge-primary {
+    background-color: #2878EB;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+/* Style pour la description */
+.club-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Style pour la section localisation */
+.location-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.location-section h4 {
+    color: #2878EB;
+    margin-bottom: 15px;
+}
+
+.location-section p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Style pour les boutons */
+.btn-primary {
+    background-color: #2878EB;
+    border-color: #2878EB;
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1c5bb9;
+    border-color: #1c5bb9;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+    transform: translateY(-2px);
+}
+
+/* Animation pour les éléments au chargement */
+.fade-in {
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style responsive */
+@media (max-width: 768px) {
+    .club-title {
+        font-size: 2rem;
+    }
+    
+    .club-logo-details {
+        max-width: 250px;
+        margin: 0 auto 20px;
+        display: block;
+    }
+    
+    .club-description {
+        font-size: 1rem;
+    }
+}
+
+/* Header section avec image de fond */
+.header-club {
+    background: linear-gradient(rgba(40, 120, 235, 0.9), rgba(40, 120, 235, 0.9)), url('../img/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+/* Séparateur décoratif */
+
+
+.separator::before,
+.separator::after {
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 40px;
+    background: #fff;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.separator::after {
+    top: 8px;
+}
+
+/* Animation pour le logo */
+.club-logo-details {
+    transition: transform 0.3s ease;
+}
+
+.club-logo-details:hover {
+    transform: scale(1.05);
+}
+
+/* Effet de survol pour la section localisation */
+.location-section {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation pour le titre */
+.club-title {
+    position: relative;
+    overflow: hidden;
+}
+
+.club-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #2878EB;
+    transition: width 0.3s ease;
+}
+
+.club-title:hover::after {
+    width: 100%;
+}
+
+/* Style pour la carte principale */
+.club-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin-top: -100px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Animation pour les badges */
+.badge-primary {
+    transition: all 0.3s ease;
+}
+
+.badge-primary:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(40, 120, 235, 0.3);
+}
+
+/* Effet de scroll doux */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Animation pour les boutons avec effet de brillance */
+.btn-primary, .btn-secondary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before, .btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.btn-primary:hover::before, .btn-secondary:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translateY(-100%);
+}
+
+/* Style pour le conteneur principal avec effet de profondeur */
+.club-details {
+    position: relative;
+    z-index: 0;
+}
+
+.club-details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(248, 249, 250, 0.8), rgba(248, 249, 250, 1));
+    z-index: -1;
+}
+
+/* Animation de chargement de la page */
+@keyframes pageLoad {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-load {
+    animation: pageLoad 1s ease-out;
+}
+
+/* Responsive design amélioré */
+@media (max-width: 992px) {
+    .header-club {
+        height: 250px;
+    }
+    
+    .club-card {
+        margin-top: -50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-club {
+        height: 200px;
+    }
+    
+    .club-card {
+        margin-top: -30px;
+        padding: 20px;
+    }
+    
+    .separator {
+        width: 70px;
+    }
+}
+
+/* Nouveau style pour le rectangle transparent */
+.info-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    margin-left: 20px;
+}
+
+/* Styles pour les éléments à l'intérieur du rectangle */
+.info-box .club-title {
+    color: #2878EB;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    border-bottom: 3px solid #2878EB;
+    padding-bottom: 10px;
+}
+
+.info-box .creation-date {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.info-box .badge-primary {
+    background: linear-gradient(to right, #2878EB, #1c5bb9);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.info-box .location-section {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border-left: 4px solid #2878EB;
+}
+
+/* Responsive design */
+@media (max-width: 991px) {
+    .info-box {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    
+    .club-logo-details {
+        max-width: 100%;
+        height: auto;
+    }
+}
