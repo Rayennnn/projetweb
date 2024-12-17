@@ -34,6 +34,9 @@ $url = isset($_GET['url']) ? $_GET['url'] : '';
           alt="" />
       </div>
       <div class="col-lg-9">
+        <div class="header-image">
+  <img src="img/kteb.jpg" alt="Header Image" />
+</div>
         <nav
           class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
           <a href="" class="text-decoration-none d-block d-lg-none">
