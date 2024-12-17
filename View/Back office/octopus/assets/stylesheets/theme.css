@@ -2455,7 +2455,7 @@ ul.nav-main li .nav-children .nav-children .nav-children li a {
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
 	display: inline-block;
-	float: left;
+	
 	height: 50px;
 	font-size: 20px;
 	font-size: 2rem;
@@ -3478,9 +3478,7 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"],
-textarea {
-	-webkit-appearance: none;
-}
+
 
 .form-control::-webkit-input-placeholder,
 input[type="text"]::-webkit-input-placeholder,
@@ -5427,7 +5425,7 @@ html.header-dark .userbox .dropdown-menu a {
 	display: block;
 	color: white;
 	font-weight: 600;
-	vertical-align: top;
+	
 	line-height: 1.3em;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -8014,7 +8012,7 @@ html.dark .panel-group .panel-accordion .form-control {
 
 .small-chart-wrapper .small-chart {
 	display: inline-block;
-	float: left;
+	
 	margin-bottom: 8px;
 	min-width: 80px;
 }
@@ -8879,7 +8877,7 @@ html.dark .modal-footer {
 /* Zoom */
 .mfp-with-zoom .mfp-container, .mfp-with-zoom.mfp-bg {
 	opacity: 0.001;
-	-webkit-backface-visibility: hidden;
+	
 	-webkit-transition: all 0.3s ease-out;
 	-moz-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
@@ -11153,7 +11151,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	background-color: #cccccc;
 	border-radius: 2px;
 	display: inline-block;
-	float: left;
+	
 	font-size: 12px;
 	font-weight: 400;
 	letter-spacing: 0;
@@ -12880,7 +12878,7 @@ html.dark .pricing-table .plan {
 
 .fileupload .uneditable-input .fileupload-preview {
 	display: inline-block;
-	float: left;
+	
 	overflow: hidden;
 	padding: 0 0 0 17px;
 	text-overflow: ellipsis;
@@ -13682,7 +13680,7 @@ html.dark .wizard-progress .wizard-steps {
 	width: 100%;
 	font-size: 0;
 	text-align: justify;
-	-ms-text-justify: distribute-all-lines;
+	
 	/* IE8+ */;
 }
 
