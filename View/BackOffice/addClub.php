@@ -186,6 +186,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
                 <header class="page-header">
                     <h2>Ajouter un Club</h2>
                 </header>
+                <section class="panel">
+                <header class="panel-heading">
+                                <h2 class="panel-title">Formulaire d'ajout</h2>
+                            </header>
 
                 <!-- start: page -->
                 <div class="row">
@@ -295,6 +299,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
                         </section>
                     </div>
                 </div>
+                </section>
             </section>
         </div>
     </section>
