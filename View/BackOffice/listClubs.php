@@ -84,9 +84,98 @@ $topClubs = $totalClicks > 0 ? array_slice($list, 0, 3) : array_slice($list, 0, 
             <!-- end: header -->
 
             <div class="inner-wrapper">
-                <!-- start: sidebar -->
-                <?php include('includes/sidebar.php'); ?>
-                <!-- end: sidebar -->
+            <aside id="sidebar-left" class="sidebar-left">
+    <div class="sidebar-header">
+        <div class="sidebar-title">Navigation</div>
+    </div>
+    
+    
+    <div class="nano">
+						<div class="nano-content">
+							<nav id="menu" class="nav-main" role="navigation">
+								<ul class="nav nav-main">
+								<li class="nav-parent nav-active">
+                        <a>
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span>Clubs</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\addClub.php">
+                                    Ajouter un club
+                                </a>
+                            </li>
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\listClubs.php">
+                                    Liste des clubs
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Ajout du menu Formations -->
+                    <li class="nav-parent ">
+                        <a>
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            <span>Formations</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\addFormation.php">
+                                    Ajouter une formation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\listFormations.php">
+                                    Liste des formations
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+									
+											
+									<li class="nav-parent  ">
+										<a>
+											<i class="fa fa-list-alt" aria-hidden="true"></i>
+											<span>suggestion</span>
+										</a>
+										<ul class="nav nav-children">
+										<li >
+											
+												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\addreponse.php">
+													 ajouter reponse
+												</a>
+											</li>
+											<li>
+												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\listereponsesug.php">
+													 liste reponse
+												</a>
+											</li>
+											<li>
+												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\listesuggestion.php">
+												liste suggestion et reclamation
+												</a>
+											</li>
+											<li>
+												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\statistiques.php">
+													 statistiques
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									
+									
+							
+				
+							<hr class="separator" />
+				
+							
+							
+				
+					</div>
+</aside>
+
 
                 <section role="main" class="content-body">
                     <header class="page-header">

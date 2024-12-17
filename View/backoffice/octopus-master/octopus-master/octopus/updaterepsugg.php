@@ -309,7 +309,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 						<div class="nano-content">
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
-									
+								<li class="nav-parent">
+                        <a>
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span>Clubs</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\addClub.php">
+                                    Ajouter un club
+                                </a>
+                            </li>
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\listClubs.php">
+                                    Liste des clubs
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Ajout du menu Formations -->
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            <span>Formations</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\addFormation.php">
+                                    Ajouter une formation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\listFormations.php">
+                                    Liste des formations
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 									
 											
 									<li class="nav-parent nav-expanded nav-active">
@@ -324,7 +361,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 													 ajouter reponse
 												</a>
 											</li>
-											<li class="nav-active">
+											<li>
 												<a href="listereponsesug.php">
 													 liste reponse
 												</a>
