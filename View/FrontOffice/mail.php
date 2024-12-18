@@ -1,8 +1,8 @@
 <?php
 // Include PHPMailer classes
-require 'C:/xampp/htdocs/Quiz/View/PHPMailer/src/PHPMailer.php';
-require 'C:/xampp/htdocs/Quiz/View/PHPMailer/src/SMTP.php';
-require 'C:/xampp/htdocs/Quiz/View/PHPMailer/src/Exception.php';
+require 'C:/xampp/htdocs/PROJETWEB/View/PHPMailer/src/PHPMailer.php';
+require 'C:/xampp/htdocs/PROJETWEB/View/PHPMailer/src/SMTP.php';
+require 'C:/xampp/htdocs/PROJETWEB/View/PHPMailer/src/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

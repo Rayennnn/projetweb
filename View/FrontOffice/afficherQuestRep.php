@@ -114,8 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="nav-item dropdown" style="margin-left: 5px;">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Internationale</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">Bourses d'Études</a>
-                                <a href="single.html" class="dropdown-item">Programmes d'Échange</a>
+                                <a href="blog.php" class="dropdown-item">Bourses d'Études</a>
+                                <a href="prog.php" class="dropdown-item">Programmes d'Échange</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown" style="margin-left: 5px;">
@@ -125,9 +125,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <a href="single.html" class="dropdown-item">Formations</a>
                             </div>
                         </div>
-                        <a href="http://localhost/Quiz/View/Front/afficherQuestRep.php" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
+                        <a href="http://localhost/PROJETWEBs/View/FrontOffice/afficherQuestRep.php" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
                         <a href="http://localhost/includes/View/index.php" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
-                        <a href="http://localhost/projetweb1/View/FrontOffice/online-courses-html-template/contact.html" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
+                        <a href="online-courses-html-template/contact.php" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
                     </div>
                     <div class="nav-buttons d-flex align-items-center">
                     <a class="btn btn-primary custom-btn" href="http://localhost/parcouri/view/front/signup.php">Sign In</a>
@@ -741,7 +741,7 @@ button[type="submit"]:hover {
 
                     <!-- Hidden Email Form -->
                     <div id="email-form-container" class="email-form-container" style="display: none;">
-                    <form id="emailForm" action="http://localhost/Quiz/View/Front/mail.php" method="POST">
+                    <form id="emailForm" action="http://localhost/PROJETWEB/View/FrontOffice/mail.php" method="POST">
             <input type="email" id="email" name="email" required />
             <input type="hidden" name="message" value="<?php echo htmlspecialchars($message); ?>">
             <input type="hidden" name="score" value="<?php echo $totalScore; ?>">

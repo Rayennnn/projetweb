@@ -821,8 +821,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="nav-item dropdown" style="margin-left: 5px;">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Internationale</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">Bourses d'Études</a>
-                                <a href="single.html" class="dropdown-item">Programmes d'Échange</a>
+                                <a href="../blog.php" class="dropdown-item">Bourses d'Études</a>
+                                <a href="../prog.php" class="dropdown-item">Programmes d'Échange</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown" style="margin-left: 5px;">
@@ -832,7 +832,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <a href="#formation" class="dropdown-item">Formations</a>
                             </div>
                         </div>
-                        <a href="course.html" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
+                        <a href="../afficherQuestRep.php" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
                         <a href="teacher.html" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
                         <a href="contact.php" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
                     </div>
