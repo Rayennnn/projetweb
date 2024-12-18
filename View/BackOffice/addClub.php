@@ -89,17 +89,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
         <?php include('includes/header.php'); ?>
         <!-- end: header -->
 
-        <aside id="sidebar-left" class="sidebar-left">
-    <div class="sidebar-header">
-        <div class="sidebar-title">Navigation</div>
-    </div>
-    
-    
-    <div class="nano">
+        <div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<aside id="sidebar-left" class="sidebar-left">
+				
+					<div class="sidebar-header">
+						
+						<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+							<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+						</div>
+					</div>
+				
+					<div class="nano">
 						<div class="nano-content">
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
-								<li class="nav-parent nav-active">
+								<li class="nav-parent nav-expanded nav-active">
                         <a>
                             <i class="fa fa-users" aria-hidden="true"></i>
                             <span>Clubs</span>
@@ -119,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
                     </li>
                     
                     <!-- Ajout du menu Formations -->
-                    <li class="nav-parent ">
+                    <li class="nav-parent">
                         <a>
                             <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                             <span>Formations</span>
@@ -137,9 +142,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
                             </li>
                         </ul>
                     </li>
-									
+					<li class="nav-parent">
+										<a>
+											<i class="fa fa-list-alt" aria-hidden="true"></i>
+											<span>Quiz</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="http://localhost/PROJETWEB/View/BackOffice/afficherquestion.php">
+													 questions
+												</a>
+											</li>
+											<li>
+												<a href="http://localhost/PROJETWEB/View/BackOffice/affichereponse.php">
+													 reponses
+												</a>
+											</li>
 											
-									<li class="nav-parent  ">
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-table" aria-hidden="true"></i>
+											<span>interantional</span>
+										</a>
+										<ul class="nav nav-children">
+											
+											<li>
+												<a href="octopus/addBourse.php">
+													 Bourses
+												</a>
+											</li>
+											<li>
+												<a href="octopus/addprogramme.php">
+													 programmes d'échanges
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									
+									<li class="nav-parent">
+										<a href ="admin-comments.php">
+											<i class="fa fa-columns" aria-hidden="true"></i>
+											<span>témoignage</span>
+										</a>
+										
+									</li>
+							<!-- Ajout du menu suggestions -->		
+											
+									<li class="nav-parent">
 										<a>
 											<i class="fa fa-list-alt" aria-hidden="true"></i>
 											<span>suggestion</span>
@@ -147,28 +199,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
 										<ul class="nav nav-children">
 										<li >
 											
-												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\addreponse.php">
+												<a href="octopus-master/octopus-master/octopus/addreponse.php">
 													 ajouter reponse
 												</a>
 											</li>
 											<li>
-												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\listereponsesug.php">
+												<a href="octopus-master/octopus-master/octopus/addsuggestion.php">
 													 liste reponse
 												</a>
 											</li>
 											<li>
-												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\listesuggestion.php">
+												<a href="octopus-master/octopus-master/octopus/listesuggestion.php">
 												liste suggestion et reclamation
 												</a>
 											</li>
 											<li>
-												<a href="\PROJETWEB\View\BackOffice\octopus-master\octopus-master\octopus\statistiques.php">
+												<a href="octopus-master/octopus-master/octopus/statistiques.php">
 													 statistiques
 												</a>
 											</li>
 											
 										</ul>
 									</li>
+									
 									
 									
 							
@@ -179,7 +232,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
 							
 				
 					</div>
-</aside>
+				
+				</aside>
+				<!-- end: sidebar -->
 
 
             <section role="main" class="content-body">
@@ -187,9 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validated']) && $_POST
                     <h2>Ajouter un Club</h2>
                 </header>
                 <section class="panel">
-                <header class="panel-heading">
-                                <h2 class="panel-title">Formulaire d'ajout</h2>
-                            </header>
+                
 
                 <!-- start: page -->
                 <div class="row">

@@ -265,49 +265,148 @@
 			<div class="inner-wrapper">
 				<!-- start: sidebar -->
 				<aside id="sidebar-left" class="sidebar-left">
-    <div class="sidebar-header">
-        <div class="sidebar-title">
-            Navigation
-        </div>
-        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
-            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-        </div>
-    </div>
-
-    <div class="nano">
-        <div class="nano-content">
-            <nav id="menu" class="nav-main" role="navigation">
-                <ul class="nav nav-main">
-                    <li class="comments-link">
-                        <a href="/comments" target="_self">
-                            <i class="fa fa-th-large" aria-hidden="true"></i>
-                            <span>Comments</span>
+				
+					<div class="sidebar-header">
+						
+						<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+							<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+						</div>
+					</div>
+				
+					<div class="nano">
+						<div class="nano-content">
+							<nav id="menu" class="nav-main" role="navigation">
+								<ul class="nav nav-main">
+								<li class="nav-parent ">
+                        <a>
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span>Clubs</span>
                         </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\addClub.php">
+                                    Ajouter un club
+                                </a>
+                            </li>
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\listClubs.php">
+                                    Liste des clubs
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="/profile" target="_self">
-                            <i class="fa fa-file" aria-hidden="true"></i>
-                            <span>Profile</span>
+                    
+                    <!-- Ajout du menu Formations -->
+                    <li class="nav-parent ">
+                        <a>
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            <span>Formations</span>
                         </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\addFormation.php">
+                                    Ajouter une formation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="\PROJETWEB\View\BackOffice\listFormations.php">
+                                    Liste des formations
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="/settings" target="_self">
-                            <i class="fa fa-gear" aria-hidden="true"></i>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/logout" target="_self">
-                            <i class="fa fa-external-link" aria-hidden="true"></i>
-                            <span>Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</aside>
-
+					<li class="nav-parent">
+										<a>
+											<i class="fa fa-list-alt" aria-hidden="true"></i>
+											<span>Quiz</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="http://localhost/PROJETWEB/View/BackOffice/afficherquestion.php">
+													 questions
+												</a>
+											</li>
+											<li>
+												<a href="http://localhost/PROJETWEB/View/BackOffice/affichereponse.php">
+													 reponses
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-table" aria-hidden="true"></i>
+											<span>interantional</span>
+										</a>
+										<ul class="nav nav-children">
+											
+											<li>
+												<a href="octopus/addBourse.php">
+													 Bourses
+												</a>
+											</li>
+											<li>
+												<a href="octopus/addprogramme.php">
+													 programmes d'échanges
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									
+									<li class="nav-parent nav-expanded nav-active">
+										<a href ="admin-comments.php">
+											<i class="fa fa-columns" aria-hidden="true"></i>
+											<span>témoignage</span>
+										</a>
+										
+									</li>
+							<!-- Ajout du menu suggestions -->		
+											
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-list-alt" aria-hidden="true"></i>
+											<span>suggestion</span>
+										</a>
+										<ul class="nav nav-children">
+										<li >
+											
+												<a href="octopus-master/octopus-master/octopus/addreponse.php">
+													 ajouter reponse
+												</a>
+											</li>
+											<li>
+												<a href="octopus-master/octopus-master/octopus/addsuggestion.php">
+													 liste reponse
+												</a>
+											</li>
+											<li>
+												<a href="octopus-master/octopus-master/octopus/listesuggestion.php">
+												liste suggestion et reclamation
+												</a>
+											</li>
+											<li>
+												<a href="octopus-master/octopus-master/octopus/statistiques.php">
+													 statistiques
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									
+									
+									
+							
+				
+							<hr class="separator" />
+				
+							
+							
+				
+					</div>
+				
+				</aside>
 				<!-- end: sidebar -->
 
 				<section role="main" class="content-body">

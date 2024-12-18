@@ -274,6 +274,7 @@ $listReponses = $reponseC->listReponses();
 			</header>
 			<!-- end: header -->
 
+			
 			<div class="inner-wrapper">
 				<!-- start: sidebar -->
 				<aside id="sidebar-left" class="sidebar-left">
@@ -327,7 +328,54 @@ $listReponses = $reponseC->listReponses();
                             </li>
                         </ul>
                     </li>
+					<li class="nav-parent">
+										<a>
+											<i class="fa fa-list-alt" aria-hidden="true"></i>
+											<span>Quiz</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="../../../afficherquestion.php">
+													 questions
+												</a>
+											</li>
+											<li>
+												<a href="../../../affichereponse.php">
+													 reponses
+												</a>
+											</li>
+											
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-table" aria-hidden="true"></i>
+											<span>interantional</span>
+										</a>
+										<ul class="nav nav-children">
+											
+											<li>
+												<a href="../../../octopus/addBourse.php">
+													 Bourses
+												</a>
+											</li>
+											<li>
+												<a href="../../../octopus/addprogramme.php">
+													 programmes d'échanges
+												</a>
+											</li>
+											
+										</ul>
+									</li>
 									
+									<li class="nav-parent">
+										<a href ="../../../admin-comments.php">
+											<i class="fa fa-columns" aria-hidden="true"></i>
+											<span>témoignage</span>
+										</a>
+										
+									</li>
+							<!-- Ajout du menu suggestions -->		
 											
 									<li class="nav-parent nav-expanded nav-active">
 										<a>
@@ -359,6 +407,7 @@ $listReponses = $reponseC->listReponses();
 											
 										</ul>
 									</li>
+									
 									
 									
 							
