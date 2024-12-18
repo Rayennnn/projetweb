@@ -1,5 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+include 'C:\xampp\htdocs\parcouri\db.php';
+require 'C:/xampp/htdocs/parcouri/PHPMailer/src/Exception.php';
+require 'C:/xampp/htdocs/parcouri/PHPMailer/src/PHPMailer.php';
+require 'C:/xampp/htdocs/parcouri/PHPMailer/src/SMTP.php';
+include 'C:\xampp\htdocs\parcouri\Controller\usercontroller.php';
+
+$error = "";
+$controller = new UserController($pdo);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $stmt = $pdo->prepare("SELECT id FROM utilisateur WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+
+    if ($user) {
+        // Générer un token unique
+        $token = bin2hex(random_bytes(32));
+
+        // Enregistrer le token dans la base de données
+        $stmt = $pdo->prepare("UPDATE utilisateur SET reset_token = ? WHERE email = ?");
+        $stmt->execute([$token, $email]);
+
+        // Envoyer l'e-mail
+        $resetLink = "http://localhost/parcouri/View/FrontOffice/reset.php?token=$token";
+        sendPasswordResetEmail($email, $resetLink);
+
+        echo "Un lien de réinitialisation a été envoyé à votre adresse e-mail.";
+    } else {
+        $error = "Aucun utilisateur trouvé avec cet e-mail.";
+    }
+}
+
+// Fonction d'envoi d'e-mail
+function sendPasswordResetEmail($to, $link) {
+;
+
+    // Configuration de PHPMailer
+    $mail = new PHPMailer(true);
+
+    try {
+        // Configuration SMTP
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com'; // Remplacez par votre serveur SMTP
+        $mail->SMTPAuth = true;
+        $mail->Username = 'med.achi94@gmail.com'; // Votre email
+        $mail->Password = 'feov hdoc ilpd rjcb'; // Votre mot de passe
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        // Informations sur l'expéditeur et le destinataire
+        $mail->setFrom('med.achi94@gmail.com', 'Votre Application');
+        $mail->addAddress($to);
+
+        // Contenu de l'email
+        $mail->isHTML(true);
+        $mail->Subject = 'Réinitialisation de votre mot de passe';
+        $mail->Body = "Bonjour,<br><br>
+            Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe :<br>
+            <a href='$link'>$link</a><br><br>
+            Ce lien est valide pour une durée limitée.<br><br>
+            Cordialement,<br>
+            Votre équipe.";
+
+        // Envoi de l'email
+        $mail->send();
+        echo "Un email de réinitialisation a été envoyé à $to.";
+        header("Location: ../../View/FrontOffice/login.php");
+    } catch (Exception $e) {
+        echo "Erreur lors de l'envoi de l'email : {$mail->ErrorInfo}";
+    }
+}
+?>
 
 <head>
     <meta charset="utf-8">
@@ -26,13 +101,11 @@
 </head>
 
 <body>
-
-
- <!-- Navbar Start -->
+   <!-- Navbar Start -->
  <div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg- ml-auto mr-auto  d-none d-lg-block">
-                        <img href="index.html" class="img-fluid" src="img/logo.jfif" width="50" 
+                        <img href="index.php" class="img-fluid" src="img/logo.jfif" width="50" 
                         height="50"alt="">
         
          
@@ -45,30 +118,38 @@
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <?php if (isset($_SESSION['user_id'])) {?>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav py-0">
-                        <a href="index.html" class="nav-item nav-link">accueil </a>
+                        <a href="index.php" class="nav-item nav-link">accueil </a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">internationale</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">bourse d'étude</a>
-                                <a href="single.html" class="dropdown-item">programme d'échange</a>
+                                <a href="blog.php" class="dropdown-item">bourse d'étude</a>
+                                <a href="single.php" class="dropdown-item">programme d'échange</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">activite</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">club</a>
-                                <a href="single.html" class="dropdown-item">formation</a>
+                                <a href="blog.php" class="dropdown-item">club</a>
+                                <a href="single.php" class="dropdown-item">formation</a>
                             </div>
                         </div>
-                        <a href="course.html" class="nav-item nav-link">quiz</a>
+                        <a href="course.php" class="nav-item nav-link">quiz</a>
 
-                        <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
-                        <a href="contact.html" class="nav-item nav-link active">Contact</a>
+                        <a href="teacher.php" class="nav-item nav-link">témoiniage</a>
+                        <a href="contact.php" class="nav-item nav-link active">Contact</a>
                     </div>
+                    <?php }?>
+                    <?php if (!isset($_SESSION['user_id'])) {?>
                     <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.php">Sign in</a>
-                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>    
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>  
+                    <?php }?>  
+                    <?php if (isset($_SESSION['user_id'])) {?>
+                        <a class="nav-item nav-link"><?php echo $_SESSION['user_name']; ?>  <?php echo $_SESSION['user_last_name']; ?></a>
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="logout.php">logout</a>  
+                    <?php }?>  
                     </div>
             </nav>
         </div>
@@ -81,11 +162,11 @@
     <div class="container-fluid page-header" style="margin-bottom: 90px;">
         <div class="container">
             <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
-                <h3 class="display-4 text-white text-uppercase">Contact</h3>
+                <h3 class="display-4 text-white text-uppercase">RESET PASSWORD</h3>
                 <div class="d-inline-flex text-white">
                     <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
                     <i class="fa fa-angle-double-right pt-1 px-3"></i>
-                    <p class="m-0 text-uppercase">Contact</p>
+                    <p class="m-0 text-uppercase">RESET</p>
                 </div>
             </div>
         </div>
@@ -93,44 +174,42 @@
     <!-- Header End -->
 
 
-    <!-- Contact Start -->
+    <!-- login Start -->
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="text-center mb-5">
-                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Contact</h5>
-                <h1>Contact For Any Query</h1>
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">RESET PASSWORD</h5>
+                <h1>RESET YOUR PASSWORD</h1>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="contact-form bg-secondary rounded p-5">
+                    <div class="login-form bg-secondary rounded p-5">
                         <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
+        
+    <?php if ($error): ?>
+        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+    <form name="resetForm" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                      
                             <div class="control-group">
-                                <input type="text" class="form-control border-0 p-4" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
+                            <label for="email">Adresse email :</label>
+                            <input  class="form-control border-0 p-4" type="email" id="email" name="email" placeholder="Entrez votre email" required>
                                 <p class="help-block text-danger"></p>
                             </div>
-                            <div class="control-group">
-                                <input type="email" class="form-control border-0 p-4" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="text" class="form-control border-0 p-4" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <textarea class="form-control border-0 py-3 px-4" rows="5" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
+                            
+
+                    
+
                             <div class="text-center">
-                                <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton">Send Message</button>
-                            </div>
+                            <button class="btn btn-primary py-3 px-5" type="submit">Réinitialiser</button>
+                                </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Contact End -->
+    <!-- login End -->
 
 
     <!-- Footer Start -->
@@ -213,7 +292,7 @@
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
+    <!-- login Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
 
@@ -222,3 +301,6 @@
 </body>
 
 </html>
+
+
+

@@ -1,33 +1,37 @@
 <?php
+
+session_start();
+
 include 'C:\xampp\htdocs\parcouri\db.php';
-include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
+include 'C:\xampp\htdocs\parcouri\Controller\usercontroller.php';
+
+$controller = new UserController($pdo);
 $error = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $token = $_GET['token'];
-    $newPassword = $_POST['password'];
-    $confirmPassword = $_POST['confirm_password'];
 
-    if ($newPassword === $confirmPassword) {
-        // Vérifiez si le token existe
-        $stmt = $pdo->prepare("SELECT id FROM utilisateur WHERE reset_token = ?");
-        $stmt->execute([$token]);
-        $user = $stmt->fetch();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+// Your reCAPTCHA secret key
+$secretKey = "6LdyiZIqAAAAAOP54s2U3-rAdVNoAicFRAy0SWZj";
+    
+// The reCAPTCHA response from the form
+$recaptchaResponse = $_POST['g-recaptcha-response'];
 
-        if ($user) {
-            // Mettre à jour le mot de passe
-            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-            $stmt = $pdo->prepare("UPDATE utilisateur SET password = ?, reset_token = NULL WHERE id = ?");
-            $stmt->execute([$hashedPassword, $user['id']]);
+// Verify reCAPTCHA response with Google
+$verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+$response = file_get_contents($verifyUrl . "?secret=" . $secretKey . "&response=" . $recaptchaResponse);
+$responseKeys = json_decode($response, true);
 
-            echo "Votre mot de passe a été mis à jour.";
-            header("Location: ../../view/front/login.php");
-        } else {
-            $error = "Le lien de réinitialisation est invalide.";
-        }
-    } else {
-        $error = "Les mots de passe ne correspondent pas.";
-    }
+// Check if reCAPTCHA verification was successful
+if (intval($responseKeys["success"]) !== 1) {
+    echo "reCAPTCHA verification failed. Please try again.";
+} else {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $controller->login($email,$password);
+
+       
 }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+ <!-- Add this script tag in the <head> section -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+
 </head>
 
 <body>
@@ -61,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  <div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg- ml-auto mr-auto  d-none d-lg-block">
-                        <img href="index.html" class="img-fluid" src="img/logo.jfif" width="50" 
+                        <img href="index.php" class="img-fluid" src="img/logo.jfif" width="50" 
                         height="50"alt="">
         
          
@@ -74,30 +83,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <?php if (isset($_SESSION['user_id'])) {?>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav py-0">
-                        <a href="index.html" class="nav-item nav-link">accueil </a>
+                        <a href="index.php" class="nav-item nav-link">accueil </a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">internationale</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">bourse d'étude</a>
-                                <a href="single.html" class="dropdown-item">programme d'échange</a>
+                                <a href="blog.php" class="dropdown-item">bourse d'étude</a>
+                                <a href="single.php" class="dropdown-item">programme d'échange</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">activite</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">club</a>
-                                <a href="single.html" class="dropdown-item">formation</a>
+                                <a href="blog.php" class="dropdown-item">club</a>
+                                <a href="single.php" class="dropdown-item">formation</a>
                             </div>
                         </div>
-                        <a href="course.html" class="nav-item nav-link">quiz</a>
+                        <a href="course.php" class="nav-item nav-link">quiz</a>
 
-                        <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
-                        <a href="contact.html" class="nav-item nav-link active">Contact</a>
+                        <a href="teacher.php" class="nav-item nav-link">témoiniage</a>
+                        <a href="contact.php" class="nav-item nav-link active">Contact</a>
                     </div>
+                    <?php }?>
+                    <?php if (!isset($_SESSION['user_id'])) {?>
                     <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.php">Sign in</a>
-                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>    
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>  
+                    <?php }?>  
+                    <?php if (isset($_SESSION['user_id'])) {?>
+                        <a class="nav-item nav-link"><?php echo $_SESSION['user_name']; ?>  <?php echo $_SESSION['user_last_name']; ?></a>
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="logout.php">logout</a>  
+                    <?php }?>  
                     </div>
             </nav>
         </div>
@@ -110,11 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container-fluid page-header" style="margin-bottom: 90px;">
         <div class="container">
             <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
-                <h3 class="display-4 text-white text-uppercase">RESET PASSWORD</h3>
+                <h3 class="display-4 text-white text-uppercase">login</h3>
                 <div class="d-inline-flex text-white">
                     <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
                     <i class="fa fa-angle-double-right pt-1 px-3"></i>
-                    <p class="m-0 text-uppercase">RESET</p>
+                    <p class="m-0 text-uppercase">login</p>
                 </div>
             </div>
         </div>
@@ -123,50 +140,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     <!-- login Start -->
+    <?php if (!isset($_SESSION['user_id'])) {?>
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="text-center mb-5">
-                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">RESET PASSWORD</h5>
-                <h1>RESET YOUR PASSWORD</h1>
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">login</h5>
+                <h1>login to your account</h1>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="login-form bg-secondary rounded p-5">
                         <div id="success"></div>
-        
-    <?php if ($error): ?>
-        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
                         <form name="userForm" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                      
-                            <div class="control-group">
-                                <label for="password">Nouveau mot de passe:</label>
-                                <input type="password" class="form-control border-0 p-4" name="password" required>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                            <label for="confirm_password">Confirmer le mot de passe:</label>
-        <input type="password" class="form-control border-0 p-4" name="confirm_password" required>
-    
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="col-sm-8">
-                            </div>
-                            <div class="col-sm-4 text-right">
-                              </div>
-                        </div>
+    <div class="control-group">
+        <input type="email" class="form-control border-0 p-4" name="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
+        <p class="help-block text-danger"></p>
+    </div>
+    <div class="control-group">
+        <input type="password" class="form-control border-0 p-4" name="password" placeholder="password" required="required" data-validation-required-message="Please enter a password" />
+        <p class="help-block text-danger"></p>
+    </div>
 
-                    
+    <!-- reCAPTCHA Widget -->
+    <div class="g-recaptcha" data-sitekey="6LdyiZIqAAAAAJKT73l5X0ho0q1Jr1yMaDbyKYIF"></div>
+    <p class="text-center">mot de passe oublié? <a href="send_reset_token.php">cliquez ici </a> 
+    </p>
 
-                            <div class="text-center">
-                            <button class="btn btn-primary py-3 px-5" type="submit">Réinitialiser</button>
-                                </div>
-                        </form>
+    <div class="text-center">
+        <button class="btn btn-primary py-3 px-5" type="submit" id="sendMessageButton"> login</button>
+    </div>
+</form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php }?>
+    <?php if (isset($_SESSION['user_id'])) {?>
+        <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;"><?php echo $_SESSION['user_name']; ?>  <?php echo $_SESSION['user_last_name']; ?></h5>
+                <h1> you are already logged in <a href="index.php">cliquez ici </a> </h1>
+           
+            </div>
+           
+        </div>
+    </div>
+        <?php }?>
     <!-- login End -->
 
 
@@ -259,5 +280,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 </html>
-
-

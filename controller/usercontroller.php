@@ -1,6 +1,6 @@
 <?php
 include 'C:\xampp\htdocs\parcouri\db.php';
-include 'C:\xampp\htdocs\parcouri\model\user.php';
+include 'C:\xampp\htdocs\parcouri\Model\user.php';
 
 class UserController {
     private $pdo;
@@ -79,21 +79,37 @@ class UserController {
     
             // Redirection en fonction du rôle de l'utilisateur
             if ($_SESSION['user_role'] === 1) {
-                header("Location: ../../view/back/profile.php");  // Redirection vers le back-office
+                header("Location: ../../View/BackOffice/profile.php");  // Redirection vers le back-office
             } else {
-                header("Location: ../front/profile.php");  // Redirection vers le front-office
+                header("Location: ../FrontOffice/profile.php");  // Redirection vers le front-office
             }
             exit();  // Assurez-vous que le script s'arrête après la redirection
         } else {
             // Redirection en cas d'erreur d'authentification avec un message d'erreur
-            header("Location: ../view/login.php?error=1");
+            header("Location: ../View/FrontOffice/login.php?error=1");
             exit();
         }
     }
     
 public function logout() {
+    session_start();
+
+    // Clear all session variables
+    session_unset();
+    
+    // Destroy the session
     session_destroy();
-    header("Location: ../front/login.php");
+    
+    // Clear the session cookie
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+    
+    header("Location: ../FrontOffice/login.php");
 }
 }
 

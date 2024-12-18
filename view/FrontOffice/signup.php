@@ -3,7 +3,7 @@
 session_start();
 
 include 'C:\xampp\htdocs\parcouri\db.php';
-include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
+include 'C:\xampp\htdocs\parcouri\Controller\usercontroller.php';
 
 $controller = new UserController($pdo);
 $error = "";
@@ -75,7 +75,7 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
   <div class="container-fluid">
     <div class="row border-top px-xl-5">
         <div class="col-lg- ml-auto mr-auto  d-none d-lg-block">
-                        <img href="index.html" class="img-fluid" src="img/logo.jfif" width="50" 
+                        <img href="index.php" class="img-fluid" src="img/logo.jfif" width="50" 
                         height="50"alt="">
         
          
@@ -83,35 +83,44 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
         <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
                 <a href="" class="text-decoration-none d-block d-lg-none">
-                    <h1 class="m-0"><span class="text-primary">E</span>COURSES</h1>
+                    <h1 class="m-0"><span class="text-primary">E</span>toumi</h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <?php if (isset($_SESSION['user_id'])) {?>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav py-0">
-                        <a href="index.html" class="nav-item nav-link">accueil </a>
+                        <a href="index.php" class="nav-item nav-link">accueil </a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">internationale</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">bourse d'étude</a>
-                                <a href="single.html" class="dropdown-item">programme d'échange</a>
+                                <a href="blog.php" class="dropdown-item">bourse d'étude</a>
+                                <a href="single.php" class="dropdown-item">programme d'échange</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">activite</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">club</a>
-                                <a href="single.html" class="dropdown-item">formation</a>
+                                <a href="blog.php" class="dropdown-item">club</a>
+                                <a href="single.php" class="dropdown-item">formation</a>
                             </div>
                         </div>
-                        <a href="course.html" class="nav-item nav-link">quiz</a>
+                        <a href="course.php" class="nav-item nav-link">quiz</a>
 
-                        <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
-                        <a href="contact.html" class="nav-item nav-link active">Contact</a>
+                        <a href="teacher.php" class="nav-item nav-link">témoiniage</a>
+                        <a href="contact.php" class="nav-item nav-link active">Contact</a>
                     </div>
+                    <?php }?>
+                    <?php if (!isset($_SESSION['user_id'])) {?>
                     <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.php">Sign in</a>
-                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>    
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="login.php">login</a>  
+                    <?php }?>  
+                    <?php if (isset($_SESSION['user_id'])) {?>
+                        <a class="nav-item nav-link"><?php echo $_SESSION['user_name']; ?>  <?php echo $_SESSION['user_last_name']; ?></a>
+                    <a class="btn btn-primary py-2 px-4 ml-3     d-none d-lg-block" href="logout.php">logout</a>  
+                    <?php }?>  
+                    
                     </div>
             </nav>
         </div>

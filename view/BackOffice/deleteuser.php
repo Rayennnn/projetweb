@@ -1,6 +1,6 @@
 <?php
 include 'C:\xampp\htdocs\parcouri\db.php';
-include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
+include 'C:\xampp\htdocs\parcouri\Controller\usercontroller.php';
 
 $controller = new UserController($pdo);
 $id = $_GET['id'] ?? null;

@@ -1,6 +1,6 @@
 <?php
 include 'C:\xampp\htdocs\parcouri\db.php';
-include 'C:\xampp\htdocs\parcouri\controller\usercontroller.php';
+include 'C:\xampp\htdocs\parcouri\Controller\usercontroller.php';
 
 $controller = new UserController($pdo);
 $error = "";
@@ -162,7 +162,7 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
 								<a class="btn btn-twitter mb-md ml-xs mr-xs">Connect with <i class="fa fa-twitter"></i></a>
 							</div>
 
-							<p class="text-center">Already have an account? <a href="pages-signin.html">Sign In!</a>
+							<p class="text-center">Already have an account? <a href="pages-signin.php">Sign In!</a>
 
     </form>
 					</div>
