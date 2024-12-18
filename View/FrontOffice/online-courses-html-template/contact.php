@@ -91,7 +91,7 @@
                   >Témoignages</a
                 >
                 <a
-                  href="contact.html"
+                  href="contact.php"
                   class="nav-item nav-link"
                   style="margin-left: 5px;"
                   >Contact</a

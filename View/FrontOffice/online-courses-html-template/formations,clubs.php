@@ -828,7 +828,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="nav-item dropdown" style="margin-left: 5px;">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Activités</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="formations,clubs.html" class="dropdown-item">Clubs/Associations</a>
+                                <a href="formations,clubs.php" class="dropdown-item">Clubs/Associations</a>
                                 <a href="#formation" class="dropdown-item">Formations</a>
                             </div>
                         </div>
