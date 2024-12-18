@@ -1,0 +1,24 @@
+.form-idea {
+  width: 100%;
+}
+
+.form-idea .opinion-conseils {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin: 15px 0px;
+}
+
+.opinion-conseils .option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.opinion-conseils input[type="radio"] {
+  width: auto;
+}
+.opinion-conseils label {
+  font-size: 18px;
+  margin: 0;
+}
