@@ -1,8 +1,8 @@
 <?php
-require_once '../../../Controller/bourseC.php';
-require_once '../../../Model/bourses.php';
-require_once '../../../Controller/programmeC.php';
-require_once '../../../Model/programme.php';
+require_once '../../Controller/bourseC.php';
+require_once '../../Model/bourses.php';
+require_once '../../Controller/programmeC.php';
+require_once '../../Model/programme.php';
 
 // Initialiser les contrôleurs
 $bourseC = new BourseC();
@@ -180,7 +180,7 @@ try {
                        
                         
                         <div class="course-footer">
-                            <a href="../../backoffice/octopus/addProgramme.php?titre=<?php echo urlencode($programme['nom_prog']); ?>&pays=<?php echo urlencode($programme['pays']); ?>&description=<?php echo urlencode($programme['description']); ?>" class="btn btn-login">
+                            <a href="../backoffice/octopus/addProgramme.php?titre=<?php echo urlencode($programme['nom_prog']); ?>&pays=<?php echo urlencode($programme['pays']); ?>&description=<?php echo urlencode($programme['description']); ?>" class="btn btn-login">
                                 Découvrir
                             </a>
                         </div>
@@ -218,7 +218,7 @@ try {
                             <li><i class="fas fa-graduation-cap"></i> <?php echo htmlspecialchars($programme['niveau_etude']); ?></li>
                         </ul>
                         <div class="course-footer">
-                            <a href="../../backoffice/octopus/addProgramme.php?titre=<?php echo urlencode($programme['nom_prog']); ?>&pays=<?php echo urlencode($programme['pays']); ?>&description=<?php echo urlencode($programme['description']); ?>" class="btn btn-login">
+                            <a href="../backoffice/octopus/addProgramme.php?titre=<?php echo urlencode($programme['nom_prog']); ?>&pays=<?php echo urlencode($programme['pays']); ?>&description=<?php echo urlencode($programme['description']); ?>" class="btn btn-login">
                                 Découvrir
                             </a>
                         </div>
@@ -256,7 +256,7 @@ try {
                             <li><i class="fas fa-graduation-cap"></i> <?php echo htmlspecialchars($programme['niveau_etude']); ?></li>
                         </ul>
                         <div class="course-footer">
-                            <a href="../../backoffice/octopus/addProgramme.php?titre=<?php echo urlencode($programme['nom_prog']); ?>&pays=<?php echo urlencode($programme['pays']); ?>&description=<?php echo urlencode($programme['description']); ?>" class="btn btn-login">
+                            <a href="../backoffice/octopus/addProgramme.php?titre=<?php echo urlencode($programme['nom_prog']); ?>&pays=<?php echo urlencode($programme['pays']); ?>&description=<?php echo urlencode($programme['description']); ?>" class="btn btn-login">
                                 Découvrir
                             </a>
                         </div>
@@ -311,35 +311,35 @@ showPage(1);</script>
       <div class="slide-track">
           <!-- Les logos seront dupliqués pour créer l'effet infini -->
           <div class="slide">
-              <img src="../projet web/img/e1.webp" alt="DAAD" />
+              <img src="projet web/img/e1.webp" alt="DAAD" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e2.jpg" alt="Fulbright" />
+              <img src="projet web/img/e2.jpg" alt="Fulbright" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e3.jpeg" alt="Erasmus" />
+              <img src="projet web/img/e3.jpeg" alt="Erasmus" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e4.jfif" alt="Chevening" />
+              <img src="projet web/img/e4.jfif" alt="Chevening" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e5.png" alt="Eiffel" />
+              <img src="projet web/img/e5.png" alt="Eiffel" />
           </div>
           <!-- Duplication des logos pour l'effet infini -->
           <div class="slide">
-              <img src="../projet web/img/e1.webp" alt="DAAD" />
+              <img src="projet web/img/e1.webp" alt="DAAD" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e2.jpg" alt="Fulbright" />
+              <img src="projet web/img/e2.jpg" alt="Fulbright" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e3.jpeg" alt="Erasmus" />
+              <img src="projet web/img/e3.jpeg" alt="Erasmus" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e4.jfif" alt="Chevening" />
+              <img src="projet web/img/e4.jfif" alt="Chevening" />
           </div>
           <div class="slide">
-              <img src="../projet web/img/e5.png" alt="Eiffel" />
+              <img src="projet web/img/e5.png" alt="Eiffel" />
           </div>
       </div>
   </div>
