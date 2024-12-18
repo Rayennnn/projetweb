@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connect.php';
+require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET['id'])) {
     $json = file_get_contents('php://input');

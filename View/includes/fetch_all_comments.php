@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connect.php';
+require_once 'config.php';
 
 try {
   $stmt = $pdo->query('SELECT * FROM comments');
