@@ -2,7 +2,6 @@
 
 
 require_once 'db_connect.php';
-
 class AnswerController
 {
     private $pdo;

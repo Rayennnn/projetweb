@@ -121,12 +121,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="nav-item dropdown" style="margin-left: 5px;">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Activités</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="http://localhost/PROJETWEB/View/FrontOffice/online-courses-html-template/formations,clubs.php" class="dropdown-item">Clubs/Associations</a>
+                                <a href="online-courses-html-template/formations,clubs.php" class="dropdown-item">Clubs/Associations</a>
                                 <a href="single.html" class="dropdown-item">Formations</a>
                             </div>
                         </div>
-                        <a href="http://localhost/PROJETWEBs/View/FrontOffice/afficherQuestRep.php" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
-                        <a href="http://localhost/includes/View/index.php" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
+                        <a href="afficherQuestRep.php" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
+                        <a href="index.php" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
                         <a href="online-courses-html-template/contact.php" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
                     </div>
                     <div class="nav-buttons d-flex align-items-center">

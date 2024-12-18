@@ -2,7 +2,7 @@
 include('C:/xampp/htdocs/PROJETWEB/Controller/questionC.php');
 require_once('C:/xampp/htdocs/PROJETWEB/Model/question.php');
 include('C:/xampp/htdocs/PROJETWEB/Controller/reponseC.php');
-require_once('C:/xampp/htdocs/PORJETWEB/Model/reponse.php');
+require_once('C:/xampp/htdocs/PROJETWEB/Model/reponse.php');
 
 
 

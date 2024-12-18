@@ -834,7 +834,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <a href="../afficherQuestRep.php" class="nav-item nav-link" style="margin-left: 5px;">Quiz</a>
-                        <a href="teacher.html" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
+                        <a href="../index.php" class="nav-item nav-link" style="margin-left: 5px;">Témoignages</a>
                         <a href="contact.php" class="nav-item nav-link" style="margin-left: 5px;">Contact</a>
                     </div>
                     <div class="nav-buttons d-flex align-items-center">

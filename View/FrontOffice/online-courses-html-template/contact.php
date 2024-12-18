@@ -85,7 +85,7 @@
                   >Quiz</a
                 >
                 <a
-                  href="teacher.html"
+                  href="../index.php"
                   class="nav-item nav-link"
                   style="margin-left: 5px;"
                   >Témoignages</a

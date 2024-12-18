@@ -57,8 +57,8 @@ $url = isset($_GET['url']) ? $_GET['url'] : '';
                   class="nav-link dropdown-toggle"
                   data-toggle="dropdown">internationale</a>
                 <div class="dropdown-menu rounded-0 m-0">
-                  <a href="blog.html" class="dropdown-item">bourse d'étude</a>
-                  <a href="single.html" class="dropdown-item">programme d'échange</a>
+                  <a href="blog.php" class="dropdown-item">bourse d'étude</a>
+                  <a href="prog.php" class="dropdown-item">programme d'échange</a>
                 </div>
               </div>
               <div class="nav-item dropdown">
@@ -67,14 +67,14 @@ $url = isset($_GET['url']) ? $_GET['url'] : '';
                   class="nav-link dropdown-toggle"
                   data-toggle="dropdown">activite</a>
                 <div class="dropdown-menu rounded-0 m-0">
-                  <a href="blog.html" class="dropdown-item">club</a>
-                  <a href="single.html" class="dropdown-item">formation</a>
+                  <a href="online-courses-html-template/formations,clubs.php" class="dropdown-item">club</a>
+                  <a href="online-courses-html-template/formations,clubs.php" class="dropdown-item">formation</a>
                 </div>
               </div>
-              <a href="course.html" class="nav-item nav-link">quiz</a>
+              <a href="afficherQuestRep.php" class="nav-item nav-link">quiz</a>
 
-              <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
-              <a href="contact.html" class="nav-item nav-link active">Contact</a>
+              <a href="index.php" class="nav-item nav-link">témoiniage</a>
+              <a href="online-courses-html-template/contact.php" class="nav-item nav-link active">Contact</a>
             </div>
             <a
               class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block"
@@ -191,5 +191,10 @@ $url = isset($_GET['url']) ? $_GET['url'] : '';
 </body>
 <script src="./js/script.js"></script>
 <script src="./js/comments.js"></script>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 </html>

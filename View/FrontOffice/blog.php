@@ -85,8 +85,7 @@ try {
                         </div>
                         <a href="afficherQuestRep.php" class="nav-item nav-link">quiz</a>
 
-                        <a href="teacher.html" class="nav-item nav-link">témoiniage</a>
-                        <a href="online-courses-html-template/contact.php" class="nav-item nav-link">contact</a>
+                        <a href="index.php" class="nav-item nav-link">témoiniage</a>
                         <a href="online-courses-html-template/contact.php" class="nav-item nav-link">contact</a>
                     </div>
                     <a class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="signup.html">Sign in</a>

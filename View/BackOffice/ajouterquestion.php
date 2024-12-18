@@ -1,5 +1,5 @@
 <?php
-include ('C:/xampp/htdocs/PORJETWEB/Controller/questionC.php');
+include ('C:/xampp/htdocs/PROJETWEB/Controller/questionC.php');
 
 $questionC = new questionC();
 
