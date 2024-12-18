@@ -200,6 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
+
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
@@ -821,8 +822,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="nav-item dropdown" style="margin-left: 5px;">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Internationale</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">Bourses d'Études</a>
-                                <a href="single.html" class="dropdown-item">Programmes d'Échange</a>
+                                <a href="../blog.php" class="dropdown-item">Bourses d'Études</a>
+                                <a href="../prog.php" class="dropdown-item">Programmes d'Échange</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown" style="margin-left: 5px;">

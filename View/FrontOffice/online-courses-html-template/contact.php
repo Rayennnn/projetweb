@@ -55,8 +55,8 @@
                     >Internationale</a
                   >
                   <div class="dropdown-menu rounded-0 m-0">
-                    <a href="blog.html" class="dropdown-item">Bourses d'Études</a>
-                    <a href="single.html" class="dropdown-item"
+                    <a href="../blog.php" class="dropdown-item">Bourses d'Études</a>
+                    <a href="../prog.php" class="dropdown-item"
                       >Programmes d'Échange</a
                     >
                   </div>
